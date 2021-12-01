@@ -1,0 +1,271 @@
+.py-2, footer {
+    background: #A6923F;
+}
+
+body {
+    padding: 25px;
+    background-color: white;
+    color: black;
+}
+
+.py-3 {
+    background: black;
+}
+
+.py-2, .sidebar ul {
+    list-style: none;
+}
+
+.py-2 li:hover a, .sidebar li:hover a {
+    color: darkolivegreen;
+}
+
+.py-2 li a {
+    color: white;
+    text-decoration: none;
+    font-weight: lighter;
+}
+
+.headline {
+    font-weight: bold;
+}
+
+.headline2 {
+    font-weight: lighter;
+}
+
+.sidebar ul {
+    height: 100%;
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color: #999900;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.sidebar li a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.card {
+    position: relative;
+    width: 1000px;
+    min-width: 250px;
+    min-height: 500px;
+    height: 200px;
+    display: flex;
+    margin-top: 20%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: auto;
+    text-align: center;
+    max-width: 300px;
+    transition: transform .2s;
+}
+
+.user {
+    min-height: 50px;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+.card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+.card button:hover {
+    opacity: 0.7;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.div-img img {
+    display: block;
+    width: 100%;
+    filter: brightness(50%);
+}
+
+.div-img {
+    position: relative;
+    display: inline-block;
+}
+
+@media (max-width: 991px) {
+    .div-img img {
+        margin-top: 2%;
+    }
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    color: #f1f1f1;
+    width: 100%;
+    transition: .5s ease;
+    opacity:0;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.div-img:hover .overlay {
+    opacity: 1;
+}
+
+.form-container {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px  0px #000;
+}
+
+.btn {
+    padding: 14px 20px;
+    border: none;
+
+    color: white;
+}
+
+hr.solid {
+    border-top: 3px solid white;
+}
+
+.foot-text {
+    color: white;
+    font-weight: lighter;
+}
+
+#services {
+    display: block;
+    text-align: center;
+}
+
+#services li {
+    width: auto;
+    height: auto;
+    display: inline-block;
+    list-style: none;
+}
+
+
+#services li div {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    line-height: 120px;
+
+    transition: all 0.5s ease;
+}
+
+.dark-mode {
+    background-color: black;
+}
+
+#services li a {
+    color: white;
+}
+
+.footer #services li div:hover {
+    transform: rotate(360deg);
+    border-radius: 100px;
+}
+
+.footer span {
+    color: white;
+}
+
+.footer #services li span {
+  width: auto;
+  height: auto;
+  display: block;
+  padding: 15px 0px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

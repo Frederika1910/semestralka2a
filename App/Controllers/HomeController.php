@@ -2,47 +2,42 @@
 
 namespace App\Controllers;
 
+use App\Core\AControllerBase;
 
-use App\Models\Produkt;
 /**
  * Class HomeController
  * Example of simple controller
  * @package App\Controllers
  */
-class HomeController extends AControllerRedirect
+class HomeController extends AControllerBase
 {
+
     public function index()
     {
-        return $this->html();
-    }
-
-    public function contact()
-    {
-        return $this->html();
-    }
-
-    public function oblecenie()
-    {
-        return $this->html();
+        return $this->html(
+            [
+                'meno' => 'študent'
+            ]);
     }
 
     public function qa()
     {
-        return $this->html();
+        return $this->html(
+            []
+        );
     }
 
     public function aboutus()
     {
-        return $this->html();
+        return $this->html(
+            []
+        );
     }
-
-    //public function post()
-    //{
-    //    return $this->html();
-    //}
 
     public function loggedUser()
     {
-        return $this->html();
+        return $this->html(
+            []
+        );
     }
 }
