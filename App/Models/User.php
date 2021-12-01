@@ -83,46 +83,6 @@ class User extends \App\Core\Model
     }
 
     /**
-    public static function validateEmail(string $email)
-    {
-        if($email == "" || !preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public static function validatePassword($password)
-    {
-        if($password == "") {
-            return false;
-        } //elseif(strlen($password)<5){
-           // return false;
-        //}
-
-        return true;
-    }
-
-    public static function validateName(string $name): ?string
-    {
-        if($name == ""){
-            return "Nie praznde";
-        }
-
-        return null;
-    }
-
-    public static function validateSurname(string $surname)
-    {
-        if($surname == ""){
-            return false;
-        }
-
-        return true;
-    }
-    **/
-
-    /**
      * @return string|null
      */
     public function getName(): ?string

@@ -61,13 +61,6 @@ class AuthController extends AControllerRedirect
         $login = $this->request()->getValue('login');
         $password = $this->request()->getValue('password');
 
-        /**
-        if (User::validateEmail($login) == false) {
-            exit('Neplatny email.');
-        } else if (User::validatePassword($password) == false) {
-            exit('Neplatne heslo.');
-        }**/
-
         $userExist = Auth::login($login, $password);
         if ($userExist) {
             Auth::setSession($login);
@@ -85,19 +78,6 @@ class AuthController extends AControllerRedirect
         $login = $this->request()->getValue('login');
         $password = $this->request()->getValue('password');
         $passwordControl = $this->request()->getValue('confirmPassword');
-
-        /**
-        $x = User::validateName($username);
-
-        if ($x != null) {
-            $this->redirect('auth', 'registerForm', ['error' => 'aaaaaaaa']);
-        } else if (User::validateSurname($surname) == false) {
-            exit('Neplatne priezvisko.');
-        } else if (User::validateEmail($login) == false) {
-            exit('Neplatny email.');
-        } else if (User::validatePassword($password) == false || User::validatePassword($passwordControl) == false) {
-            exit('Neplatne heslo.');
-        }**/
 
         $alreadyExist = Auth::register($login);
         if ($alreadyExist) {
@@ -135,11 +115,6 @@ class AuthController extends AControllerRedirect
         $oldP = $this->request()->getValue('oldPass');
         $newP = $this->request()->getValue('newPass');
         $newPControl = $this->request()->getValue('newPassControl');
-
-        /**
-        if (User::validatePassword($oldP) == false || User::validatePassword($newP) == false) {
-            exit('Neplatne heslo.');
-        }**/
 
         $userExist = Auth::getUser($login, $oldP);
         if ($userExist != null) {
