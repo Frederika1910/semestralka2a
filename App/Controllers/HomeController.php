@@ -15,9 +15,7 @@ class HomeController extends AControllerBase
     public function index()
     {
         return $this->html(
-            [
-                'meno' => 'študent'
-            ]);
+            []);
     }
 
     public function qa()

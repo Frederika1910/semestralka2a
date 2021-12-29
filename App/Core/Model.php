@@ -122,7 +122,9 @@ abstract class Model implements \JsonSerializable
             foreach ($data as $key => &$item) {
                 $item = $this->$key;
             }
+            print_r($data[self::$pkColumn]);
             if ($data[self::$pkColumn] == null) {
+
                 $arrColumns = array_map(fn($item) => (':' . $item), array_keys($data));
                 $columns = implode(',', array_keys($data));
                 $params = implode(',', $arrColumns);
@@ -131,6 +133,7 @@ abstract class Model implements \JsonSerializable
                 $stmt->execute($data);
                 return self::$connection->lastInsertId();
             } else {
+
                 $arrColumns = array_map(fn($item) => ($item . '=:' . $item), array_keys($data));
                 $columns = implode(',', $arrColumns);
                 $sql = "UPDATE " . self::getTableName() . " SET $columns WHERE id=:" . self::$pkColumn;

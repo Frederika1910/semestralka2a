@@ -26,4 +26,6 @@ class ProductController extends AControllerRedirect
                 'products' => $products
             ]);
     }
+
+
 }

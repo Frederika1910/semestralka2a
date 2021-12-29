@@ -28,7 +28,7 @@
         </ul>
         <?php if (\App\Auth::isLogged()) { ?>
         <ul class="nav">
-            <li class="nav-item fa fa-shopping-cart py-1" style="color:white"><a href="#" class="px-1" id="vKosiku">0</a></li>
+            <li class="nav-item fa fa-shopping-cart py-1" style="color:white"><a href="?c=order&a=orderItem" class="px-1" id="vKosiku">0</a></li>
             <li class="nav-item"><a href="?c=home&a=loggedUser" class="px-2">Môj účet</a></li>
             <li class="nav-item"><a href="?c=auth&a=logout" class="px-2">Logout</a></li>
         </ul>

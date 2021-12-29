@@ -16,7 +16,6 @@ class AuthController extends AControllerRedirect
      */
     public function index()
     {
-
     }
 
     public function loginForm()

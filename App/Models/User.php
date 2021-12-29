@@ -1,8 +1,7 @@
 <?php
 
 namespace  App\Models;
-use App\Core\Model;
-use App\Core\DB\Connection;
+
 class User extends \App\Core\Model
 {
 
@@ -72,14 +71,6 @@ class User extends \App\Core\Model
     public function setPassword(?string $password): void
     {
         $this->password = $password;
-    }
-
-    public static function findUser($login)
-    {
-        $statement = Connection::connect()->prepare("SELECT * FROM users WHERE login = ?");
-        $statement->execute([$login]);
-        $statement->setFetchMode(\PDO::FETCH_CLASS, Models\User::class);
-        $user = $statement->fetch();
     }
 
     /**
