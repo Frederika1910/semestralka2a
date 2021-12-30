@@ -2,27 +2,28 @@
 
 namespace App\Models;
 
-class OrderItem extends \App\Core\Model
+class Cart extends \App\Core\Model
 {
 
     public function __construct(
         public int $id = 0,
         public int $order_id = 0,
         public int $quantity = 0,
-        public int $product_id = 0,
-        public ?string $productName = null
+        public int $product_id = 222,
+        public ?string $productName = null,
+        public int $item_price = 0
     )
     {
     }
 
     static public function setDbColumns()
     {
-        return ['id', 'order_id', 'quantity', 'product_id'];
+        return ['id', 'order_id', 'quantity', 'product_id', 'productName', 'item_price'];
     }
 
     static public function setTableName()
     {
-        return "order_item";
+        return "shopping_cart";
     }
 
     /**
@@ -103,5 +104,21 @@ class OrderItem extends \App\Core\Model
     public function setProductName(?string $productName): void
     {
         $this->productName = $productName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getItemPrice(): int
+    {
+        return $this->item_price;
+    }
+
+    /**
+     * @param int $itemPrice
+     */
+    public function setItemPrice(int $itemPrice): void
+    {
+        $this->item_price = $itemPrice;
     }
 }
