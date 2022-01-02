@@ -209,3 +209,36 @@ function validatePasswordControl() {
     navhood5 = null;
     return displayInputInColor(navhood5, passwordControl);
 }
+
+$(document).ready(function () {
+        $('#my_form_id').submit(function (e) {
+            e.preventDefault();
+
+            let c = $('#street').value;
+            console.log(c);
+            $.ajax({
+                method: 'POST',
+                url: 'http://localhost/semestralka2?c=order&a=daco',
+                data: $('#my_form_id').serialize(),
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        })
+});
+
+$(document).ready(function() {
+    $(document).on('click', '#delete_but', function(){
+        var del_id = $(this).attr('dataId');
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost/semestralka2?c=cart&a=removeOrderItem',
+            data: {
+    },
+            success: function (data) {
+                console.log(del_id);
+
+            }
+        })
+    })
+})

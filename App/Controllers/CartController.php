@@ -39,23 +39,24 @@ class CartController extends AControllerRedirect
 
     public function removeOrderItem()
     {
-        if (isset($_POST['del'])) {
+        //if (isset($_POST['del'])) {
 
                 $orders = Cart::getAll();
-
+                $deleteItem = $_POST['#delete_but'];
                 foreach ($orders as $item) {
-                    if ($item->getId() == $_POST['item_id']) {
+                   if ($item->getId() == $deleteItem) {
                         $item->delete();
-                        $this->redirect('cart', 'shopingCart');
-                    }
+
+                   }
+
                 }
 
-        }
+        //}
     }
 
     public function editOrderItem()
     {
-        if (isset($_POST['edit'])) {
+        //if (isset($_POST['edit'])) {
             $items = Cart::getAll();
 
             $oldItem = Cart::getOne($_POST['item_id']);
@@ -81,7 +82,7 @@ class CartController extends AControllerRedirect
 
             $this->redirect('cart', 'shopingCart');
 
-        }
+       // }
 
 
     }
