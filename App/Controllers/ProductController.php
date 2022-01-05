@@ -51,7 +51,7 @@ class ProductController extends AControllerRedirect
             $newO->setProductName(($_POST['p_name']));
             $newO->setProductId(intval($_POST['p_id']));
             $newO->setItemPrice(intval($_POST['p_price']));
-
+            $newO->setQuantityPrice(intval($_POST['p_price']));
             $newO->save();
 
             //if (isset($_SESSION['card'])) {

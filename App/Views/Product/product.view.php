@@ -8,7 +8,7 @@
                             <img class="card-img-top" src="/semestralka2/<?php echo \App\Config\Configuration::UPLOAD_DIR . $product->getImage() ?>"  alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $product->getName() ?></h5>
-                                <p class="card-text">Cena: <?php echo $product->getPrice() ?>€</p>
+                                <p class="card-text" id="xyz<?php echo $product->getId() ?> ">Cena: <?php echo $product->getPrice() ?>€</p>
                             </div>
 
                             <div class="card-body">

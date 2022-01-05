@@ -229,16 +229,64 @@ $(document).ready(function () {
 
 $(document).ready(function() {
     $(document).on('click', '#delete_but', function(){
-        var del_id = $(this).attr('dataId');
+        let del_id = $(this).attr('dataId');
+        let del_price = $(this).attr('dataPrice');
+
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=cart&a=removeOrderItem',
             data: {
+                deleteItem: del_id,
     },
-            success: function (data) {
-                console.log(del_id);
-
+            success: function (html) {
+                $(".deleteItem" + del_id).fadeOut('slow');
             }
         })
     })
 })
+
+$(document).ready(function() {
+    $(document).on('click', '#edit_but', function(){
+        let edit_id = $(this).attr('dataId');
+
+        $('#quantity'+edit_id).hide();
+        $('#quantityInput'+edit_id).show();
+
+        $('.editBut').hide();
+        $('.saveBut').show();
+
+    })
+})
+
+
+$(document).ready(function() {
+    $(document).on('click', '#save_but', function(e){
+            e.preventDefault();
+            let edit_id = $(this).attr('dataId');
+            let quantity_price = $(this).attr('dataQuantityPrice');
+
+            let quantity_input = parseInt($('#quantityInput'+edit_id).val());
+            let totalPrice = quantity_price * quantity_input;
+            let aString = quantity_input.toString();
+            let totalPriceString = totalPrice.toString();
+
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost/semestralka2?c=cart&a=editOrderItem',
+                data: {text: $('#quantityInput'+edit_id).val(),
+                    oldItem: edit_id,
+                    },
+                success: function (html, data) {
+                    $('#quantityInput'+edit_id).hide();
+                    $('#quantity'+edit_id).show();
+
+                    $('.saveBut').hide()
+                    $('.editBut').show();
+
+                    $('#quantity'+edit_id).html(aString);
+                    $('#price'+edit_id).html(totalPriceString+'€');
+                }
+            })
+        })
+})
+

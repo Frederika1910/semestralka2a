@@ -11,14 +11,15 @@ class Cart extends \App\Core\Model
         public int $quantity = 0,
         public int $product_id = 222,
         public ?string $productName = null,
-        public int $item_price = 0
+        public int $item_price = 0,
+        public int $quantityPrice = 0
     )
     {
     }
 
     static public function setDbColumns()
     {
-        return ['id', 'order_id', 'quantity', 'product_id', 'productName', 'item_price'];
+        return ['id', 'order_id', 'quantity', 'product_id', 'productName', 'item_price', 'quantityPrice'];
     }
 
     static public function setTableName()
@@ -120,5 +121,21 @@ class Cart extends \App\Core\Model
     public function setItemPrice(int $itemPrice): void
     {
         $this->item_price = $itemPrice;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantityPrice(): int
+    {
+        return $this->quantityPrice;
+    }
+
+    /**
+     * @param int $quantityPrice
+     */
+    public function setQuantityPrice(int $quantityPrice): void
+    {
+        $this->quantityPrice = $quantityPrice;
     }
 }

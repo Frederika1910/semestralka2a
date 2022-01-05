@@ -39,19 +39,16 @@ class CartController extends AControllerRedirect
 
     public function removeOrderItem()
     {
-        //if (isset($_POST['del'])) {
+        $orders = Cart::getAll();
+        $deleteItem = $_POST['deleteItem'];
 
-                $orders = Cart::getAll();
-                $deleteItem = $_POST['#delete_but'];
-                foreach ($orders as $item) {
-                   if ($item->getId() == $deleteItem) {
-                        $item->delete();
 
-                   }
+        foreach ($orders as $item) {
+            if ($item->getId() == $deleteItem) {
+                $item->delete();
+            }
+        }
 
-                }
-
-        //}
     }
 
     public function editOrderItem()
@@ -59,13 +56,16 @@ class CartController extends AControllerRedirect
         //if (isset($_POST['edit'])) {
             $items = Cart::getAll();
 
-            $oldItem = Cart::getOne($_POST['item_id']);
+            //$editItem = $_POST['editItem'];
+            $oldItem = Cart::getOne($_POST['oldItem']);
 
             $newItem = new Cart();
             $newItem->setId($oldItem->getId());
             $newItem->setProductId($oldItem->getProductId());
             $newItem->setProductName($oldItem->getProductName());
-            $newItem->setQuantity($oldItem->getQuantity()+1);
+            $newQuantity = $_POST['text'];
+            $newItem->setQuantity($newQuantity);
+
 
             $products = Product::getAll();
             $priceOfOne = 0;
@@ -76,11 +76,9 @@ class CartController extends AControllerRedirect
                 }
             }
 
-            $newItem->setItemPrice($oldItem->getItemPrice()+$priceOfOne);
+            $newItem->setItemPrice($priceOfOne);
+            $newItem->setQuantityPrice($priceOfOne*$newQuantity);
             $newItem->save();
-
-
-            $this->redirect('cart', 'shopingCart');
 
        // }
 
