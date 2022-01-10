@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Responses\Response;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Cart;
 
@@ -28,7 +29,32 @@ class ProductController extends AControllerRedirect
             ]);
     }
 
-    public function addmmm() {
+    public function addProductToCart() {
+
+        $product = Product::getOne($_POST['id']);
+
+        $items = Cart::getAll();
+        $pocet = 0;
+        foreach ($items as $item) {
+            if ($item->getProductId() == $product->getId()) {
+                echo "uzVKosiku";
+                exit();
+            }
+        }
+
+        //if ($existuje == false) {
+            $cartItem = new Cart();
+            $cartItem->setOrderId(1);
+            $cartItem->setQuantity(1);
+            $cartItem->setProductId($product->getId());
+            $cartItem->setProductName($product->getName());
+            $cartItem->setItemPrice($product->getPrice());
+            $cartItem->setQuantityPrice($product->getPrice());
+
+            $cartItem->save();
+        //}
+
+        /**
         if (isset($_POST['sub'])) {
             //print_r(($_POST['p_price']));
 
@@ -64,6 +90,7 @@ class ProductController extends AControllerRedirect
             //echo '<script>alert("Welcome to Geeks for Geeks")</script>';
             $this->redirect('product', 'product');
         }
+         * **/
     }
 
 

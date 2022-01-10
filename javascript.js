@@ -228,7 +228,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function() {
-    $(document).on('click', '#delete_but', function(){
+    $(document).on('click', '#delete_but', function () {
         let del_id = $(this).attr('dataId');
         let del_price = $(this).attr('dataPrice');
 
@@ -237,7 +237,7 @@ $(document).ready(function() {
             url: 'http://localhost/semestralka2?c=cart&a=removeOrderItem',
             data: {
                 deleteItem: del_id,
-    },
+            },
             success: function (html) {
                 $(".deleteItem" + del_id).fadeOut('slow');
             }
@@ -246,21 +246,50 @@ $(document).ready(function() {
 })
 
 $(document).ready(function() {
-    $(document).on('click', '#edit_but', function(){
+    $(document).on('click', '.editBut', function(){
         let edit_id = $(this).attr('dataId');
 
         $('#quantity'+edit_id).hide();
         $('#quantityInput'+edit_id).show();
 
-        $('.editBut').hide();
-        $('.saveBut').show();
+        $('#edit_but'+edit_id).hide();
+        $('#save_but'+edit_id).show();
 
     })
 })
 
+$(document).ready(function() {
+    $(document).on('click', '#edit_order_item', function(){
+        let product_id = $(this).attr('dataId');
+
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost/semestralka2?c=product&a=addProductToCart',
+            data: {
+                id: product_id
+            },
+            success: function (data) {
+                if (data === "uzVKosiku") {
+                    $('#modelMsg').html("Produkt sa v kosiku uz nachadza.");
+                    $('#productResponse').show();
+                } else {
+                    $('#modelMsg').html("Produkt bol uspesne pridany do kosika.");
+                    $('#productResponse').show();
+                }
+            }
+        })
+
+    })
+})
 
 $(document).ready(function() {
-    $(document).on('click', '#save_but', function(e){
+    $(document).on('click', '#cancel_but', function(){
+        $('#productResponse').hide();
+    })
+})
+
+$(document).ready(function() {
+    $(document).on('click', '.saveBut', function(e){
             e.preventDefault();
             let edit_id = $(this).attr('dataId');
             let quantity_price = $(this).attr('dataQuantityPrice');
@@ -280,8 +309,8 @@ $(document).ready(function() {
                     $('#quantityInput'+edit_id).hide();
                     $('#quantity'+edit_id).show();
 
-                    $('.saveBut').hide()
-                    $('.editBut').show();
+                    $('#save_but'+edit_id).hide()
+                    $('#edit_but'+edit_id).show();
 
                     $('#quantity'+edit_id).html(aString);
                     $('#price'+edit_id).html(totalPriceString+'€');
