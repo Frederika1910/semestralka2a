@@ -9,14 +9,16 @@ class Product extends \App\Core\Model
         public int $id = 0,
         public ?string $image = null,
         public int $price = 0,
-        public int $inCart = 0
+        public int $category_id = 0,
+        public ?string $size = null,
+        public ?string $gender = null
     )
     {
     }
 
     static public function setDbColumns()
     {
-        return ['name','id', 'image', 'price', 'inCart'];
+        return ['name','id', 'image', 'price', 'category_id', 'size', 'gender'];
     }
 
     static public function setTableName()
@@ -89,18 +91,50 @@ class Product extends \App\Core\Model
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getInCart(): int
+    public function getSize(): ?string
     {
-        return $this->inCart;
+        return $this->size;
     }
 
     /**
-     * @param int $inCart
+     * @param int|null $size
      */
-    public function setInCart(int $inCart): void
+    public function setSize(?string $size): void
     {
-        $this->inCart = $inCart;
+        $this->size = $size;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId(): int
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * @param int $category_id
+     */
+    public function setCategoryId(int $category_id): void
+    {
+        $this->category_id = $category_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string|null $gender
+     */
+    public function setGender(?string $gender): void
+    {
+        $this->gender = $gender;
     }
 }

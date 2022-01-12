@@ -231,6 +231,8 @@ $(document).ready(function() {
     $(document).on('click', '#delete_but', function () {
         let del_id = $(this).attr('dataId');
         let del_price = $(this).attr('dataPrice');
+        let numberOfRowsInTable = $('.table').length;
+
 
         $.ajax({
             method: 'POST',
@@ -240,6 +242,11 @@ $(document).ready(function() {
             },
             success: function (html) {
                 $(".deleteItem" + del_id).fadeOut('slow');
+                console.log(numberOfRowsInTable);
+                if (numberOfRowsInTable <= 1) {
+                    $('.table').fadeOut('slow');
+                    $('.yy').html("Vas nakupny kosik je prazdny.").fadeIn('slow');
+                }
             }
         })
     })
@@ -318,4 +325,45 @@ $(document).ready(function() {
             })
         })
 })
+
+$(document).ready(function() {
+    $(document).on('click', '#filter_but', function () {
+        let category_id = getFilter('category');
+        let min_price = $('.price:checked').attr('min');
+        let max_price = $('.price:checked').attr('max');
+        let gender = getFilter('gender');
+        console.log(min_price);
+        console.log(max_price);
+        console.log(gender);
+        console.log(category_id);
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost/semestralka2?c=product&a=showFilteredProducts',
+            data: {
+                category: category_id,
+                minPrice: min_price,
+                maxPrice: max_price,
+                gender: gender
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('.filter_data').html(data);
+                console.log(data);
+            }
+        })
+    })
+})
+
+
+function getFilter(filter) {
+    return $('.' + filter + ':checked').val();
+}
+
+$(document).ready(function() {
+    $(document).on('click', '#clear_but', function () {
+       document.querySelector('.common_selector').checked = false;
+    })
+})
+
 

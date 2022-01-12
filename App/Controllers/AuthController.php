@@ -60,6 +60,9 @@ class AuthController extends AControllerRedirect
         $login = $this->request()->getValue('login');
         $password = $this->request()->getValue('password');
 
+        //$user = User::getAll("login='{$_POST['login']}'");
+        //$user = User::getAll('login=?', [$_POST['login']]);
+
         $userExist = Auth::login($login, $password);
         if ($userExist) {
             Auth::setSession($login);

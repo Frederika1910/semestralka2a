@@ -48,15 +48,6 @@ class Auth
         return null;
     }
 
-    public static function passExist($login)
-    {
-        $statement = Connection::connect()->prepare("SELECT * FROM users WHERE login = ?");
-        $statement->execute([$login]);
-        $statement->setFetchMode(\PDO::FETCH_CLASS, Models\User::class);
-        $user = $statement->fetch();
-
-        return $user;
-    }
 
     public static function isLogged()
     {

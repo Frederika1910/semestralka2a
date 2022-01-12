@@ -42,7 +42,6 @@ class CartController extends AControllerRedirect
         $orders = Cart::getAll();
         $deleteItem = $_POST['deleteItem'];
 
-
         foreach ($orders as $item) {
             if ($item->getId() == $deleteItem) {
                 $item->delete();

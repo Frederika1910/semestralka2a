@@ -25,7 +25,7 @@
     <div class="container d-flex flex-wrap">
         <ul class="nav me-auto">
             <li class="nav-item"><a href="?c=home" class="px-2">Domov</a></li>
-            <li class="nav-item"><a href="?c=product&a=product" class="px-2">Oblečenie</a></li>
+            <li class="nav-item"><a href="?c=product&a=filterProduct" class="px-2">Oblečenie</a></li>
             <li class="nav-item"><a href="?c=home&a=qa" class="px-2">Q&A</a></li>
             <li class="nav-item"><a href="?c=home&a=aboutus" class="px-2">O nás</a></li>
         </ul>

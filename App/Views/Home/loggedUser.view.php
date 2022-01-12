@@ -1,6 +1,6 @@
-<?php /** @var Array $row */ ?>
-<h1 class="text-center">Vítame, Vás vo Vašom účte.</h1>
+<?php /** @var Array $data */ ?>
 
+<h1 class="text-center">Vítame, Vás vo Vašom účte.</h1>
 <div class="row">
     <div class="col-lg-6 col-md-12">
         <div class="info">
