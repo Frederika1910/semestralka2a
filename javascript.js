@@ -244,8 +244,7 @@ $(document).ready(function() {
                 $(".deleteItem" + del_id).fadeOut('slow');
                 console.log(numberOfRowsInTable);
                 if (numberOfRowsInTable <= 1) {
-                    $('.table').fadeOut('slow');
-                    $('.yy').html("Vas nakupny kosik je prazdny.").fadeIn('slow');
+                    $('.tbody').fadeOut('slow');
                 }
             }
         })
@@ -366,4 +365,13 @@ $(document).ready(function() {
     })
 })
 
+function myFunction(id) {
+    let x = document.getElementById(id);
+    console.log(x);
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+    } else if (x.style.display === 'block') {
+        x.style.display = 'none';
+    }
 
+}

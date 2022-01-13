@@ -17,7 +17,7 @@ body {
 }
 
 .py-2 li:hover a, .sidebar li:hover a {
-    color: darkolivegreen;
+    color: red;
 }
 
 .py-2 li a {
@@ -42,15 +42,16 @@ body {
 }
 
 .sidebar li {
+    list-style: none;
     padding: 8px;
     margin-bottom: 7px;
-    background-color: #999900;
+    background-color: #E6E6FA;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .sidebar li a {
     display: block;
-    color: white;
+    color: #8B0000;
     text-decoration: none;
     font-weight: lighter;
     text-align: center;
@@ -241,31 +242,3 @@ hr.solid {
     text-decoration: none;
     cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

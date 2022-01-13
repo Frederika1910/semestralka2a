@@ -41,6 +41,10 @@ class ProductController extends AControllerRedirect
             ]);
     }
 
+    public function aboutProduct() {
+        return $this->html();
+    }
+
     public function showFilteredProducts() {
         //$category;
         //$minPrice = $_POST['minPrice'];
@@ -110,7 +114,9 @@ class ProductController extends AControllerRedirect
                             </div>
 
                             <div class="card-body d-flex flex-row">
-                                <button type="submit" class="btn btn-primary flex-fill me-1" dataId="<?php echo $product->getId() ?>" style="background-color: #E6E6FA; color: #8B0000" >Viac</button>
+                                <a href="?c=product&a=aboutProduct" style="width: 100%">
+                                    <button type="submit" class="btn btn-primary flex-fill"  style="background-color: #E6E6FA; color: #8B0000" >Viac</button>
+                                </a>
                             </div>
                     </div>
 

@@ -7,13 +7,13 @@
                 <h3>Cena</h3>
                 <div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
                     <div class="list-group-item checkbox">
-                        <label><input type="radio" name="radiobuttonPrice" class="common_selector price" min="0" max="5" autocomplete="off"> pod 5€</label>
+                        <label><input type="radio" name="radiobuttonPrice" class="common_selector price" min="0" max="4" autocomplete="off"> pod 5€</label>
                     </div>
                     <div class="list-group-item checkbox">
                         <label><input type="radio" name="radiobuttonPrice" class="common_selector price" min="5" max="10" autocomplete="off"> 5€ - 10€</label>
                     </div>
                     <div class="list-group-item checkbox">
-                        <label><input type="radio" name="radiobuttonPrice" class="common_selector price" min="10" max="20" autocomplete="off"> 10€ - 20€</label>
+                        <label><input type="radio" name="radiobuttonPrice" class="common_selector price" min="11" max="20" autocomplete="off"> 11€ - 20€</label>
                     </div>
                 </div>
             </div>

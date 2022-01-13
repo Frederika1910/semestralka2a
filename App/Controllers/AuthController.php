@@ -54,7 +54,6 @@ class AuthController extends AControllerRedirect
         );
     }
 
-
     public function login()
     {
         $login = $this->request()->getValue('login');
@@ -87,7 +86,10 @@ class AuthController extends AControllerRedirect
         } else {
             $newUser = new User();
             $newUser->setLogin($login);
-            $newUser->setPassword($password);
+
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+
+            $newUser->setPassword($hash);
             $newUser->setName($username);
             $newUser->setSurname($surname);
             $newUser->save();

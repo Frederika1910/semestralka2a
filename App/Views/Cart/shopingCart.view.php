@@ -1,8 +1,7 @@
 <?php /** @var Array $data */ ?>
 
-<div class="yy">
     <?php if (empty($data['shopping_cart'])) { ?>
-        <h5 id="xyz" align="center">Váš nákupný košík je prázdny.</h5>
+        <h5 align="center">Váš nákupný košík je prázdny.</h5>
     <?php } else { ?>
 
     <table class="table table-hover">
@@ -16,7 +15,7 @@
             <th scope="col">Cena spolu</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="tbody">
         <?php $index = 1 ?>
         <?php foreach ($data['shopping_cart'] as $item) { ?>
                 <tr class="deleteItem<?php echo $item->getId() ?>">
@@ -77,4 +76,3 @@
     </table>
 
     <?php } ?>
-</div>

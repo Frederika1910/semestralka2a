@@ -26,12 +26,10 @@
                             </div>
 
                             <div class="card-body d-flex flex-row">
-                                <button type="submit" class="btn btn-primary flex-fill me-1" dataId="<?php echo $product->getId() ?>" style="background-color: #E6E6FA; color: #8B0000" >Viac</button>
-                                <?php if (\App\Auth::isLogged()) { ?>
-                                    <button type="submit" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId="<?php echo $product->getId() ?>" style="background-color:  #8B0000">Pridať do košíka</button>
-                                <?php } else { ?>
-                                    <a href="?c=auth&a=loginForm"><button type="submit" class="btn btn-danger flex-fill ms-1" id="edit_order_item" style="background-color:  #8B0000">Pridať do košíka</button></a>
-                                <?php } ?>
+                                <a href="?c=auth&a=loginForm" style="width: 100%">
+                                    <button type="submit" class="btn btn-primary flex-fill"  style="background-color: #E6E6FA; color: #8B0000" >Viac</button>
+                                    <input name="p_id" type="hidden" value="<?php echo $product->getId() ?>">
+                                </a>
                             </div>
                     </div>
 

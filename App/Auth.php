@@ -11,7 +11,7 @@ class Auth
     {
         $users = User::getAll();
         foreach ($users as $user) {
-            if ($user->getLogin() == $login && $user->getPassword() == $password) {
+            if ($user->getLogin() == $login && password_verify($password, $user->getPassword())) {
                 return true;
             }
         }
