@@ -14,8 +14,7 @@ class HomeController extends AControllerBase
 
     public function index()
     {
-        return $this->html(
-            []);
+        return $this->html();
     }
 
     public function qa()

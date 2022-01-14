@@ -107,6 +107,8 @@ function setSubmitButton() {
         }
     } else if (navhood4 == null && navhood5 == null) {
         document.querySelector(".validate").disabled = false;
+    } else if (navhood6 == null && navhood7 == null && navhood8 == null) {
+        document.querySelector(".validate").disabled = false;
     }
 }
 
@@ -141,6 +143,11 @@ function validateSurname() {
     validateNameOrSurname(input);
 }
 
+function validateText(id) {
+    let input = document.getElementById(id);
+    validateNameOrSurname(input);
+}
+
 function validateNameOrSurname(input) {
     let inputValue = input.value;
     let disabledChar = /[0-9]/;
@@ -170,6 +177,63 @@ function validateEmail() {
     }
     navhood3 = null;
     return displayInputInColor(navhood3, input);
+}
+
+let navhood6 = "";
+function validateNumbers(id) {
+    let input = document.getElementById(id);
+    let inputValue = input.value;
+    let disabledChar = /^\d*\.?\d*$/;
+
+    if (!inputValue) {
+        navhood6 = "Pole nesmie byť prázdne.";
+        return displayInputInColor(navhood6, input);
+    } else if (!disabledChar.test(inputValue)) {
+        navhood6 = "Pole nesmie obsahovať znaky.";                                      //pozor lomka
+        return displayInputInColor(navhood6, input);
+    }
+
+    navhood6 = null;
+    return displayInputInColor(navhood6, input);
+}
+
+let navhood8 = "";
+function validateMobileNumber() {
+    let mobile = document.getElementById("mobileNumber");
+    let mobileValue = mobile.value;
+    let disabledChar = /^\d*\.?\d*$/;
+
+    if (!mobileValue) {
+        navhood8 = "Pole nesmie byť prázdne.";
+        return displayInputInColor(navhood8, mobile);
+    } else if (!disabledChar.test(mobileValue)) {
+        navhood8 = "Pole nesmie obsahovať znaky.";                                      //pozor lomka
+        return displayInputInColor(navhood8, mobile);
+    }
+
+    navhood8 = null;
+    return displayInputInColor(navhood8, mobile);
+}
+
+let navhood7 = "";
+function validatePSC() {
+    let input = document.getElementById("psc");
+    let inputValue = input.value;
+    let disabledChar = /[a-zA-Z]/;
+
+    if (!inputValue) {
+        navhood7 = "Pole nesmie byť prázdne.";
+        return displayInputInColor(navhood7, input);
+    }
+
+    if (inputValue.length < 5 || inputValue.length > 5 || disabledChar.test(inputValue)) {
+        navhood7 = "PSČ musí mať 5 znakov.";
+        return displayInputInColor(navhood7, input);
+    }
+
+
+    navhood7 = null;
+    return displayInputInColor(navhood7, input);
 }
 
 function validatePassword() {
@@ -220,8 +284,8 @@ $(document).ready(function () {
                 method: 'POST',
                 url: 'http://localhost/semestralka2?c=order&a=daco',
                 data: $('#my_form_id').serialize(),
-                success: function (data) {
-                    console.log(data);
+                success: function () {
+                    console.log("data");
                 }
             })
         })
@@ -400,27 +464,50 @@ $(document).ready(function() {
 
 $('input:radio').change(function() {
 
-    $('#payment_but').attr('disabled', false);
-
     if (document.getElementById('radioButtonOne').checked) {
         $('.meth').html("Poštovné: 2€");
     } else if (document.getElementById('radioButtonTwo').checked) {
         $('.meth').html("Poštovné: 0€");
     }
-
+    document.querySelector(".validate").disabled = false;
 })
 
+function checkPaymentDetail() {
+    if (document.getElementById('radioButtonTwo').checked) {
+        let mon = document.getElementById('months');
+        let year = document.getElementById('years');
+        let card = document.getElementById('cards');
+        let rB = document.getElementById('radioButtonTwo').checked;
+        console.log(rB);
+        let error = false;
+
+        if (navhood6 === "" || mon.options[mon.selectedIndex].value === "false" || year.options[year.selectedIndex].value === "false" || card.options[card.selectedIndex].value === "false") {
+            console.log(mon.options[mon.selectedIndex].value);
+            error = true;
+        }
+
+        if (error) {
+            alert("nie nie nie");
+        }
+    } else if (document.getElementById('radioButtonOne').checked) {
+        console.log("dsd");
+    }
+}
+
+/**
 $(document).ready(function() {
-    $(document).on('click', '#payment_but', function(e){
+    $('#orderForm').submit(function (e) {
         e.preventDefault();
 
         $.ajax({
             type: 'POST',
             url: 'http://localhost/semestralka2?c=order&a=addNewOrder',
+            data: $('#orderForm').serialize(),
             success: function () {
                 $('#modelMsg').html("Objednávka prebehla úspešne.");
                 $('#productResponse').show();
+                console.log(data);
             }
         })
     })
-})
+})**/

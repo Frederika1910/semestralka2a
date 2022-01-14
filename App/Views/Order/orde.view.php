@@ -10,14 +10,16 @@
     </tr>
     </thead>
     <tbody class="tbody">
-    <?php foreach ($data['orders'] as $product) { ?>
+    <?php $pocet = 0;
+    foreach ($data['orders'] as $order) {
+        $pocet++;?>
+    <tr>
             </td>
-            <td>1</td>
-            <td>2</td>
-            <td>14.01.2022</td>
-            <td>2€</td>
-    <?php } ?>
-
+            <td><?php $pocet ?></td>
+            <td><?php $order->getNumberOfProducts() ?></td>
+            <td><?php $order->getDate() ?></td>
+            <td><?php $order->getTotalPrice() ?></td>
     </tr>
+    <?php } ?>
     </tbody>
 </table>

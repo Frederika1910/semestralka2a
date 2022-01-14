@@ -30,12 +30,11 @@
                 <div class="col-lg-4 col-sm-12">
                     <div class="sidebar">
                         <li class="sidebar-item">
-                            <a onclick="myFunction('paymentMethodOne')" href="#" class="px-2">Dobierka</a></li>
-
+                            <a onclick="myFunction('paymentMethodOne')" href="#" class="px-2">Dobierka</a>
+                        </li>
                         <div id="paymentMethodOne" style="display: none">
                             <input type="radio" id="radioButtonOne" name="paymentMethod" autocomplete="off">Cena dobierky: 2€
                         </div>
-
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-12">
@@ -47,7 +46,8 @@
                             <form method="post">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Druh karty:</label>
-                                    <select id="cards">
+                                    <select id="cards" autocomplete="off">
+                                        <option value="false" selected>-----</option>
                                         <option value="Maestro">Maestro</option>
                                         <option value="MasterCard">MasterCard</option>
                                         <option value="Visa">Visa</option>
@@ -55,11 +55,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Číslo karty:</label>
-                                    <input type="text" class="form-control" name="cardNumber" id="exampleInputEmail1" placeholder="Číslo karty..." required>
+                                    <input type="text" class="form-control" name="cardNumber" id="cardNumber" onkeyup="validateNumbers('cardNumber')" placeholder="Číslo karty..." autocomplete="off" required>
+                                    <div id="valid"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Dátum splatnosti:</label>
-                                    <select id="months">
+                                    <select id="months" name="mon" autocomplete="off">
+                                        <option value="false" selected>--</option>
                                         <option value="1">01</option>
                                         <option value="2">02</option>
                                         <option value="3">03</option>
@@ -74,7 +76,8 @@
                                         <option value="12">12</option>
                                     </select>
                                     /
-                                    <select id="years">
+                                    <select id="years" autocomplete="off">
+                                        <option value="false" selected>----</option>
                                         <option value="2022">2022</option>
                                         <option value="2023">2023</option>
                                         <option value="2024">2024</option>
@@ -93,7 +96,7 @@
             </div>
         </div>
         <div class="d-flex" style="justify-content: flex-end">
-            <a href="?c=order&a=paymentForm"><button type="button" id="payment_but" class="btn btn-success validate">Potvrdiť</button></a>
+            <a href="#"><button type="button" id="payment_but" onclick="checkPaymentDetail()" class="btn btn-success validate">Potvrdiť</button></a>
         </div>
     </div>
 </div>

@@ -70,7 +70,7 @@ class OrderController extends AControllerRedirect
                 }
             }
         }
-
+        $newOrder->setUserId(2);
         if(isset($_POST['street'])) {
             $newOrder->setStreet($_POST["street"]);
         }

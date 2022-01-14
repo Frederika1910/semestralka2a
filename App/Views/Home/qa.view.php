@@ -1,7 +1,7 @@
 <div class="container text-center">
     <div class="row">
         <div class="col-lg-4 col-sm-12">
-            <div class="sidebar">
+            <div class="sidebar" style="color:  #8B0000">
                 <li class="sidebar-item"><a onclick="myFunction('howOrder')" href="#" class="px-2">Ako si tovar objednám?</a></li>
             </div>
         </div>
