@@ -40,10 +40,10 @@ class CartController extends AControllerRedirect
     public function removeOrderItem()
     {
         $orders = Cart::getAll();
-        $deleteItem = $_POST['deleteItem'];
+        $deleteIte = intval($_POST['deleteItem']);
 
         foreach ($orders as $item) {
-            if ($item->getId() == $deleteItem) {
+            if ($item->getId() === $deleteIte) {
                 $item->delete();
             }
         }
@@ -53,7 +53,6 @@ class CartController extends AControllerRedirect
     public function editOrderItem()
     {
         //if (isset($_POST['edit'])) {
-            $items = Cart::getAll();
 
             //$editItem = $_POST['editItem'];
             $oldItem = Cart::getOne($_POST['oldItem']);

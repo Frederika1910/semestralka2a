@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Responses\Response;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\User;
 
@@ -19,10 +20,41 @@ class OrderController extends AControllerRedirect
 
     public function orderForm()
     {
+        return $this->html();
+    }
+
+    public function paymentForm() {
+
+        $orders = Cart::getAll();
+
         return $this->html(
             [
-            ]
-        );
+                'shopping_cart' => $orders
+            ]);
+    }
+
+    public function orde()
+    {
+        $orders = Order::getAll();
+
+        return $this->html(
+            [
+                'orders' => $orders
+            ]);
+    }
+
+    public function addNewOrder() {
+
+
+        $newOrder = new Order();
+        $newOrder->setUserId(1);
+        $newOrder->setStreet("ulica");
+        $newOrder->setHouseNumber(12);
+        $newOrder->setPsc("00000");
+        $newOrder->setCity("Zilina");
+        $newOrder->setMobileNumber(0000);
+        $newOrder->save();
+
     }
 
     public function daco()

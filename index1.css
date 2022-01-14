@@ -225,7 +225,7 @@ hr.solid {
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 100%;
 }
 
 /* The Close Button */
@@ -242,3 +242,4 @@ hr.solid {
     text-decoration: none;
     cursor: pointer;
 }
+

@@ -2,12 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Core\Responses\Response;
-use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\ProductCategory;
-use App\Models\User;
 
 class ProductController extends AControllerRedirect
 {
@@ -34,15 +31,70 @@ class ProductController extends AControllerRedirect
     public function filterProduct()
     {
         $categories = ProductCategory::getAll();
-
+        $products = Product::getAll();
         return $this->html(
             [
-                'product_category' => $categories
+                'product_category' => $categories,
+                'products' => $products
             ]);
     }
 
     public function aboutProduct() {
-        return $this->html();
+        $products = Product::getAll();
+
+        return $this->html(
+            [
+                //tu posielame data
+                'products' => $products
+            ]);
+    }
+
+    public function showProductDetail() {
+
+        $clickedProduct = null;
+        $products = Product::getAll();
+        foreach ($products as $product) {
+            if ($product->getId() == intval($_POST['id'])) {
+                $clickedProduct = '
+   
+                <div class="row">
+                    <div class="col">
+                        <div class="images p-3">
+                            <div class="text-center p-4">
+                                <img id="main-image" src="/semestralka2/' . \App\Config\Configuration::UPLOAD_DIR . $product->getImage() .'" width="250" alt="obrazok">
+                            </div>                         
+                   </div>
+                    <div class="col">
+                        <div class="product p-4">
+                            <div class="mt-4 mb-3" style="text-align: center">
+                                <span class="text-uppercase text-muted brand">Second Hand U Inky</span>
+                                <h5 class="text-uppercase">'. $product->getName() .'</h5>                               
+                            </div>
+                            <p class="about">Shop from a wide range of t-shirt from orianz. Pefect for your everyday use, you could pair it with a stylish pair of jeans or trousers complete the look.</p>
+                            <div class="sizes mt-5" style="text-align: center">
+                                <h6 class="text-uppercase">Veľkosť: </h6> 
+                                <span class="act-price">'. $product->getPrice() .'€</span>
+                            </div>
+                            <div class="cart mt-4" style="text-align: center"> 
+                            ';
+                if (\App\Auth::isLogged()) {
+                    $clickedProduct .= '<button type="submit" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000">Pridať do košíka</button>';
+                } else {
+                    $clickedProduct .= '<button type="submit" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000" disabled="true">Pridať do košíka</button>';
+                }
+                $clickedProduct .= '<button type="button" id="cancel_but" class="btn btn-secondary" data-dismiss="modal" style="background-color: #E6E6FA; color: #8B0000">Zavrieť</button>
+                            </div>
+                        </div>
+                    </div>
+                </div        
+                ';
+                break;
+
+            }
+        }
+
+        echo $clickedProduct;
+        exit();
     }
 
     public function showFilteredProducts() {
@@ -114,8 +166,8 @@ class ProductController extends AControllerRedirect
                             </div>
 
                             <div class="card-body d-flex flex-row">
-                                <a href="?c=product&a=aboutProduct" style="width: 100%">
-                                    <button type="submit" class="btn btn-primary flex-fill"  style="background-color: #E6E6FA; color: #8B0000" >Viac</button>
+                                <a style="width: 100%">
+                                    <button type="submit" id="more_but" class="btn btn-primary flex-fill" style="background-color: #E6E6FA; color: #8B0000" dataId='. $product->getId() .' >Viac</button>
                                 </a>
                             </div>
                     </div>
@@ -134,7 +186,6 @@ class ProductController extends AControllerRedirect
         $product = Product::getOne($_POST['id']);
 
         $items = Cart::getAll();
-        $pocet = 0;
         foreach ($items as $item) {
             if ($item->getProductId() == $product->getId()) {
                 echo "uzVKosiku";

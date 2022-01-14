@@ -28,7 +28,7 @@
                     </svg>
                     <h5 class="card-title">Moje objednávky</h5>
                     <p class="card-text">Tu si môžete prezrieť Vaše obejdnávky.</p>
-                    <a href="#" class="btn btn-success mt-2">Prehľad mojich objednávok</a>
+                    <a href="?c=order&a=orde" class="btn btn-success mt-2">Prehľad mojich objednávok</a>
                 </div>
             </div>
         </div>

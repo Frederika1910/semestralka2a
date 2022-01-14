@@ -55,7 +55,7 @@
 
 
                 <div class="d-flex justify-content-center">
-                    <input type="submit" name="formular" class="btn btn-success">
+                    <a href="?c=order&a=paymentForm"><button type="button" class="btn btn-success">Potvrdiť</button></a>
                 </div>
 
             </form>

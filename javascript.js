@@ -73,7 +73,7 @@ window.onload = function() {
     }
 }
 
-function addProductToBasket(product) {
+function addProductToBasket() {
     let productsInBasket = localStorage.getItem('currentNumberOfProducts');
 
     let productsInBasketInt = parseInt(productsInBasket);
@@ -228,11 +228,9 @@ $(document).ready(function () {
 });
 
 $(document).ready(function() {
-    $(document).on('click', '#delete_but', function () {
+    $(document).on('click', '.delBut', function () {
         let del_id = $(this).attr('dataId');
-        let del_price = $(this).attr('dataPrice');
-        let numberOfRowsInTable = $('.table').length;
-
+        let numberOfRows = $('.table').length;
 
         $.ajax({
             method: 'POST',
@@ -240,12 +238,13 @@ $(document).ready(function() {
             data: {
                 deleteItem: del_id,
             },
-            success: function (html) {
-                $(".deleteItem" + del_id).fadeOut('slow');
-                console.log(numberOfRowsInTable);
-                if (numberOfRowsInTable <= 1) {
+            success: function () {
+                $('.deleteItem' + del_id).fadeOut('slow');
+
+                if (numberOfRows <= 1) {
                     $('.tbody').fadeOut('slow');
                 }
+
             }
         })
     })
@@ -291,6 +290,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $(document).on('click', '#cancel_but', function(){
         $('#productResponse').hide();
+        $('#productDetail').hide();
     })
 })
 
@@ -311,7 +311,7 @@ $(document).ready(function() {
                 data: {text: $('#quantityInput'+edit_id).val(),
                     oldItem: edit_id,
                     },
-                success: function (html, data) {
+                success: function () {
                     $('#quantityInput'+edit_id).hide();
                     $('#quantity'+edit_id).show();
 
@@ -373,5 +373,54 @@ function myFunction(id) {
     } else if (x.style.display === 'block') {
         x.style.display = 'none';
     }
-
 }
+
+$(document).ready(function() {
+    $(document).on('click', '#more_but', function (e) {
+        e.preventDefault();
+
+        let product_id = $(this).attr('dataId');
+        console.log(product_id);
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost/semestralka2?c=product&a=showProductDetail',
+            data: {
+                id: product_id
+            },
+            success: function (data) {
+                console.log(data);
+                    $('#productDetailMsg').html(data);
+                    $('#productDetail').show();
+
+            }
+        })
+
+    })
+})
+
+$('input:radio').change(function() {
+
+    $('#payment_but').attr('disabled', false);
+
+    if (document.getElementById('radioButtonOne').checked) {
+        $('.meth').html("Poštovné: 2€");
+    } else if (document.getElementById('radioButtonTwo').checked) {
+        $('.meth').html("Poštovné: 0€");
+    }
+
+})
+
+$(document).ready(function() {
+    $(document).on('click', '#payment_but', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost/semestralka2?c=order&a=addNewOrder',
+            success: function () {
+                $('#modelMsg').html("Objednávka prebehla úspešne.");
+                $('#productResponse').show();
+            }
+        })
+    })
+})

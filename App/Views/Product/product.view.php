@@ -1,18 +1,5 @@
 <?php /** @var Array $data */ ?>
-<div class="container" xmlns="http://www.w3.org/1999/html">
-
-    <div class="modal" id="productResponse" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body" id="modelMsg">
-                    <p></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="cancel_but" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container">
 
     <div class="row">
         <?php foreach ($data['products'] as $product) { ?>
@@ -26,13 +13,11 @@
                             </div>
 
                             <div class="card-body d-flex flex-row">
-                                <a href="?c=auth&a=loginForm" style="width: 100%">
-                                    <button type="submit" class="btn btn-primary flex-fill"  style="background-color: #E6E6FA; color: #8B0000" >Viac</button>
-                                    <input name="p_id" type="hidden" value="<?php echo $product->getId() ?>">
+                                <a style="width: 100%">
+                                    <button type="submit" id="more_but" class="btn btn-primary flex-fill" style="background-color: #E6E6FA; color: #8B0000" dataId="<?php echo $product->getId() ?>" >Viac</button>
                                 </a>
                             </div>
                     </div>
-
             </div>
         <?php } ?>
     </div>
