@@ -354,11 +354,11 @@ $(document).ready(function () {
         let country = $('#country').val();
         let city = $('#city').val();
         let mobile_number = $('#mobileNumber').val();
-        let radio_first =  $('#radioButtonOne').checked;
-        console.log(radio_first);
+        let radio_first =  $("input[type=radio][name=paymentMethod]:checked").attr('id');
+        console.log("rB " + radio_first);
         $.ajax({
             method: 'POST',
-            url: 'http://localhost/semestralka2?c=order&a=daco',
+            url: 'http://localhost/semestralka2?c=order&a=addNewOrder',
             data: {
                 nameA: name,
                 surnameA: surname,
@@ -370,9 +370,10 @@ $(document).ready(function () {
                 mobileNumberA: mobile_number,
                 rbOne: radio_first
             },
-            success: function () {
-                console.log(radio_first);
-                $('#modelMsg').html("Objednávka prebehla úspešne.");
+            success: function (data) {
+                console.log(data);
+                console.log("rB " + radio_first);
+                $('#modelMsg').html(data);
                 $('#productResponse').show();
             }
         })
@@ -395,6 +396,7 @@ $(document).ready(function() {
 
                 if (numberOfRows <= 1) {
                     $('.tbody').fadeOut('slow');
+                    $('#order_but').fadeOut('slow');
                 }
 
             }
@@ -450,7 +452,7 @@ $(document).ready(function() {
     $(document).on('click', '.saveBut', function(e){
             e.preventDefault();
             let edit_id = $(this).attr('dataId');
-            let quantity_price = $(this).attr('dataQuantityPrice');
+            let quantity_price = $(this).attr('dataPrice'); //8
 
             let quantity_input = parseInt($('#quantityInput'+edit_id).val());
             let totalPrice = quantity_price * quantity_input;
@@ -483,6 +485,13 @@ $(document).ready(function() {
         let min_price = $('.price:checked').attr('min');
         let max_price = $('.price:checked').attr('max');
         let gender = getFilter('gender');
+
+        //let radio_first =  $("input[type=radio][name=paymentMethod]:checked").attr('id');
+        //let category_id =  $("input[type=radio][name=radiobuttonCat]:checked").attr('id');
+        //let min_price =  $("input[type=radio][name=radiobuttonPrice]:checked").attr('id');
+        //let max_price =  $("input[type=radio][name=radiobuttonPrice]:checked").attr('id');
+        //let gender =  $("input[type=radio][name=radiobuttonGen]:checked").attr('id');
+
         console.log(min_price);
         console.log(max_price);
         console.log(gender);
@@ -499,8 +508,11 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function (data) {
-                $('.filter_data').html(data);
-                console.log(data);
+
+                $('#modelMsg').html(data);
+                $('#productResponse').show();
+
+
             }
         })
     })
@@ -513,7 +525,20 @@ function getFilter(filter) {
 
 $(document).ready(function() {
     $(document).on('click', '#clear_but', function () {
-       document.querySelector('.common_selector').checked = false;
+       let x = document.getElementsByClassName('common_selector');
+
+       let check = 0;
+       for (let i = 0; i < x.length; i++) {
+           if (x[i].checked === true) {
+               x[i].checked = false;
+               check++;
+           }
+       }
+
+       if (check == 0) {
+           $('#modelMsg').html("Neboli zvolené žiadne filtre.");
+           $('#productResponse').show();
+       }
     })
 })
 
@@ -543,14 +568,13 @@ $(document).ready(function() {
                 console.log(data);
                     $('#productDetailMsg').html(data);
                     $('#productDetail').show();
-
             }
         })
 
     })
 })
 
-$('input:radio').change(function() {
+$('input[type=radio][name=paymentMethod]').change(function() {
 
     if (document.getElementById('radioButtonOne').checked) {
         $('.meth').html("Poštovné: 2€");

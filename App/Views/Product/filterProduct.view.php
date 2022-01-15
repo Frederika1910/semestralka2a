@@ -42,7 +42,7 @@
             <ul class="navbar-nav mr-auto">
                 <div class="row">
                     <div class="col">
-                        <button type="submit" id="clear_but" class="btn btn-primary filterB" style="background-color: #E6E6FA; color: #8B0000; width: 100%">Vymaž filter</button>
+                        <button type="submit" id="clear_but" class="btn btn-primary validate" style="background-color: #E6E6FA; color: #8B0000; width: 100%">Vymaž filter</button>
                         <div class="list-group">
                             <h3>Cena</h3>
                             <div style="height: 180px; overflow-y: auto; overflow-x: hidden;">

@@ -7,11 +7,11 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col" class="productNo">#</th>
             <th scope="col">Množstvo</th>
-            <th scope="col">Produkt ID</th>
+            <th scope="col" class="productId">Produkt ID</th>
             <th scope="col">Názov</th>
-            <th scope="col">Cena produktu</th>
+            <th scope="col" class="productPrice">Cena produktu</th>
             <th scope="col">Cena spolu</th>
         </tr>
         </thead>
@@ -19,16 +19,16 @@
         <?php $index = 1 ?>
         <?php foreach ($data['shopping_cart'] as $item) { ?>
                 <tr class="deleteItem<?php echo $item->getId() ?>">
-                    <td><?php echo $index++ ?></td>
+                    <td class="productNo"><?php echo $index++ ?></td>
                     <td>
                         <span id="quantity<?php echo $item->getId() ?>"><?php echo $item->getQuantity() ?></span>
 
                         <input type="name" id="quantityInput<?php echo $item->getId() ?>" class="form-control" placeholder="Mnozstvo..." style="display: none;"/>
 
                     </td>
-                    <td><?php echo $item->getProductId() ?></td>
+                    <td class="productId"><?php echo $item->getProductId() ?></td>
                     <td><?php echo $item->getProductName() ?></td>
-                    <td><?php echo $item->getItemPrice() ?>€</td>
+                    <td class="productPrice"><?php echo $item->getItemPrice() ?>€</td>
                     <td id="price<?php echo $item->getId() ?>"><?php echo $item->getQuantityPrice() ?>€</td>
 
                     <td>
@@ -61,18 +61,9 @@
                 foreach ($data['shopping_cart'] as $item) {
                     $spolu += $item->getItemPrice();
                 }?>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td align="right">Spolu:</td>
-                    <td id="totalPrice"><?php echo $spolu ?>€</td>
-                    <?php if (isset($data['shopping_cart'])) { ?>
-                        <td><a href="?c=order&a=orderForm"><button class="btn btn-success p-1" type="button">Objednať</button></a></td>
-                    <?php } ?>
-
-                </tr>
         </tbody>
     </table>
-
+        <?php if (isset($data['shopping_cart'])) { ?>
+            <a href="?c=order&a=orderForm"><button class="btn btn-success p-1" id="order_but" type="button" style="float: right">Objednať</button></a>
+        <?php } ?>
     <?php } ?>

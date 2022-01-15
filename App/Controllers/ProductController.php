@@ -54,7 +54,7 @@ class ProductController extends AControllerRedirect
         $clickedProduct = null;
         $products = Product::getAll();
         foreach ($products as $product) {
-            if ($product->getId() == intval($_POST['id'])) {
+            if ($product->getId() == intval($this->request()->getValue('id'))) {
                 $clickedProduct = '
    
                 <div class="row">
@@ -98,58 +98,60 @@ class ProductController extends AControllerRedirect
     }
 
     public function showFilteredProducts() {
-        //$category;
-        //$minPrice = $_POST['minPrice'];
-        //$maxPrice = $_POST['maxPrice'];
-        //$gender = $_POST['gender'];
-        /**
-        if (isset($_POST['category'])) {
-            $category = $_POST['category'];
+        $category = $this->request()->getValue('category');
+        $gender = $this->request()->getValue('gender');
+        $minPrice = $this->request()->getValue('minPrice');
+        $maxPrice = $this->request()->getValue('maxPrice');
+
+        if ($category == null && $gender == null && $minPrice == null && $maxPrice == null) {
+            $noFilter = "Neboli zvolené žiadne filtre.";
+            echo json_encode($noFilter);
+            exit();
         }
 
-        if (empty($_POST['minPrice'])) {
-            $minPrice = intval($_POST['minPrice']);
-        }
-        if (empty($_POST['maxPrice'])) {
-            $maxPrice = intval($_POST['maxPrice']);
-        }
-
-        if (empty($_POST['gender'])) {
-            $gender = NULL;
-        }
-        * **/
         $products = Product::getAll();
         $array = array();
 
         foreach ($products as $product) {
             $isCorrect = false;
+            /**
+            if (strcmp($product->getGender(), $gender) == 0 && $product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
+                $isCorrect = true;
+            } else if (intval($category) == $product->getCategoryId()) {
+                $isCorrect = true;
+            } else if (strcmp($product->getGender(), $gender) == 0) {
+                $isCorrect = true;
+            } else if ($product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
+                $isCorrect = true;
+            }
+             **/
 
-            if (isset($_POST['category']) && isset($_POST['gender']) && isset($_POST['minPrice'])) {
-                if ($product->getCategoryId() == intval($_POST['category']) && strcmp($product->getGender(), $_POST['gender'] && $product->getPrice() >= $_POST['minPrice'] && $product->getPrice() <= $_POST['maxPrice']) == 0) {
+            if ($category != null && $gender != null && $minPrice != null) {
+                if ($product->getCategoryId() == intval($category) && strcmp($product->getGender(), $gender) == 0 && $product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
                     $isCorrect = true;
                 }
-            } else if (isset($_POST['category']) && isset($_POST['gender'])) {
-                if ($product->getCategoryId() == intval($_POST['category']) && strcmp($product->getGender(), $_POST['gender']) == 0) {
+            } else if ($category != null && $gender != null) {
+                if ($product->getCategoryId() == intval($category) && strcmp($product->getGender(), $gender) == 0) {
                     $isCorrect = true;
                 }
-            } else if (isset($_POST['category']) && isset($_POST['minPrice'])) {
-                if ($product->getCategoryId() == intval($_POST['category']) && $product->getPrice() >= $_POST['minPrice'] && $product->getPrice() <= $_POST['maxPrice']) {
+            } else if ($category != null && $minPrice != null) {
+                if ($product->getCategoryId() == intval($category) && $product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
                     $isCorrect = true;
                 }
-            } else if (isset($_POST['gender']) && isset($_POST['minPrice'])) {
-                if (strcmp($product->getGender(), $_POST['gender']) == 0 && $product->getPrice() >= $_POST['minPrice'] && $product->getPrice() <= $_POST['maxPrice']) {
+            } else if ($gender != null && $minPrice != null) {
+                if (strcmp($product->getGender(), $gender) == 0 && $product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
                     $isCorrect = true;
                 }
-            } else if (isset($_POST['category'])) {
-                if ($product->getCategoryId() == intval($_POST['category'])) {
+            } else if ($category != null) {
+                if ($product->getCategoryId() == intval($category)) {
                     $isCorrect = true;
                 }
-            } else if (isset($_POST['gender'])) {
-                if (strcmp($product->getGender(), $_POST['gender']) == 0) {
+            } else if ($gender != null) {
+                if (strcmp($product->getGender(), $gender) == 0) {
                     $isCorrect = true;
                 }
-            }else if (isset($_POST['minPrice'])) {
-                if ($product->getPrice() >= $_POST['minPrice'] && $product->getPrice() <= $_POST['maxPrice']) {
+            }else if ($minPrice != null) {
+                if ($product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
                     $isCorrect = true;
                 }
             }
@@ -177,13 +179,18 @@ class ProductController extends AControllerRedirect
             }
         }
 
+        if (sizeof($array) == 0) {
+            echo json_encode("Neboli nájdené žiadne zhody.");
+            exit();
+        }
+
         echo json_encode($array);
         exit();
     }
 
     public function addProductToCart() {
 
-        $product = Product::getOne($_POST['id']);
+        $product = Product::getOne($this->request()->getValue('id'));
 
         $items = Cart::getAll();
         foreach ($items as $item) {
@@ -193,55 +200,15 @@ class ProductController extends AControllerRedirect
             }
         }
 
-        //if ($existuje == false) {
-            $cartItem = new Cart();
-            $cartItem->setOrderId(1);
-            $cartItem->setQuantity(1);
-            $cartItem->setProductId($product->getId());
-            $cartItem->setProductName($product->getName());
-            $cartItem->setItemPrice($product->getPrice());
-            $cartItem->setQuantityPrice($product->getPrice());
+        $cartItem = new Cart();
+        $cartItem->setOrderId(1);
+        $cartItem->setQuantity(1);
+        $cartItem->setProductId($product->getId());
+        $cartItem->setProductName($product->getName());
+        $cartItem->setItemPrice($product->getPrice());
+        $cartItem->setQuantityPrice($product->getPrice());
 
-            $cartItem->save();
-        //}
-
-        /**
-        if (isset($_POST['sub'])) {
-            //print_r(($_POST['p_price']));
-
-            $items = Cart::getAll();
-            foreach ($items as $item) {
-                if ($item->getProductId() == $_POST['p_id']) {
-                    echo "<script>alert('Tento produkt si uz pridal do kosika.')</script>";
-                    echo "<script>window.location ='?c=product&a=product'</script>";
-                    //$this->redirect('product', 'product', ['error' => 'Zadané staré heslo nebolo správne.']);
-                    //$this->redirect('home');
-                    return;
-                }
-            }
-
-            $newO = new Cart();
-            //$newO->setId(2);
-            $newO->setOrderId(1);
-            $newO->setQuantity(1);
-
-            $newO->setProductName(($_POST['p_name']));
-            $newO->setProductId(intval($_POST['p_id']));
-            $newO->setItemPrice(intval($_POST['p_price']));
-            $newO->setQuantityPrice(intval($_POST['p_price']));
-            $newO->save();
-
-            //if (isset($_SESSION['card'])) {
-
-            //} else {
-            //    $order_array = array('order_id'=>$_POST['order_id']);
-            //}
-            //$_SESSION['card'][0] = $order_array;
-            //$this->redirect('auth', 'registerForm');
-            //echo '<script>alert("Welcome to Geeks for Geeks")</script>';
-            $this->redirect('product', 'product');
-        }
-         * **/
+        $cartItem->save();
     }
 
 

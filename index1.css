@@ -261,4 +261,7 @@ hr.solid {
     .filterBigScreen {
         display: none;
     }
+    .productId, .productPrice, .productNo {
+        display: none;
+    }
 }

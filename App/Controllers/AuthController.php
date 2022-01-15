@@ -59,7 +59,15 @@ class AuthController extends AControllerRedirect
         $login = $this->request()->getValue('login');
         $password = $this->request()->getValue('password');
 
-        //$user = User::getAll("login='{$_POST['login']}'");
+        //$loginVal = User::validateEmail($login);
+        //$passwordVal = User::validatePassword($password, null);
+        //if ($loginVal != null) {
+          //  exit($loginVal);
+        //} else if ($passwordVal != null) {
+        //    exit($passwordVal);
+        //}
+
+        //$login = User::getAll("login='{$_POST['login']}'");
         //$user = User::getAll('login=?', [$_POST['login']]);
 
         $userExist = Auth::login($login, $password);
@@ -74,11 +82,25 @@ class AuthController extends AControllerRedirect
 
     public function register()
     {
-        $username = $this->request()->getValue('username');
+        $name = $this->request()->getValue('username');
         $surname = $this->request()->getValue('surname');
         $login = $this->request()->getValue('login');
         $password = $this->request()->getValue('password');
         $passwordControl = $this->request()->getValue('confirmPassword');
+
+        $nameVal = User::validateName($name);
+        $surnameVal = User::validateSurname($surname);
+        $loginVal = User::validateEmail($login);
+        $passwordVal = User::validatePassword($password, $passwordControl);
+        if ($nameVal != null) {
+            exit($nameVal);
+        } else if ($surnameVal != null) {
+            exit($surnameVal);
+        } else if ($loginVal != null) {
+            exit($loginVal);
+        } else if ($passwordVal != null) {
+            exit($passwordVal);
+        }
 
         $alreadyExist = Auth::register($login);
         if ($alreadyExist) {
@@ -90,7 +112,7 @@ class AuthController extends AControllerRedirect
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
             $newUser->setPassword($hash);
-            $newUser->setName($username);
+            $newUser->setName($name);
             $newUser->setSurname($surname);
             $newUser->save();
 
@@ -120,16 +142,14 @@ class AuthController extends AControllerRedirect
         $newP = $this->request()->getValue('newPass');
         $newPControl = $this->request()->getValue('newPassControl');
 
+        $passwordVal = User::validatePassword($oldP, $newP);
+
         $userExist = Auth::getUser($login, $oldP);
         if ($userExist != null) {
             if ($newPControl == $newP) {
-                $updatedUser = new User();
-                $updatedUser->setLogin($login);
-                $updatedUser->setPassword($newP);
-                $updatedUser->setName($userExist->getName());
-                $updatedUser->setSurname($userExist->getSurname());
-                $updatedUser->save();
-                $userExist->delete();
+                $hash = password_hash($newP, PASSWORD_DEFAULT);
+                $userExist->setPassword($hash);
+                $userExist->save();
                 Auth::logout();
                 $this->redirect('auth', 'loginForm');
             }

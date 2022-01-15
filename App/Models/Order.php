@@ -15,14 +15,15 @@ class Order extends \App\Core\Model
         public ?string $country = null,
         public int $mobile_number = 0,
         public int $totalPrice = 0,
-        public int $numberOfProducts = 0
+        public int $numberOfProducts = 0,
+        public ?string $date = null
     )
     {
     }
 
     static public function setDbColumns()
     {
-        return ['id','user_id', 'street', 'house_number', 'psc', 'city', 'country','mobile_number','totalPrice','numberOfProducts'];
+        return ['id','user_id', 'street', 'house_number', 'psc', 'city', 'country','mobile_number','totalPrice','numberOfProducts', 'date'];
     }
 
     static public function setTableName()
@@ -190,4 +191,96 @@ class Order extends \App\Core\Model
         $this->numberOfProducts = $numberOfProducts;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getDate(): ?string
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param string|null $date
+     */
+    public function setDate(?string $date): void
+    {
+        $this->date = $date;
+    }
+
+    public static function validateStreet(string $street): ?string
+    {
+        if($street == ""){
+            return "Nezadali ste ulicu.";
+        } else if (preg_match("/[0-9]/", $street)) {
+            return "Ulica nesmie obsahovať číslice.";
+        }
+
+        return null;
+    }
+
+    public static function validateHouseNumber(string $houseNumber): ?string
+    {
+        if($houseNumber == ""){
+            return "Nezadali ste číslo domu.";
+        } else if (!preg_match("/^\d*\.?\d*$/", $houseNumber)) {
+            return "Číslo domu nesmie obsahovať znaky.";
+        }
+
+        return null;
+    }
+
+    public static function validateCity(string $city): ?string
+    {
+        if($city == ""){
+            return "Nezadali ste obec.";
+        } else if (preg_match("/[0-9]/", $city)) {
+            return "Obec nesmie obsahovať číslice.";
+        }
+
+        return null;
+    }
+
+    public static function validateCountry(string $country): ?string
+    {
+        if($country == ""){
+            return "Nezadali ste štát.";
+        } else if (preg_match("/[0-9]/", $country)) {
+            return "Štát nesmie obsahovať číslice.";
+        }
+
+        return null;
+    }
+
+    public static function validateMobileNumber(string $mobileNumber): ?string
+    {
+        if($mobileNumber == ""){
+            return "Nezadali ste mobilné číslo.";
+        } else if (!preg_match("/^\d*\.?\d*$/", $mobileNumber)) {
+            return "Mobilné číslo nesmie obsahovať znaky.";
+        }
+
+        return null;
+    }
+
+    public static function validatePsc(string $psc): ?string
+    {
+        if($psc == ""){
+            return "Nezadali ste PSČ.";
+        } else if (!preg_match("/^\d*\.?\d*$/", $psc)) {
+            return "PSČ nesmie obsahovať znaky.";
+        } elseif(strlen($psc)<5 || strlen($psc)>5){
+            return "Heslo musí mať 5 znakov.";
+        }
+
+        return null;
+    }
+
+    public static function validateRadioBut(string $rbID): ?string
+{
+        if($rbID != "radioButtonOne" && $rbID != "radioButtonTwo"){
+            return "Nevybrali ste si spôsob platby.";
+        }
+
+        return null;
+    }
 }

@@ -12,13 +12,13 @@
     <tbody class="tbody">
     <?php $pocet = 0;
     foreach ($data['orders'] as $order) {
-        $pocet++;?>
+        $pocet++?>
     <tr>
             </td>
-            <td><?php $pocet ?></td>
-            <td><?php $order->getStreet() ?></td>
-            <td><?php $order->getPsc() ?></td>
-            <td><?php $order->getCity() ?></td>
+            <td><?php echo $pocet ?></td>
+            <td><?php echo $order->getNumberOfProducts() ?></td>
+            <td><?php echo $order->getDate() ?></td>
+            <td><?php echo $order->getTotalPrice() ?></td>
     </tr>
     <?php } ?>
     </tbody>

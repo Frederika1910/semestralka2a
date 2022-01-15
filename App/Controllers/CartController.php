@@ -40,10 +40,10 @@ class CartController extends AControllerRedirect
     public function removeOrderItem()
     {
         $orders = Cart::getAll();
-        $deleteIte = intval($_POST['deleteItem']);
+        $delCartItem = intval($this->request()->getValue('deleteItem'));
 
         foreach ($orders as $item) {
-            if ($item->getId() === $deleteIte) {
+            if ($item->getId() === $delCartItem) {
                 $item->delete();
             }
         }
@@ -52,63 +52,13 @@ class CartController extends AControllerRedirect
 
     public function editOrderItem()
     {
-        //if (isset($_POST['edit'])) {
+        $oldItem = Cart::getOne($this->request()->getValue('oldItem'));
 
-            //$editItem = $_POST['editItem'];
-            $oldItem = Cart::getOne($_POST['oldItem']);
+        $newQuantity = $this->request()->getValue('text');
+        $oldItem->setQuantity($newQuantity);
 
-            $newItem = new Cart();
-            $newItem->setId($oldItem->getId());
-            $newItem->setProductId($oldItem->getProductId());
-            $newItem->setProductName($oldItem->getProductName());
-            $newQuantity = $_POST['text'];
-            $newItem->setQuantity($newQuantity);
-
-
-            $products = Product::getAll();
-            $priceOfOne = 0;
-            foreach ($products as $product) {
-                if ($product->getId() == $oldItem->getProductId()) {
-                    $priceOfOne = $product->getPrice();
-                    break;
-                }
-            }
-
-            $newItem->setItemPrice($priceOfOne);
-            $newItem->setQuantityPrice($priceOfOne*$newQuantity);
-            $newItem->save();
-
-       // }
-
-
+        $oldItem->setQuantityPrice($oldItem->getItemPrice()*$newQuantity);
+        $oldItem->save();
     }
-
-    /**
-    public function addOrder() {
-        if (isset($_POST['sub'])) {
-            print_r(intval($_POST['order_id']));
-
-            $newO = new shopingCart();
-            $newO->setOrderId(1);
-            //$newO->setQuantity(0);
-            //$newO->setProductId(intval($_POST['prod_id']));
-            //$newO->setProductName("dsdsdsdad");
-            $newO->save();
-
-            //if (isset($_SESSION['card'])) {
-
-            //} else {
-            //    $order_array = array('order_id'=>$_POST['order_id']);
-            //}
-            //$_SESSION['card'][0] = $order_array;
-            //$this->redirect('auth', 'registerForm');
-            //echo '<script>alert("Welcome to Geeks for Geeks")</script>';
-            //$this->redirect('product', 'product');
-        } else {
-
-            $this->redirect('auth', 'loginForm');
-        }
-    }
-     **/
 
 }

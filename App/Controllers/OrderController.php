@@ -48,32 +48,63 @@ class OrderController extends AControllerRedirect
             ]);
     }
 
-    public function addNewOrder() {
-
-
-        $newOrder = new Order();
-        $newOrder->setUserId(1);
-        $newOrder->setStreet("ulica");
-        $newOrder->setHouseNumber(12);
-        $newOrder->setPsc("00000");
-        $newOrder->setCity("Zilina");
-        $newOrder->setMobileNumber(0000);
-        $newOrder->save();
-
-    }
-
-    public function daco()
+    public function addNewOrder()
     {
+        $name = $this->request()->getValue('nameA');
+        $surname = $this->request()->getValue('surnameA');
+        $street = $this->request()->getValue('streetA');
+        $houseNumber = $this->request()->getValue('houseNumberA');
+        $psc = $this->request()->getValue('pscA');
+        $country = $this->request()->getValue('countryA');
+        $city = $this->request()->getValue('cityA');
+        $mobileNumber = $this->request()->getValue('mobileNumberA');
+        $radioBut = $this->request()->getValue('rbOne');
+
+        $nameVal = User::validateName($name);
+        $surnameVal = User::validateSurname($surname);
+        $streetVal = Order::validateStreet($street);
+        $cityVal = Order::validateCity($city);
+        $countryVal = Order::validateCountry($country);
+        $houseNumberVal = Order::validateHouseNumber($houseNumber);
+        $mobileNumberVal = Order::validateMobileNumber($mobileNumber);
+        $pscVal = Order::validatePsc($psc);
+        $radioButVal = Order::validateRadioBut($radioBut);
+        if ($nameVal != null) {
+            echo ($nameVal);
+            exit();
+        } else if ($surnameVal != null) {
+            echo ($surnameVal);
+            exit();
+        } else if ($streetVal != null) {
+            echo ($streetVal);
+            exit();
+        } else if ($houseNumberVal != null) {
+            echo ($houseNumberVal);
+            exit();
+        } else if ($cityVal != null) {
+            echo ($cityVal);
+            exit();
+        } else if ($countryVal != null) {
+            echo ($countryVal);
+            exit();
+        } else if ($pscVal != null) {
+            echo ($pscVal);
+            exit();
+        } else if ($mobileNumberVal != null) {
+            echo ($mobileNumberVal);
+            exit();
+        } else if ($radioButVal != null) {
+            echo ($radioButVal);
+            exit();
+        }
 
         $newOrder = new Order();
 
-        if(isset($_POST['nameA']) && isset($_POST['surnameA'])) {
-            $users = User::getAll();
-            foreach ($users as $user) {
-                if ($user->getName() == $_POST['nameA'] && $user->getSurname() == $_POST['surnameA']) {
-                    $newOrder->setUserId($user->getId());
-                    break;
-                }
+        $users = User::getAll();
+        foreach ($users as $user) {
+            if ($user->getName() == $name && $user->getSurname() == $surname) {
+                $newOrder->setUserId($user->getId());
+                break;
             }
         }
 
@@ -81,39 +112,27 @@ class OrderController extends AControllerRedirect
         $numberOfItem = 0;
         $totalPrice = 0;
         foreach ($shoppingCartItems as $item) {
-                $numberOfItem++;
-                $totalPrice += $item->getItemPrice();
+            $numberOfItem++;
+            $totalPrice += $item->getItemPrice();
         }
 
         $newOrder->setNumberOfProducts($numberOfItem);
 
-        if(isset($_POST['rbOne']) && ($_POST['rbOne']) == "1") {
+        if ($radioBut == "radioButtonOne") {
             $totalPrice += 2;
         }
 
-
+        $newOrder->setDate(date("Y/m/d"));
         $newOrder->setTotalPrice($totalPrice);
-
-        if(isset($_POST['streetA'])) {
-            $newOrder->setStreet($_POST["streetA"]);
-        }
-        if (isset($_POST['houseNumberA'])) {
-            $newOrder->setHouseNumber(intval($_POST['houseNumberA']));
-        }
-        if (isset($_POST['pscA'])) {
-            $newOrder->setPsc($_POST['pscA']);
-        }
-        if (isset($_POST['cityA'])) {
-            $newOrder->setCity($_POST['cityA']);
-        }
-        if (isset($_POST['countryA'])) {
-            $newOrder->setCountry($_POST['countryA']);
-        }
-        if (isset($_POST['mobileNumberA'])) {
-            $newOrder->setMobileNumber(intval($_POST['mobileNumberA']));
-        }
-
+        $newOrder->setStreet($street);
+        $newOrder->setHouseNumber(intval($houseNumber));
+        $newOrder->setPsc($psc);
+        $newOrder->setCity($city);
+        $newOrder->setCountry($country);
+        $newOrder->setMobileNumber(intval($mobileNumber));
         $newOrder->save();
 
+        echo "Objednávka prebehla úspešne.";
+        exit();
     }
 }
