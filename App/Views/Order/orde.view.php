@@ -16,9 +16,9 @@
     <tr>
             </td>
             <td><?php $pocet ?></td>
-            <td><?php $order->getNumberOfProducts() ?></td>
-            <td><?php $order->getDate() ?></td>
-            <td><?php $order->getTotalPrice() ?></td>
+            <td><?php $order->getStreet() ?></td>
+            <td><?php $order->getPsc() ?></td>
+            <td><?php $order->getCity() ?></td>
     </tr>
     <?php } ?>
     </tbody>

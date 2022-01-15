@@ -99,17 +99,66 @@ let navhood2 = "";
 let navhood3 = "";
 let navhood4 = "";
 let navhood5 = "";
+let paymentPartOne = null;
+let paymentPartTwo = null;
 
 function setSubmitButton() {
-    if (document.forms.namedItem('name') != null) {
-        if (navhood2 == null && navhood3 == null && navhood4 == null && navhood5 == null) {
+    console.log("uspech");
+
+    if (paymentPartOne != null) {
+        document.querySelector(".validate").disabled = false;
+    } else if (paymentPartTwo != null) {
+        if (navhood2 == null && navhood6 == null && navhood7 == null && navhood8 == null && navhood9 == null && paymentPartTwo === true) {
+            console.log("if3");
             document.querySelector(".validate").disabled = false;
         }
+    } else if (navhood2 == null && navhood3 == null && navhood4 == null && navhood5 == null) {
+            console.log("if1");
+            document.querySelector(".validate").disabled = false;
+
     } else if (navhood4 == null && navhood5 == null) {
-        document.querySelector(".validate").disabled = false;
-    } else if (navhood6 == null && navhood7 == null && navhood8 == null) {
+        console.log("if2");
         document.querySelector(".validate").disabled = false;
     }
+}
+
+function check(id) {
+    let rB = document.getElementById(id);
+    console.log("id " + id);
+    console.log(rB);
+    if (id === "radioButtonOne" && rB.checked) {
+        console.log("prvyif");
+        paymentPartOne = true;
+    } else if (id === "radioButtonTwo" && rB.checked) {
+        paymentPartOne = null;
+        console.log("druhyif");
+
+        let mon = document.getElementById('months');
+        let year = document.getElementById('years');
+        let card = document.getElementById('cards');
+
+        let error = false;
+
+
+        if (mon.options[mon.selectedIndex].value === "false" || year.options[year.selectedIndex].value === "false" || card.options[card.selectedIndex].value === "false") {
+            console.log(mon.options[mon.selectedIndex].value);
+            error = true;
+        }
+
+        if (error) {
+            paymentPartTwo = null;
+            document.querySelector(".validate").disabled = true;
+        } else {
+            paymentPartTwo = true;
+        }
+
+    }
+    setSubmitButton();
+    //for (let i=0; i<2; i++) {
+    //    if (rB[i].checked) {
+    //        paymentPart = true;
+    //    }
+    //}
 }
 
 function displayInputInColor(string, element) {
@@ -197,6 +246,25 @@ function validateNumbers(id) {
     return displayInputInColor(navhood6, input);
 }
 
+
+let navhood9 = "";
+function validateCardNumber() {
+    let input = document.getElementById('cardNumber');
+    let cardValue = input.value;
+    let disabledChar = /^\d*\.?\d*$/;
+
+    if (!cardValue) {
+        navhood9 = "Pole nesmie byť prázdne.";
+        return displayInputInColor(navhood9, input);
+    } else if (!disabledChar.test(cardValue)) {
+        navhood9 = "Pole nesmie obsahovať znaky.";                                      //pozor lomka
+        return displayInputInColor(navhood9, input);
+    }
+
+    navhood9 = null;
+    return displayInputInColor(navhood9, input);
+}
+
 let navhood8 = "";
 function validateMobileNumber() {
     let mobile = document.getElementById("mobileNumber");
@@ -275,20 +343,40 @@ function validatePasswordControl() {
 }
 
 $(document).ready(function () {
-        $('#my_form_id').submit(function (e) {
-            e.preventDefault();
+    $('#my_form_id').submit(function (e) {
+        e.preventDefault();
 
-            let c = $('#street').value;
-            console.log(c);
-            $.ajax({
-                method: 'POST',
-                url: 'http://localhost/semestralka2?c=order&a=daco',
-                data: $('#my_form_id').serialize(),
-                success: function () {
-                    console.log("data");
-                }
-            })
+        let name = $('#meno').val();
+        let surname = $('#priezvisko').val();
+        let street = $('#street').val();
+        let house_number = $('#houseNumber').val();
+        let psc = $('#psc').val();
+        let country = $('#country').val();
+        let city = $('#city').val();
+        let mobile_number = $('#mobileNumber').val();
+        let radio_first =  $('#radioButtonOne').checked;
+        console.log(radio_first);
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost/semestralka2?c=order&a=daco',
+            data: {
+                nameA: name,
+                surnameA: surname,
+                streetA: street,
+                houseNumberA: house_number,
+                pscA: psc,
+                countryA: country,
+                cityA: city,
+                mobileNumberA: mobile_number,
+                rbOne: radio_first
+            },
+            success: function () {
+                console.log(radio_first);
+                $('#modelMsg').html("Objednávka prebehla úspešne.");
+                $('#productResponse').show();
+            }
         })
+    })
 });
 
 $(document).ready(function() {
@@ -469,9 +557,10 @@ $('input:radio').change(function() {
     } else if (document.getElementById('radioButtonTwo').checked) {
         $('.meth').html("Poštovné: 0€");
     }
-    document.querySelector(".validate").disabled = false;
+
 })
 
+/**
 function checkPaymentDetail() {
     if (document.getElementById('radioButtonTwo').checked) {
         let mon = document.getElementById('months');
@@ -494,7 +583,7 @@ function checkPaymentDetail() {
     }
 }
 
-/**
+
 $(document).ready(function() {
     $('#orderForm').submit(function (e) {
         e.preventDefault();

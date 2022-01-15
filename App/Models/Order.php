@@ -13,14 +13,16 @@ class Order extends \App\Core\Model
         public ?string $psc = null,
         public ?string $city = null,
         public ?string $country = null,
-        public int $mobile_number = 0
+        public int $mobile_number = 0,
+        public int $totalPrice = 0,
+        public int $numberOfProducts = 0
     )
     {
     }
 
     static public function setDbColumns()
     {
-        return ['id','user_id', 'street', 'house_number', 'psc', 'city', 'country','mobile_number'];
+        return ['id','user_id', 'street', 'house_number', 'psc', 'city', 'country','mobile_number','totalPrice','numberOfProducts'];
     }
 
     static public function setTableName()
@@ -154,6 +156,38 @@ class Order extends \App\Core\Model
     public function setMobileNumber(int $mobile_number): void
     {
         $this->mobile_number = $mobile_number;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalPrice(): int
+    {
+        return $this->totalPrice;
+    }
+
+    /**
+     * @param int $totalPrice
+     */
+    public function setTotalPrice(int $totalPrice): void
+    {
+        $this->totalPrice = $totalPrice;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfProducts(): int
+    {
+        return $this->numberOfProducts;
+    }
+
+    /**
+     * @param int $numberOfProducts
+     */
+    public function setNumberOfProducts(int $numberOfProducts): void
+    {
+        $this->numberOfProducts = $numberOfProducts;
     }
 
 }

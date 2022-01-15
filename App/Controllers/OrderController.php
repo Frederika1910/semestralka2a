@@ -20,7 +20,12 @@ class OrderController extends AControllerRedirect
 
     public function orderForm()
     {
-        return $this->html();
+        $orders = Cart::getAll();
+
+        return $this->html(
+            [
+                'shopping_cart' => $orders
+            ]);
     }
 
     public function paymentForm() {
@@ -59,37 +64,56 @@ class OrderController extends AControllerRedirect
 
     public function daco()
     {
+
         $newOrder = new Order();
 
-        if(isset($_POST['name']) && isset($_POST['surname'])) {
+        if(isset($_POST['nameA']) && isset($_POST['surnameA'])) {
             $users = User::getAll();
             foreach ($users as $user) {
-                if ($user->getName() == $_POST['name'] && $user->getSurname() == $_POST['surname']) {
+                if ($user->getName() == $_POST['nameA'] && $user->getSurname() == $_POST['surnameA']) {
                     $newOrder->setUserId($user->getId());
                     break;
                 }
             }
         }
-        $newOrder->setUserId(2);
-        if(isset($_POST['street'])) {
-            $newOrder->setStreet($_POST["street"]);
+
+        $shoppingCartItems = Cart::getAll();
+        $numberOfItem = 0;
+        $totalPrice = 0;
+        foreach ($shoppingCartItems as $item) {
+                $numberOfItem++;
+                $totalPrice += $item->getItemPrice();
         }
-        if (isset($_POST['houseNumber'])) {
-            $newOrder->setHouseNumber(intval($_POST['houseNumber']));
+
+        $newOrder->setNumberOfProducts($numberOfItem);
+
+        if(isset($_POST['rbOne']) && ($_POST['rbOne']) == "1") {
+            $totalPrice += 2;
         }
-        if (isset($_POST['psc'])) {
-            $newOrder->setPsc($_POST['psc']);
+
+
+        $newOrder->setTotalPrice($totalPrice);
+
+        if(isset($_POST['streetA'])) {
+            $newOrder->setStreet($_POST["streetA"]);
         }
-        if (isset($_POST['city'])) {
-            $newOrder->setCity($_POST['city']);
+        if (isset($_POST['houseNumberA'])) {
+            $newOrder->setHouseNumber(intval($_POST['houseNumberA']));
         }
-        if (isset($_POST['country'])) {
-            $newOrder->setCountry($_POST['country']);
+        if (isset($_POST['pscA'])) {
+            $newOrder->setPsc($_POST['pscA']);
         }
-        if (isset($_POST['mobile_number'])) {
-            $newOrder->setMobileNumber(intval($_POST['mobile_number']));
+        if (isset($_POST['cityA'])) {
+            $newOrder->setCity($_POST['cityA']);
+        }
+        if (isset($_POST['countryA'])) {
+            $newOrder->setCountry($_POST['countryA']);
+        }
+        if (isset($_POST['mobileNumberA'])) {
+            $newOrder->setMobileNumber(intval($_POST['mobileNumberA']));
         }
 
         $newOrder->save();
+
     }
 }
