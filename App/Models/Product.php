@@ -137,4 +137,55 @@ class Product extends \App\Core\Model
     {
         $this->gender = $gender;
     }
+
+    public static function validateSize(string $size): ?string
+    {
+        if ($size == "") {
+            return "Nezadali ste veľkosť.";
+        } else if (!preg_match("/[0-9\a-zA-Z]$/", $size)) {
+            return "Veľkosť smie obsahovať len znaky.";
+        }
+
+        return null;
+    }
+
+    public static function validateGender(string $gender): ?string
+    {
+        if ($gender == "") {
+            return "Nezadali ste pre koho.";
+        } else if (!preg_match("/[a-zA-Z]$/", $gender)) {
+            return "Pre koho smie obsahovať len znaky.";
+        }
+
+        return null;
+    }
+
+    public static function validatePrice(string $price): ?string
+    {
+        if ($price == "") {
+            return "Nezadali ste cenu.";
+        } else if (!preg_match("/^[0-9]\d*(,\d+)?$/", $price)) {
+            return "Cena smie obsahovať len číslice.";
+        }
+
+        return null;
+    }
+
+    public static function validateCategory(string $catId): ?string
+    {
+        if ($catId != "1" && $catId != "2" && $catId != "3" && $catId != "4") {
+            return "Nevybrali ste kategóriu produktu.";
+        }
+
+        return null;
+    }
+
+    public static function validateImage(string $image): ?string
+    {
+        if ($image == null) {
+            return "Nenahrali ste obrázok.";
+        }
+
+        return null;
+    }
 }

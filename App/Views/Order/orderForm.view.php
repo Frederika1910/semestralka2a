@@ -1,5 +1,5 @@
 <?php /** @var Array $data */ ?>
-<div class="container-fluid">
+<div class="container-fluid" onload="fillInputs()">
 
     <div class="modal" id="productResponse" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -23,52 +23,53 @@
     <div class="row justify-content-center">
 
         <div class="col-lg-5 col-sm-12">
-                <h2 class="text-center bold">Objednávka</h2>
+                <h2 class="text-center bold">Doručovacie údaje</h2>
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example1cg">Meno</label>
-                    <input type="text" name="name" id="meno" class="form-control form-control" onkeyup="validateText('meno')" placeholder="Meno..." required autocomplete="off"/>
+                    <input type="text" name="name" id="meno" class="form-control form-control" onkeyup="validateName()" placeholder="Meno..." required autocomplete="off"/>
                     <div id="valid"></div>
                 </div>
 
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example1cg">Priezvisko</label>
-                    <input type="text" name="surname" id="priezvisko" class="form-control" onkeyup="validateText('priezvisko')" placeholder="Priezvisko..." autocomplete="off" required/>
+                    <input type="text" name="surname" id="priezvisko" class="form-control" onkeyup="validateSurname()" placeholder="Priezvisko..." autocomplete="off" required/>
                     <div id="valid"></div>
                 </div>
 
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example1cg">Ulica</label>
-                    <input type="text" name="street" id="street" class="form-control" value="" onkeyup="validateText('street')" placeholder="Ulica..." autocomplete="off" required/>
+                    <input type="text" name="street" id="street" class="form-control" value="" onkeyup="validateStreet()" placeholder="Ulica..." autocomplete="off" required/>
                     <div id="valid"></div>
                 </div>
 
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example1cg">Číslo domu</label>
-                    <input type="text" name="houseNumber" id="houseNumber" class="form-control" onkeyup="validateNumbers('houseNumber')" placeholder="Číslo domu..." autocomplete="off" required/>
+                    <input type="text" name="houseNumber" id="houseNumber" class="form-control" onkeyup="validateHouseNumber()" placeholder="Číslo domu..." autocomplete="off" required/>
                     <div id="valid"></div>
                 </div>
 
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example1cg">PSČ</label>
-                    <input type="text" name="psc" id="psc" class="form-control" onkeyup="validatePSC()" placeholder="PSČ..." autocomplete="off"  required/>
+                    <input type="text" name="psc" id="psc" class="form-control" onkeyup="validatePsc()" placeholder="PSČ..." autocomplete="off"  required/>
                     <div id="valid"></div>
                 </div>
 
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example1cg">Obec</label>
-                    <input type="text" name="city" id="city" class="form-control" onkeyup="validateText('city')" placeholder="Obec..." autocomplete="off" required/>
+                    <input type="text" name="city" id="city" class="form-control" onkeyup="validateCity()" placeholder="Obec..." autocomplete="off" required/>
                     <div id="valid"></div>
                 </div>
 
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example4cg">Štát</label>
-                    <input type="text" name="country" id="country" class="form-control" onkeyup="validateText('country')" placeholder="Štát..." autocomplete="off" required/>
+                    <input type="text" name="country" id="country" class="form-control" onkeyup="validateCountry()" placeholder="Štát..." autocomplete="off" required/>
                     <div id="valid"></div>
                 </div>
 
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example4cg">Mobil</label>
                     <input type="text" name="mobile" id="mobileNumber" class="form-control" onkeyup="validateMobileNumber()" placeholder="Mobil..." autocomplete="off" required/>
+                    <span>Zadávajte v tvare +421...</span>
                     <div id="valid"></div>
                 </div>
 
@@ -82,11 +83,18 @@
                         <div class="col-lg-12 col-sm-12">
                             <?php
                             $sumaSpolu = 0;
-                            foreach ($data['shopping_cart'] as $product) {
-                                $sumaSpolu += $product->getItemPrice();
+                            $currentUser = \App\Auth::getId();
+                            foreach ($data['shopping_cart'] as $item) {
+                                if ($item->getUserId() == $currentUser && $item->getState() == 0) {
+                                    $product = \App\Models\Product::getOne($item->getProductId());
+
+                                    $sumaSpolu += $item->getQuantityPrice();
+                                }
                             } ?>
                             <div>Zaplatiť: <?php echo $sumaSpolu ?>€</div>
                             <div class="meth">Poštovné: 0€</div>
+                            <br>
+                            <div id="priceTotal">Spolu: <?php echo $sumaSpolu ?> €</div>
                         </div>
                         <div class="col-lg-5 col-sm-12">
                             <div class="sidebar">
@@ -94,7 +102,7 @@
                                     <a onclick="myFunction('paymentMethodOne')" href="#" class="px-2">Dobierka</a>
                                 </li>
                                 <div id="paymentMethodOne" style="display: none">
-                                    <input type="radio" id="radioButtonOne" name="paymentMethod" value="1" onclick="check('radioButtonOne')" autocomplete="off">Cena dobierky: 2€
+                                    <input type="radio" id="radioButtonOne" name="paymentMethod" value="<?php echo $sumaSpolu ?>" onclick="check('radioButtonOne')" autocomplete="off">Cena dobierky: 2€
                                 </div>
                             </div>
                         </div>
@@ -103,7 +111,7 @@
                                 <li class="sidebar-item"><a onclick="myFunction('paymentMethodTwo')" href="#" class="px-2">Online platba kartou</a></li>
 
                                 <div id="paymentMethodTwo" style="display: none">
-                                    <input type="radio" id="radioButtonTwo" name="paymentMethod" value="2" onclick="check('radioButtonTwo')" autocomplete="off">Platba kartou: zadarmo
+                                    <input type="radio" id="radioButtonTwo" name="paymentMethod" value="0" onclick="check('radioButtonTwo')" autocomplete="off">Platba kartou: zadarmo
                                     <form method="post">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Druh karty:</label>

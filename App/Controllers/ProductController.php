@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\ProductCategory;
+use App\Models\User;
 
 class ProductController extends AControllerRedirect
 {
@@ -49,6 +50,122 @@ class ProductController extends AControllerRedirect
             ]);
     }
 
+    public function addProductCategoryForm() {
+        $categories = ProductCategory::getAll();
+
+        return $this->html([
+            'product_category' => $categories
+        ]);
+    }
+
+    public function removeProductCategory() {
+        $categories = ProductCategory::getAll();
+
+        return $this->html([
+            'product_category' => $categories
+        ]);
+    }
+
+    public function addProductCategory() {
+        $name = $this->request()->getValue('nameCategory');
+        $nameVal = User::validateName($name);
+
+        if ($nameVal != null) {
+            echo ($nameVal);
+            exit();
+        }
+
+        $categories = ProductCategory::getAll();
+        foreach ($categories as $category) {
+            if (strcmp(strtolower($category->getName()), strtolower($name)) == 0) {
+                echo "Kategória sa v tabuľke už nachádza.";
+                exit();
+            }
+        }
+        $newCategory = new ProductCategory();
+        $newCategory->setName($name);
+        $newCategory->save();
+
+        echo "Kategória bola úspešne pridaná.";
+        exit();
+    }
+
+    public function removeCategory() {
+        $id = intval($this->request()->getValue('id'));
+        $categories = ProductCategory::getAll();
+        $products = Product::getAll();
+
+        foreach ($products as $product) {
+            if ($product->getCategoryId() == $id) {
+                $product->delete();
+            }
+        }
+
+        foreach ($categories as $category) {
+            if ($category->getId() == $id) {
+                $category->delete();
+            }
+        }
+
+        echo $id;
+        exit();
+    }
+
+    public function removeProduct() {
+        $id = intval($this->request()->getValue('id'));
+        $products = Product::getAll();
+        $carts = Cart::getAll();
+
+        foreach ($carts as $cart) {
+            if ($cart->getProductId() == $id) {
+                $cart->delete();
+            }
+        }
+
+        foreach ($products as $product) {
+            if ($product->getId() == $id) {
+                $product->delete();
+            }
+        }
+    }
+
+    public function editProduct() {
+        $id = $this->request()->getValue('id');
+        $name = $this->request()->getValue('newName');
+        $size = $this->request()->getValue('newSize');
+        $price = $this->request()->getValue('newPrice');
+
+        $product = Product::getOne($id);
+        if ($name != null) {
+            $product->setName($name);
+        }
+        if ($size != null) {
+            $product->setSize($size);
+        }
+        if ($price != null) {
+            $product->setPrice($price);
+        }
+
+
+        /**
+        foreach ($products as $product) {
+            if ($product->getId() == intval($id)) {
+                if (empty($name) == true) {
+                    $s = $product->getName();
+                    $product->setName($s);
+                } else {
+                    $product->setName($name);
+                }
+
+
+                $product->setSize($size);
+                $product->setPrice($price);
+                $product->save();
+                break;
+            }
+        **/
+    }
+
     public function showProductDetail() {
 
         $clickedProduct = null;
@@ -57,7 +174,7 @@ class ProductController extends AControllerRedirect
             if ($product->getId() == intval($this->request()->getValue('id'))) {
                 $clickedProduct = '
    
-                <div class="row">
+                <div class="row deleteProductModal">
                     <div class="col">
                         <div class="images p-3">
                             <div class="text-center p-4">
@@ -68,21 +185,29 @@ class ProductController extends AControllerRedirect
                         <div class="product p-4">
                             <div class="mt-4 mb-3" style="text-align: center">
                                 <span class="text-uppercase text-muted brand">Second Hand U Inky</span>
-                                <h5 class="text-uppercase">'. $product->getName() .'</h5>                               
+                                <h5 class="text-uppercase" id="nameProduct'. $product->getId() .'">'. $product->getName() .'</h5>  
+                                <input type="name" id="productNameInput'. $product->getId() .'" class="form-control" placeholder="Názov..." style="display: none;"/>                             
                             </div>
-                            <p class="about">Shop from a wide range of t-shirt from orianz. Pefect for your everyday use, you could pair it with a stylish pair of jeans or trousers complete the look.</p>
                             <div class="sizes mt-5" style="text-align: center">
-                                <h6 class="text-uppercase">Veľkosť: </h6> 
-                                <span class="act-price">'. $product->getPrice() .'€</span>
+                                <h6 class="text-uppercase" id="sizeProduct'. $product->getId() .'">Veľkosť: '. $product->getSize() .' </h6> 
+                                <input type="name" id="productSizeInput'. $product->getId() .'" class="form-control mb-2" placeholder="Veľkosť..." style="display: none;"/>
+                                <span class="act-price" id="priceProduct'. $product->getId() .'">'. $product->getPrice() .'€</span>
+                                <input type="name" id="productPriceInput'. $product->getId() .'" class="form-control" placeholder="Cena..." style="display: none;"/>
                             </div>
                             <div class="cart mt-4" style="text-align: center"> 
                             ';
-                if (\App\Auth::isLogged()) {
+                if (\App\Auth::isLogged() && \App\Auth::isAdmin()) {
+                    $clickedProduct .= '<button type="submit" id="delete_order_but" class="btn btn-primary" dataId='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
+                                        <button type="submit" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" dataId='. $product->getId() .' style="background-color:  #A6923F">Upraviť</button>
+                                        <button type="submit" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut" dataId='. $product->getId() .' style="color:  white; background-color: lightblue; display: none">Potvrdiť</button>';
+
+                } else if (\App\Auth::isLogged()) {
                     $clickedProduct .= '<button type="submit" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000">Pridať do košíka</button>';
                 } else {
                     $clickedProduct .= '<button type="submit" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000" disabled="true">Pridať do košíka</button>';
                 }
                 $clickedProduct .= '<button type="button" id="cancel_but" class="btn btn-secondary" data-dismiss="modal" style="background-color: #E6E6FA; color: #8B0000">Zavrieť</button>
+                                   
                             </div>
                         </div>
                     </div>
@@ -186,29 +311,6 @@ class ProductController extends AControllerRedirect
 
         echo json_encode($array);
         exit();
-    }
-
-    public function addProductToCart() {
-
-        $product = Product::getOne($this->request()->getValue('id'));
-
-        $items = Cart::getAll();
-        foreach ($items as $item) {
-            if ($item->getProductId() == $product->getId()) {
-                echo "uzVKosiku";
-                exit();
-            }
-        }
-
-        $cartItem = new Cart();
-        $cartItem->setOrderId(1);
-        $cartItem->setQuantity(1);
-        $cartItem->setProductId($product->getId());
-        $cartItem->setProductName($product->getName());
-        $cartItem->setItemPrice($product->getPrice());
-        $cartItem->setQuantityPrice($product->getPrice());
-
-        $cartItem->save();
     }
 
 

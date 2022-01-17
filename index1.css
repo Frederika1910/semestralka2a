@@ -17,7 +17,8 @@ body {
 }
 
 .py-2 li:hover a, .sidebar li:hover a {
-    color: black;
+    color: #8B0000;
+    font-weight: bold;
 }
 
 .py-2 li a {
@@ -261,7 +262,7 @@ hr.solid {
     .filterBigScreen {
         display: none;
     }
-    .productId, .productPrice, .productNo {
+    .productId, .productPrice, .productNo, .stateOrder {
         display: none;
     }
 }

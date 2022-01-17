@@ -77,7 +77,9 @@
                                 </div>
                             </div>
                         </div>
+
                         <button type="submit" id="filter_but" class="btn btn-primary filterB" style="background-color:  #8B0000; width: 100%">Vyfiltruj</button>
+
                     </div>
             </ul>
         </div>
@@ -133,7 +135,7 @@
                 <?php foreach ($data['products'] as $product) { ?>
                     <div class="col">
 
-                        <div class="card mt-2" style="width: 18rem;">
+                        <div class="card mt-2 cardProductDelete<?php echo $product->getId() ?>" style="width: 18rem;">
                             <img class="card-img-top" src="/semestralka2/<?php echo \App\Config\Configuration::UPLOAD_DIR . $product->getImage() ?>"  alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $product->getName() ?></h5>

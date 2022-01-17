@@ -7,19 +7,19 @@ class Cart extends \App\Core\Model
 
     public function __construct(
         public int $id = 0,
-        public int $order_id = 0,
         public int $quantity = 0,
-        public int $product_id = 222,
-        public ?string $productName = null,
-        public int $item_price = 0,
-        public int $quantityPrice = 0
+        public int $product_id = 0,
+        public int $quantityPrice = 0,
+        public int $user_id = 0,
+        public int $order_id = 0,
+        public int $state = 0
     )
     {
     }
 
     static public function setDbColumns()
     {
-        return ['id', 'order_id', 'quantity', 'product_id', 'productName', 'item_price', 'quantityPrice'];
+        return ['id', 'quantity', 'product_id', 'quantityPrice', 'user_id', 'order_id', 'state'];
     }
 
     static public function setTableName()
@@ -41,22 +41,6 @@ class Cart extends \App\Core\Model
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrderId(): int
-    {
-        return $this->order_id;
-    }
-
-    /**
-     * @param int $order_id
-     */
-    public function setOrderId(int $order_id): void
-    {
-        $this->order_id = $order_id;
     }
 
     /**
@@ -92,38 +76,6 @@ class Cart extends \App\Core\Model
     }
 
     /**
-     * @return string|null
-     */
-    public function getProductName(): ?string
-    {
-        return $this->productName;
-    }
-
-    /**
-     * @param string|null $productName
-     */
-    public function setProductName(?string $productName): void
-    {
-        $this->productName = $productName;
-    }
-
-    /**
-     * @return int
-     */
-    public function getItemPrice(): int
-    {
-        return $this->item_price;
-    }
-
-    /**
-     * @param int $itemPrice
-     */
-    public function setItemPrice(int $itemPrice): void
-    {
-        $this->item_price = $itemPrice;
-    }
-
-    /**
      * @return int
      */
     public function getQuantityPrice(): int
@@ -137,5 +89,53 @@ class Cart extends \App\Core\Model
     public function setQuantityPrice(int $quantityPrice): void
     {
         $this->quantityPrice = $quantityPrice;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param int $user_id
+     */
+    public function setUserId(int $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderId(): int
+    {
+        return $this->order_id;
+    }
+
+    /**
+     * @param int $order_id
+     */
+    public function setOrderId(int $order_id): void
+    {
+        $this->order_id = $order_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getState(): int
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param int $state
+     */
+    public function setState(int $state): void
+    {
+        $this->state = $state;
     }
 }

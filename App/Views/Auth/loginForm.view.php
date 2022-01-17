@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Heslo</label>
-                    <input type="text"  class="form-control" name="password" id="exampleInputPassword1" placeholder="Heslo..." required>
+                    <input type="password"  class="form-control" name="password" id="exampleInputPassword1" placeholder="Heslo..." required>
                 </div>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">

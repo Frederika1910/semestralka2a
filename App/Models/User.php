@@ -10,14 +10,15 @@ class User extends \App\Core\Model
         public int $id = 0,
         public ?string $password = null,
         public ?string $name = null,
-        public ?string $surname = null
+        public ?string $surname = null,
+        public ?string $admin = "false"
     )
     {
     }
 
     static public function setDbColumns()
     {
-        return ['id', 'login', 'password', 'name', 'surname'];
+        return ['id', 'login', 'password', 'name', 'surname', 'admin'];
     }
 
     static public function setTableName()
@@ -139,8 +140,8 @@ class User extends \App\Core\Model
     {
         if($inp == ""){
             return "Nezadali ste meno.";
-        } else if (preg_match("/[0-9]/", $inp)) {
-            return "Meno nesmie obsahovať číslice.";
+        } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $inp)) {
+            return "Meno smie obsahovať iba znaky.";
         }
 
         return null;
@@ -150,11 +151,28 @@ class User extends \App\Core\Model
     {
         if($inp == ""){
             return "Nezadali ste priezvisko.";
-        } else if (preg_match("/[0-9]/", $inp)) {
-            return "Priezvisko nesmie obsahovať číslice.";
+        } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $inp)) {
+            return "Priezvisko smie obsahovať iba znaky.";
         }
 
         return null;
     }
+
+    /**
+     * @return bool
+     */
+    public function getAdmin(): ?string
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param bool $admin
+     */
+    public function setAdmin(string $admin)
+    {
+        $this->admin = $admin;
+    }
+
 
 }

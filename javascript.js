@@ -95,29 +95,39 @@ function addProductToBasketDisplay() {
     }
 }
 
-let navhood2 = "";
-let navhood3 = "";
-let navhood4 = "";
-let navhood5 = "";
+let returnValueName = "null";
+let returnValueSurname = "null";
+let returnValueStreet = "null";
+let returnValueCity = "null";
+let returnValueCountry = "null";
+let returnValueMobileNumber = "null";
+let returnValueCardNumber = "null";
+let returnValueEmail = "null";
+let returnValuePassword = "null";
+let returnValuePasswordControl = "null";
+let returnValueHouseNumber = "null";
+let returnValuePsc = "null";
 let paymentPartOne = null;
 let paymentPartTwo = null;
+let returnValueImage = "null";
+let returnValuePrice = "null";
+let returnValueCategoryId = "null";
+let returnValueSize = "null";
+let returnValueGender = "null";
 
 function setSubmitButton() {
     console.log("uspech");
 
-    if (paymentPartOne != null) {
-        document.querySelector(".validate").disabled = false;
-    } else if (paymentPartTwo != null) {
-        if (navhood2 == null && navhood6 == null && navhood7 == null && navhood8 == null && navhood9 == null && paymentPartTwo === true) {
-            console.log("if3");
+    if ( returnValueSurname == null && returnValueStreet == null && returnValueHouseNumber == null && returnValuePsc == null && returnValueCity == null && returnValueCountry == null && returnValueMobileNumber == null) {
+        console.log("som tu");
+        if (paymentPartOne === true) {
+            document.querySelector(".validate").disabled = false;
+        } else if (paymentPartTwo === true && returnValueCardNumber == null) {
             document.querySelector(".validate").disabled = false;
         }
-    } else if (navhood2 == null && navhood3 == null && navhood4 == null && navhood5 == null) {
-            console.log("if1");
-            document.querySelector(".validate").disabled = false;
-
-    } else if (navhood4 == null && navhood5 == null) {
-        console.log("if2");
+    } else if (returnValueName == null && returnValueSurname == null && returnValueEmail == null && returnValuePassword == null && returnValuePasswordControl == null) {
+        document.querySelector(".validate").disabled = false;
+    } else if (returnValueName == null && returnValuePrice == null && returnValueSize == null && returnValueGender == null && returnValueCategoryId == null && returnValueImage == null) {
         document.querySelector(".validate").disabled = false;
     }
 }
@@ -139,7 +149,6 @@ function check(id) {
 
         let error = false;
 
-
         if (mon.options[mon.selectedIndex].value === "false" || year.options[year.selectedIndex].value === "false" || card.options[card.selectedIndex].value === "false") {
             console.log(mon.options[mon.selectedIndex].value);
             error = true;
@@ -147,18 +156,13 @@ function check(id) {
 
         if (error) {
             paymentPartTwo = null;
-            document.querySelector(".validate").disabled = true;
+            //document.querySelector(".validate").disabled = true;
         } else {
             paymentPartTwo = true;
         }
 
     }
     setSubmitButton();
-    //for (let i=0; i<2; i++) {
-    //    if (rB[i].checked) {
-    //        paymentPart = true;
-    //    }
-    //}
 }
 
 function displayInputInColor(string, element) {
@@ -182,34 +186,88 @@ function displayInputInColor(string, element) {
 }
 
 function validateName() {
+    let input = document.getElementById('meno');
+    let inputValue = input.value;
+    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueName = "Meno nesmie byť prázdne.";
+        return displayInputInColor(returnValueName, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueName = "Meno smie obsahovať len znaky.";
+        return displayInputInColor(returnValueName, input);
+    }
 
-    let input = document.getElementById("meno");
-    validateNameOrSurname(input)
+    returnValueName = null;
+    return displayInputInColor(returnValueName, input);
 }
 
 function validateSurname() {
-    let input = document.getElementById("priezvisko");
-    validateNameOrSurname(input);
-}
-
-function validateText(id) {
-    let input = document.getElementById(id);
-    validateNameOrSurname(input);
-}
-
-function validateNameOrSurname(input) {
+    let input = document.getElementById('priezvisko');
     let inputValue = input.value;
-    let disabledChar = /[0-9]/;
-
-    if (!inputValue || inputValue.length == 0) {
-        navhood2 = "Pole nesmie byť prázdne.";
-        return displayInputInColor(navhood2, input);
-    } else if (disabledChar.test(inputValue)){
-        navhood2 = "Pole nesmie obsahovať číslice.";
-        return displayInputInColor(navhood2, input);
+    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueSurname = "Priezvisko nesmie byť prázdne.";
+        return displayInputInColor(returnValueSurname, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueSurname = "Priezvisko smie obsahovať len znaky.";
+        return displayInputInColor(returnValueSurname, input);
     }
-    navhood2 = null;
-    return displayInputInColor(navhood2, input);
+
+    returnValueSurname = null;
+    return displayInputInColor(returnValueSurname, input);
+}
+
+function validateStreet() {
+    let input = document.getElementById('street');
+    let inputValue = input.value;
+    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueStreet = "Ulica nesmie byť prázdne.";
+        return displayInputInColor(returnValueStreet, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueStreet = "Ulica jsmie obsahovať len znaky.";
+        return displayInputInColor(returnValueStreet, input);
+    }
+
+    returnValueStreet = null;
+    return displayInputInColor(returnValueStreet, input);
+}
+
+function validateCity() {
+    let input = document.getElementById('city');
+    let inputValue = input.value;
+    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueCity = "Obec nesmie byť prázdne.";
+        return displayInputInColor(returnValueCity, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueCity = "Obec smie obsahovať len znaky.";
+        return displayInputInColor(returnValueCity, input);
+    }
+
+    returnValueCity = null;
+    return displayInputInColor(returnValueCity, input);
+}
+
+function validateCountry() {
+    let input = document.getElementById('country');
+    let inputValue = input.value;
+    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueCountry = "Štát nesmie byť prázdne.";
+        return displayInputInColor(returnValueCountry, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueCountry = "Štát smie obsahovať len znaky.";
+        return displayInputInColor(returnValueCountry, input);
+    }
+
+    returnValueCountry = null;
+    return displayInputInColor(returnValueCountry, input);
 }
 
 function validateEmail() {
@@ -218,90 +276,96 @@ function validateEmail() {
     let disabledChar = /[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/;
 
     if (!mailValue || mailValue.length == 0) {
-        navhood3 = "Pole nesmie byť prázdne.";
-        return displayInputInColor(navhood3, input);
+        returnValueEmail = "Pole nesmie byť prázdne.";
+        return displayInputInColor(returnValueEmail, input);
     } else if (!disabledChar.test(mailValue)) {
-        navhood3 = "E-mail musí mať tvar: inka@priklad.sk";
-        return displayInputInColor(navhood3, input);
+        returnValueEmail = "E-mail musí mať tvar: inka@priklad.sk";
+        return displayInputInColor(returnValueEmail, input);
     }
-    navhood3 = null;
-    return displayInputInColor(navhood3, input);
+    returnValueEmail = null;
+    return displayInputInColor(returnValueEmail, input);
 }
 
-let navhood6 = "";
-function validateNumbers(id) {
-    let input = document.getElementById(id);
+function validateHouseNumber() {
+    let input = document.getElementById('houseNumber');
     let inputValue = input.value;
-    let disabledChar = /^\d*\.?\d*$/;
-
-    if (!inputValue) {
-        navhood6 = "Pole nesmie byť prázdne.";
-        return displayInputInColor(navhood6, input);
-    } else if (!disabledChar.test(inputValue)) {
-        navhood6 = "Pole nesmie obsahovať znaky.";                                      //pozor lomka
-        return displayInputInColor(navhood6, input);
+    let disabledChar = /[0-9\/]$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueHouseNumber = "Číslo domu nesmie byť prázdne.";
+        return displayInputInColor(returnValueHouseNumber, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueHouseNumber = "Číslo domu nesmie obsahovať znaky.";
+        return displayInputInColor(returnValueHouseNumber, input);
     }
 
-    navhood6 = null;
-    return displayInputInColor(navhood6, input);
+    returnValueHouseNumber = null;
+    return displayInputInColor(returnValueHouseNumber, input);
 }
 
+function validatePsc() {
+    let input = document.getElementById('psc');
+    let inputValue = input.value;
+    let disabledChar = /[0-9]$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValuePsc = "PSČ nesmie byť prázdne.";
+        return displayInputInColor(returnValuePsc, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValuePsc = "PSČ nesmie obsahovať znaky.";
+        return displayInputInColor(returnValuePsc, input);
+    } if (inputValue.length < 5 || inputValue.length > 5) {
+        returnValuePsc = "PSČ musí mať presne 5 znakov.";
+        return displayInputInColor(returnValuePsc, input);
+    }
 
-let navhood9 = "";
+    returnValuePsc = null;
+    return displayInputInColor(returnValuePsc, input);
+}
+
 function validateCardNumber() {
     let input = document.getElementById('cardNumber');
-    let cardValue = input.value;
-    let disabledChar = /^\d*\.?\d*$/;
-
-    if (!cardValue) {
-        navhood9 = "Pole nesmie byť prázdne.";
-        return displayInputInColor(navhood9, input);
-    } else if (!disabledChar.test(cardValue)) {
-        navhood9 = "Pole nesmie obsahovať znaky.";                                      //pozor lomka
-        return displayInputInColor(navhood9, input);
-    }
-
-    navhood9 = null;
-    return displayInputInColor(navhood9, input);
-}
-
-let navhood8 = "";
-function validateMobileNumber() {
-    let mobile = document.getElementById("mobileNumber");
-    let mobileValue = mobile.value;
-    let disabledChar = /^\d*\.?\d*$/;
-
-    if (!mobileValue) {
-        navhood8 = "Pole nesmie byť prázdne.";
-        return displayInputInColor(navhood8, mobile);
-    } else if (!disabledChar.test(mobileValue)) {
-        navhood8 = "Pole nesmie obsahovať znaky.";                                      //pozor lomka
-        return displayInputInColor(navhood8, mobile);
-    }
-
-    navhood8 = null;
-    return displayInputInColor(navhood8, mobile);
-}
-
-let navhood7 = "";
-function validatePSC() {
-    let input = document.getElementById("psc");
     let inputValue = input.value;
-    let disabledChar = /[a-zA-Z]/;
-
-    if (!inputValue) {
-        navhood7 = "Pole nesmie byť prázdne.";
-        return displayInputInColor(navhood7, input);
+    let disabledChar = /[0-9]$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueCardNumber = "Číslo karty nesmie byť prázdne.";
+        return displayInputInColor(returnValueCardNumber, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueCardNumber = "Číslo karty nesmie obsahovať znaky.";
+        return displayInputInColor(returnValueCardNumber, input);
+    } if (inputValue.length < 16 || inputValue.length > 16) {
+        returnValueCardNumber = "Číslo karty musí mať presne 16 znakov.";
+        return displayInputInColor(returnValueCardNumber, input);
     }
 
-    if (inputValue.length < 5 || inputValue.length > 5 || disabledChar.test(inputValue)) {
-        navhood7 = "PSČ musí mať 5 znakov.";
-        return displayInputInColor(navhood7, input);
+    returnValueCardNumber = null;
+    return displayInputInColor(returnValueCardNumber, input);
+}
+
+function validateMobileNumber() {
+    let input = document.getElementById('mobileNumber');
+    let inputValue = input.value;
+    let disabledChar = /[0-9\+]$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueMobileNumber = "Telefónne číslo nesmie byť prázdne.";
+        return displayInputInColor(returnValueMobileNumber, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueMobileNumber = "Telefónne číslo nesmie obsahovať znaky.";
+        return displayInputInColor(returnValueMobileNumber, input);
+    } else if ((inputValue.substr(0,4) !== '+421')) {
+        returnValueMobileNumber = "Telefónne číslo musí začínať +421.";
+        return displayInputInColor(returnValueMobileNumber, input);
+    }if (inputValue.length < 13 || inputValue.length > 13) {
+        returnValueMobileNumber = "Telefónne číslo musí mať presne 13 znakov.";
+        return displayInputInColor(returnValueMobileNumber, input);
     }
 
+    returnValueMobileNumber = null;
+    return displayInputInColor(returnValueMobileNumber, input);
 
-    navhood7 = null;
-    return displayInputInColor(navhood7, input);
+    return null;
 }
 
 function validatePassword() {
@@ -312,34 +376,109 @@ function validatePassword() {
     let disabledCharNumber = /[0-9]/;
 
     if (!passwordValue) {
-        navhood4 = "Pole nesmie byť prázdne.";
-        return displayInputInColor(navhood4, input);
+        returnValuePassword = "Pole nesmie byť prázdne.";
+        return displayInputInColor(returnValuePassword, input);
     } else if (!disabledChar.test(passwordValue)) {
-        navhood4 = "Heslo nesmie obsahovať špeciálne znaky."
-        return displayInputInColor(navhood4, input);
+        returnValuePassword = "Heslo nesmie obsahovať špeciálne znaky."
+        return displayInputInColor(returnValuePassword, input);
     } else if (passwordValue.length <= 5) {
-        navhood4 = "Heslo musí mať minimálne 5 znakov.";
-        return displayInputInColor(navhood4, input);
+        returnValuePassword = "Heslo musí mať minimálne 5 znakov.";
+        return displayInputInColor(returnValuePassword, input);
     } else if (!disabledCharCapitalLetter.test(passwordValue)) {
         return displayInputInColor("Heslo musí obsahovať aspoň 1 veľké písmeno.", input);
     } else if (!disabledCharNumber.test(passwordValue)) {
-        navhood4 = "Heslo musí obsahovať aspoň 1 číslicu.";
-        return displayInputInColor(navhood4, input);
+        returnValuePassword = "Heslo musí obsahovať aspoň 1 číslicu.";
+        return displayInputInColor(returnValuePassword, input);
     }
-    navhood4 = null;
-    return displayInputInColor(navhood4, input);
+    returnValuePassword = null;
+    return displayInputInColor(returnValuePassword, input);
 }
 
 function validatePasswordControl() {
     let password = document.getElementById("heslo");
     let passwordControl = document.getElementById("hesloKontrola");
     if (passwordControl.value != password.value) {
-        navhood5 = "Heslá sa nezhodujú.";
-        return displayInputInColor(navhood5, passwordControl);
+        returnValuePasswordControl = "Heslá sa nezhodujú.";
+        return displayInputInColor(returnValuePasswordControl, passwordControl);
     }
 
-    navhood5 = null;
-    return displayInputInColor(navhood5, passwordControl);
+    returnValuePasswordControl = null;
+    return displayInputInColor(returnValuePasswordControl, passwordControl);
+}
+
+function validatePrice() {
+    let input = document.getElementById('price');
+    let inputValue = input.value;
+    let disabledChar = /[0-9]$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValuePrice = "Cena nesmie byť prázdna.";
+        return displayInputInColor(returnValuePrice, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValuePrice = "Cena smie obsahovať len číslice.";
+        return displayInputInColor(returnValuePrice, input);
+    }
+
+    returnValuePrice = null;
+    return displayInputInColor(returnValuePrice, input);
+}
+
+function validateSize() {
+    let input = document.getElementById('size');
+    let inputValue = input.value;
+    let disabledChar = /[0-9\a-zA-Z]$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueSize = "Veľkosť nesmie byť prázdna.";
+        return displayInputInColor(returnValueSize, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueSize = "Veľkosť smie obsahovať len znaky.";
+        return displayInputInColor(returnValueSize, input);
+    }
+
+    returnValueSize = null;
+    return displayInputInColor(returnValueSize, input);
+}
+
+function validateGender() {
+    let input = document.getElementById('gender');
+    let inputValue = input.value;
+    let disabledChar = /[a-zA-Z]$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueGender = "Pre koho nesmie byť prázdne.";
+        return displayInputInColor(returnValueGender, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueGender = "Pre koho nesmie obsahovať číslice.";
+        return displayInputInColor(returnValueGender, input);
+    }
+
+    returnValueGender = null;
+    return displayInputInColor(returnValueGender, input);
+}
+
+function validateCategory() {
+    let cat = document.getElementById('categoryProductForm');
+
+    let error = false;
+
+    if (cat.options[cat.selectedIndex].value === "false") {
+        console.log(cat.options[cat.selectedIndex].value);
+        error = true;
+    }
+
+    if (!error) {
+        returnValueCategoryId = null;
+    }
+}
+
+function validateImage() {
+    let x = document.getElementById('productImage').value.length;
+    console.log(x);
+    if (x > 0) {
+        returnValueImage = null;
+    }
+    setSubmitButton();
 }
 
 $(document).ready(function () {
@@ -354,8 +493,22 @@ $(document).ready(function () {
         let country = $('#country').val();
         let city = $('#city').val();
         let mobile_number = $('#mobileNumber').val();
-        let radio_first =  $("input[type=radio][name=paymentMethod]:checked").attr('id');
-        console.log("rB " + radio_first);
+        //let radio_first =  $("input[type=radio][name=paymentMethod]:checked").attr('id');
+
+        let rb1 = document.getElementById('radioButtonOne').checked;
+        let rb2 = document.getElementById('radioButtonTwo').checked;
+
+        let c = document.getElementById('cards');
+        let cardsValue = c.options[c.selectedIndex].value;
+
+        let cardNumber = $('#cardNumber').val();
+
+        let m = document.getElementById('months');
+        let monthValue = m.options[m.selectedIndex].value;
+
+        let y = document.getElementById('years');
+        let yearValue = y.options[y.selectedIndex].value;
+
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=order&a=addNewOrder',
@@ -368,11 +521,16 @@ $(document).ready(function () {
                 countryA: country,
                 cityA: city,
                 mobileNumberA: mobile_number,
-                rbOne: radio_first
+                rbOne: rb1,
+                rbTwo: rb2,
+                sOne: cardsValue,
+                cardNo: cardNumber,
+                sTwo: monthValue,
+                sTree: yearValue
             },
             success: function (data) {
                 console.log(data);
-                console.log("rB " + radio_first);
+                //console.log("rB " + radio_first);
                 $('#modelMsg').html(data);
                 $('#productResponse').show();
             }
@@ -383,7 +541,7 @@ $(document).ready(function () {
 $(document).ready(function() {
     $(document).on('click', '.delBut', function () {
         let del_id = $(this).attr('dataId');
-        let numberOfRows = $('.table').length;
+        let numberOfRows = document.getElementById('tableShoppingCart').rows.length;
 
         $.ajax({
             method: 'POST',
@@ -391,14 +549,14 @@ $(document).ready(function() {
             data: {
                 deleteItem: del_id,
             },
-            success: function () {
-                $('.deleteItem' + del_id).fadeOut('slow');
+            success: function (data) {
+                //$('.deleteItem' + del_id).fadeOut('slow');
+                let i = $('#tableShoppingCart').find('deleteItem'+del_id).index();
 
-                if (numberOfRows <= 1) {
-                    $('.tbody').fadeOut('slow');
+                document.getElementById('tableShoppingCart').deleteRow(i);
+                if (numberOfRows <= 2) {
                     $('#order_but').fadeOut('slow');
                 }
-
             }
         })
     })
@@ -423,18 +581,13 @@ $(document).ready(function() {
 
         $.ajax({
             method: 'POST',
-            url: 'http://localhost/semestralka2?c=product&a=addProductToCart',
+            url: 'http://localhost/semestralka2?c=cart&a=addToCart',
             data: {
                 id: product_id
             },
             success: function (data) {
-                if (data === "uzVKosiku") {
-                    $('#modelMsg').html("Produkt sa v kosiku uz nachadza.");
-                    $('#productResponse').show();
-                } else {
-                    $('#modelMsg').html("Produkt bol uspesne pridany do kosika.");
-                    $('#productResponse').show();
-                }
+                $('#modelMsg').html(data);
+                $('#productResponse').show();
             }
         })
 
@@ -443,7 +596,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(document).on('click', '#cancel_but', function(){
-        $('#productResponse').hide();
+        $('.modal').hide();
         $('#productDetail').hide();
     })
 })
@@ -485,12 +638,6 @@ $(document).ready(function() {
         let min_price = $('.price:checked').attr('min');
         let max_price = $('.price:checked').attr('max');
         let gender = getFilter('gender');
-
-        //let radio_first =  $("input[type=radio][name=paymentMethod]:checked").attr('id');
-        //let category_id =  $("input[type=radio][name=radiobuttonCat]:checked").attr('id');
-        //let min_price =  $("input[type=radio][name=radiobuttonPrice]:checked").attr('id');
-        //let max_price =  $("input[type=radio][name=radiobuttonPrice]:checked").attr('id');
-        //let gender =  $("input[type=radio][name=radiobuttonGen]:checked").attr('id');
 
         console.log(min_price);
         console.log(max_price);
@@ -566,8 +713,8 @@ $(document).ready(function() {
             },
             success: function (data) {
                 console.log(data);
-                    $('#productDetailMsg').html(data);
-                    $('#productDetail').show();
+                $('#productDetailMsg').html(data);
+                $('#productDetail').show();
             }
         })
 
@@ -578,49 +725,163 @@ $('input[type=radio][name=paymentMethod]').change(function() {
 
     if (document.getElementById('radioButtonOne').checked) {
         $('.meth').html("Poštovné: 2€");
+        let y = parseInt($('#radioButtonOne').val()) + 2;
+        $('#priceTotal').html("Spolu:"+ y + "€");
     } else if (document.getElementById('radioButtonTwo').checked) {
         $('.meth').html("Poštovné: 0€");
+        let y = parseInt($('#radioButtonOne').val());
+        $('#priceTotal').html("Spolu: "+ y + "€")
     }
 
 })
 
-/**
-function checkPaymentDetail() {
-    if (document.getElementById('radioButtonTwo').checked) {
-        let mon = document.getElementById('months');
-        let year = document.getElementById('years');
-        let card = document.getElementById('cards');
-        let rB = document.getElementById('radioButtonTwo').checked;
-        console.log(rB);
-        let error = false;
-
-        if (navhood6 === "" || mon.options[mon.selectedIndex].value === "false" || year.options[year.selectedIndex].value === "false" || card.options[card.selectedIndex].value === "false") {
-            console.log(mon.options[mon.selectedIndex].value);
-            error = true;
-        }
-
-        if (error) {
-            alert("nie nie nie");
-        }
-    } else if (document.getElementById('radioButtonOne').checked) {
-        console.log("dsd");
-    }
-}
-
-
 $(document).ready(function() {
-    $('#orderForm').submit(function (e) {
+    $(document).on('click', '.delOrderBut', function (e) {
         e.preventDefault();
+        let order_item_id = $(this).attr('dataId');
+        console.log("ss" + order_item_id);
 
         $.ajax({
-            type: 'POST',
-            url: 'http://localhost/semestralka2?c=order&a=addNewOrder',
-            data: $('#orderForm').serialize(),
-            success: function () {
-                $('#modelMsg').html("Objednávka prebehla úspešne.");
-                $('#productResponse').show();
-                console.log(data);
+            method: 'POST',
+            url: 'http://localhost/semestralka2?c=order&a=stornoOrder',
+            data: {
+                id: order_item_id
+            },
+            success: function (data) {
+                if (data != null) {
+                    //$('#delete_order_but'+order_item_id).style.disabled = true;
+                    let x = document.getElementById('stornoBut'+order_item_id);
+                    x.disabled = true;
+                    $('#stateValue').html(data);
+                    //$('#orderDetailMsg').html(data);
+                }
+
             }
         })
     })
-})**/
+})
+
+$(document).ready(function () {
+    $('#formAddCategory').submit(function (e) {
+        e.preventDefault();
+
+        let name = $('#meno').val();
+
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost/semestralka2?c=product&a=addProductCategory',
+            data: {
+                nameCategory: name,
+            },
+            success: function (data) {
+                $('#categoryMsg').html(data);
+                $('#categoryResponse').show();
+                document.getElementById('meno').value = '';
+            }
+        })
+    })
+});
+
+$(document).ready(function() {
+    $(document).on('click', '.delCategoryBut', function (e) {
+        e.preventDefault();
+        let category_id = $(this).attr('dataId');
+        let numberOfRows = document.getElementById('categoryTable').rows.length;
+
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost/semestralka2?c=product&a=removeCategory',
+            data: {
+                id: category_id
+            },
+            success: function (data) {
+                console.log(data);
+                let i = $('#categoryTable').find('productCategoryRow'+category_id).index();
+                document.getElementById('categoryTable').deleteRow(i);
+            }
+        })
+    })
+})
+
+$(document).ready(function() {
+    $(document).on('click', '#delete_order_but', function(){
+        let product_id = $(this).attr('dataId');
+
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost/semestralka2?c=product&a=removeProduct',
+            data: {
+                id: product_id
+            },
+            success: function () {
+                $('#productDetail').hide();
+                $('.cardProductDelete'+product_id).fadeOut('slow');
+            }
+        })
+
+    })
+})
+
+$(document).ready(function() {
+    $(document).on('click', '.editOrderBut', function(){
+        let edit_id = $(this).attr('dataId');
+
+        $('#nameProduct'+edit_id).hide();
+        $('#productNameInput'+edit_id).show();
+
+        $('#sizeProduct'+edit_id).hide();
+        $('#productSizeInput'+edit_id).show();
+
+        $('#priceProduct'+edit_id).hide();
+        $('#productPriceInput'+edit_id).show();
+
+        $('#edit_order_but'+edit_id).hide();
+        $('#save_order_but'+edit_id).show();
+
+        $('#delete_order_but'+edit_id).hide();
+    })
+})
+
+$(document).ready(function() {
+    $(document).on('click', '.saveOrderBut', function (e) {
+        e.preventDefault();
+        let save_id = $(this).attr('dataId');
+
+        let new_name = $('#productNameInput'+save_id).val();
+        let new_size = $('#productSizeInput'+save_id).val();
+        let new_price = $('#productPriceInput'+save_id).val();
+        console.log(new_name);
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost/semestralka2?c=product&a=editProduct',
+            data: {
+                id: save_id,
+                newName: new_name,
+                newSize: new_size,
+                newPrice: new_price
+            },
+            success: function() {
+                $('#productNameInput'+save_id).hide();
+                $('#nameProduct'+save_id).show();
+
+                $('#productSizeInput'+save_id).hide();
+                $('#sizeProduct'+save_id).show();
+
+                $('#productPriceInput'+save_id).hide();
+                $('#priceProduct'+save_id).show();
+
+                $('#save_order_but'+save_id).hide();
+                $('#edit_order_but'+save_id).show();
+
+                if (new_name != null) {
+                    $('#nameProduct'+save_id).html(new_name);
+                } else if (new_size != null) {
+                    $('#sizeProduct'+save_id).html(new_size);
+                } else if (new_price != null) {
+                    $('#priceProduct'+save_id).html(new_price);
+                }
+            }
+        })
+    })
+})
+

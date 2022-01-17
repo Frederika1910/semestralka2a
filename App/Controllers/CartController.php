@@ -2,10 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Auth;
 use App\Core\Responses\Response;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
 
 class CartController extends AControllerRedirect
 {
@@ -41,13 +43,15 @@ class CartController extends AControllerRedirect
     {
         $orders = Cart::getAll();
         $delCartItem = intval($this->request()->getValue('deleteItem'));
-
+        $delItemPrice = 0;
         foreach ($orders as $item) {
             if ($item->getId() === $delCartItem) {
+                $product = Product::getOne($item->getProductId());
+                $delItemPrice = $product->getPrice();
                 $item->delete();
             }
         }
-
+        echo $delItemPrice;
     }
 
     public function editOrderItem()
@@ -57,8 +61,33 @@ class CartController extends AControllerRedirect
         $newQuantity = $this->request()->getValue('text');
         $oldItem->setQuantity($newQuantity);
 
-        $oldItem->setQuantityPrice($oldItem->getItemPrice()*$newQuantity);
+        $product = Product::getOne($oldItem->getProductId());
+        $oldItem->setQuantityPrice($product->getPrice()*$newQuantity);
         $oldItem->save();
+    }
+
+    public function addToCart() {
+
+        $product = Product::getOne($this->request()->getValue('id'));
+
+        $currentUser = Auth::getId();
+        $items = Cart::getAll();
+        foreach ($items as $item) {
+            if ($item->getProductId() == $product->getId() && $item->getUserId() == $currentUser && $item->getState() == 0) {
+                echo "Produkt sa v tvojom košíku už nachádza.";
+                exit();
+            }
+        }
+
+        $cartItem = new Cart();
+        $cartItem->setQuantity(1);
+        $cartItem->setProductId($product->getId());
+        $cartItem->setQuantityPrice($product->getPrice());
+        $cartItem->setUserId($currentUser);
+        $cartItem->save();
+
+        echo "Produkt bol úspešne pridaný do tvojho košíka.";
+        exit();
     }
 
 }

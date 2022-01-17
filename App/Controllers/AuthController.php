@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Auth;
 use App\Core\Model;
 use App\Core\Responses\Response;
+use App\Models\Cart;
+use App\Models\Order;
 use App\Models\User;
 use http\Message;
 
@@ -124,15 +126,31 @@ class AuthController extends AControllerRedirect
     {
         $login = Auth::getName();
         $users = User::getAll();
+        $carts = Cart::getAll();
+        $orders = Order::getAll();
 
+        $deleteUser = null;
         foreach ($users as $user) {
             if ($user->getLogin() == $login) {
-                Auth::logout();
-                $user->delete();
-                $this->redirect('home');
+                $deleteUser = $user;
+                break;
             }
         }
 
+        foreach ($carts as $cart) {
+            if ($cart->getUserId() == $deleteUser->getId()) {
+                $cart->delete();
+            }
+        }
+
+        foreach ($orders as $order) {
+            if ($order->getUserId() == $deleteUser->getId()) {
+                $order->delete();
+            }
+        }
+
+        Auth::logout();
+        $deleteUser->delete();
         $this->redirect('home');
     }
 
@@ -164,5 +182,13 @@ class AuthController extends AControllerRedirect
         $this->redirect('home');
     }
 
+    public function getUser() {
+        $currentId = Auth::getId();
+        $currentUser = User::getOne($currentId);
+        $currentName = $currentUser->getName();
+        $currentSurname = $currentUser->getSurname();
+        $result = ['name'=>$currentName,'surname'=>$currentSurname];
+        echo json_encode($result);
+    }
 
 }

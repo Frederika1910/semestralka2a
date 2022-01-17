@@ -48,6 +48,18 @@ class Auth
         return null;
     }
 
+    public static function getId()
+    {
+        $currentUser = $_SESSION['login'];
+        $users = User::getAll();
+        foreach ($users as $user) {
+            if (strcmp($currentUser, $user->getLogin()) == 0) {
+                return $user->getId();
+            }
+        }
+
+        return -1;
+    }
 
     public static function isLogged()
     {
@@ -55,8 +67,17 @@ class Auth
     }
 
     public static function isAdmin() {
-        return isset($_SESSION['admin']);
+        $currentUser = $_SESSION['login'];
+        $users = User::getAll();
+        foreach ($users as $user) {
+            if (strcmp($currentUser, $user->getLogin()) == 0 && strcmp($user->getAdmin(), "true") == 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
+
 
     public static function getName()
     {

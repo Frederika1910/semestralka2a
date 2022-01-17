@@ -32,7 +32,12 @@
             <li class="nav-item"><a href="?c=home&a=qa" class="px-2">Q&A</a></li>
             <li class="nav-item"><a href="?c=home&a=aboutus" class="px-2">O nás</a></li>
         </ul>
-        <?php if (\App\Auth::isLogged()) { ?>
+        <?php if (\App\Auth::isLogged() && \App\Auth::isAdmin()) { ?>
+        <ul class="nav">
+            <li class="nav-item"><a href="?c=home&a=loggedUser" class="px-2">Admin</a></li>
+            <li class="nav-item"><a href="?c=auth&a=logout" class="px-2">Logout</a></li>
+        </ul>
+        <?php } else if (\App\Auth::isLogged()) { ?>
             <ul class="nav">
                 <li class="nav-item"><a class="text-decoration-none px-2" href="?c=cart&a=shopingCart">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 6 16 10">

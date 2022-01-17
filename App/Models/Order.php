@@ -6,24 +6,25 @@ class Order extends \App\Core\Model
 {
 
     public function __construct(
-        public int $id = 0,
-        public int $user_id=0,
+        public int     $id = 0,
+        public int     $user_id = 0,
         public ?string $street = null,
-        public int $house_number = 0,
+        public int     $house_number = 0,
         public ?string $psc = null,
         public ?string $city = null,
         public ?string $country = null,
-        public int $mobile_number = 0,
-        public int $totalPrice = 0,
-        public int $numberOfProducts = 0,
-        public ?string $date = null
+        public ?string     $mobile_number = null,
+        public int     $totalPrice = 0,
+        public int     $numberOfProducts = 0,
+        public ?string $date = null,
+        public int $state = 0
     )
     {
     }
 
     static public function setDbColumns()
     {
-        return ['id','user_id', 'street', 'house_number', 'psc', 'city', 'country','mobile_number','totalPrice','numberOfProducts', 'date'];
+        return ['id', 'user_id', 'street', 'house_number', 'psc', 'city', 'country', 'mobile_number', 'totalPrice', 'numberOfProducts', 'date', 'state'];
     }
 
     static public function setTableName()
@@ -146,7 +147,7 @@ class Order extends \App\Core\Model
     /**
      * @return int
      */
-    public function getMobileNumber(): int
+    public function getMobileNumber(): ?string
     {
         return $this->mobile_number;
     }
@@ -154,7 +155,7 @@ class Order extends \App\Core\Model
     /**
      * @param int $mobile_number
      */
-    public function setMobileNumber(int $mobile_number): void
+    public function setMobileNumber(string $mobile_number): void
     {
         $this->mobile_number = $mobile_number;
     }
@@ -209,10 +210,10 @@ class Order extends \App\Core\Model
 
     public static function validateStreet(string $street): ?string
     {
-        if($street == ""){
+        if ($street == "") {
             return "Nezadali ste ulicu.";
-        } else if (preg_match("/[0-9]/", $street)) {
-            return "Ulica nesmie obsahovať číslice.";
+        } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $street)) {
+            return "Ulica smie obsahovať len znaky.";
         }
 
         return null;
@@ -220,10 +221,10 @@ class Order extends \App\Core\Model
 
     public static function validateHouseNumber(string $houseNumber): ?string
     {
-        if($houseNumber == ""){
+        if ($houseNumber == "") {
             return "Nezadali ste číslo domu.";
-        } else if (!preg_match("/^\d*\.?\d*$/", $houseNumber)) {
-            return "Číslo domu nesmie obsahovať znaky.";
+        } else if (!preg_match("/[0-9\/]$/", $houseNumber)) {
+            return "Číslo domu smie obsahovať číslice a znak '/'.";
         }
 
         return null;
@@ -231,10 +232,10 @@ class Order extends \App\Core\Model
 
     public static function validateCity(string $city): ?string
     {
-        if($city == ""){
+        if ($city == "") {
             return "Nezadali ste obec.";
-        } else if (preg_match("/[0-9]/", $city)) {
-            return "Obec nesmie obsahovať číslice.";
+        } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $city)) {
+            return "Obec smie obsahovať len znaky.";
         }
 
         return null;
@@ -242,10 +243,10 @@ class Order extends \App\Core\Model
 
     public static function validateCountry(string $country): ?string
     {
-        if($country == ""){
+        if ($country == "") {
             return "Nezadali ste štát.";
-        } else if (preg_match("/[0-9]/", $country)) {
-            return "Štát nesmie obsahovať číslice.";
+        } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $country)) {
+            return "Štát smie obsahovať len znaky.";
         }
 
         return null;
@@ -253,34 +254,59 @@ class Order extends \App\Core\Model
 
     public static function validateMobileNumber(string $mobileNumber): ?string
     {
-        if($mobileNumber == ""){
-            return "Nezadali ste mobilné číslo.";
-        } else if (!preg_match("/^\d*\.?\d*$/", $mobileNumber)) {
-            return "Mobilné číslo nesmie obsahovať znaky.";
-        }
+        if ($mobileNumber == "") {
+            return "Nezadali ste telefónne číslo.";
+        } else if (!preg_match("/[0-9\+]$/", $mobileNumber)) {
+            return "Telefónne číslo smie obsahovať číslice a znak '+'.";
+        } else if (strcmp(substr($mobileNumber,0,4), '+421') == 0) {
+            return "Telefónne číslo musí začínať +421.";
+        }if (strlen($mobileNumber) < 13 || strlen($mobileNumber) > 13) {
+            return "Telefónne číslo musí mať presne 13 znakov.";
+    }
 
         return null;
     }
 
     public static function validatePsc(string $psc): ?string
     {
-        if($psc == ""){
+        if ($psc == "") {
             return "Nezadali ste PSČ.";
-        } else if (!preg_match("/^\d*\.?\d*$/", $psc)) {
-            return "PSČ nesmie obsahovať znaky.";
-        } elseif(strlen($psc)<5 || strlen($psc)>5){
-            return "Heslo musí mať 5 znakov.";
+        } else if (!preg_match("/[0-9]$/", $psc)) {
+            return "PSČ smie obsahovať len číslice.";
+        } elseif (strlen($psc) < 5 || strlen($psc) > 5) {
+            return "PSČ musí mať presne 5 znakov.";
         }
 
         return null;
     }
 
-    public static function validateRadioBut(string $rbID): ?string
-{
-        if($rbID != "radioButtonOne" && $rbID != "radioButtonTwo"){
-            return "Nevybrali ste si spôsob platby.";
+    public static function validateCardNumber(string $cardNumber): ?string
+    {
+        if ($cardNumber == "") {
+            return "Číslo karty nesmie byť prázdne.";
+        } else if (!preg_match("/[0-9]$/", $cardNumber)){
+            return "Číslo karty nesmie obsahovať znaky.";
+        } if (strlen($cardNumber) < 16 || strlen($cardNumber) > 16) {
+            return "Číslo karty musí mať presne 16 znakov.";
         }
 
         return null;
     }
+
+    /**
+     * @return int
+     */
+    public function getState(): int
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param int $state
+     */
+    public function setState(int $state): void
+    {
+        $this->state = $state;
+    }
+
 }
