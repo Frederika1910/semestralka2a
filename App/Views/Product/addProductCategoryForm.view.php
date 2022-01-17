@@ -8,7 +8,11 @@
                     <p></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="cancel_but" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
+                    <div class="sidebar">
+                        <li class="sidebar-item">
+                            <a href="?c=home&a=loggedUser" class="px-2">Zavrieť</a>
+                        </li>
+                    </div>
                 </div>
             </div>
         </div>
