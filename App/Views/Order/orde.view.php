@@ -18,9 +18,7 @@ use App\Models\State; ?>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-
             <ul class="navbar-nav mr-auto">
-
                 <?php if (\App\Auth::isLogged() && \App\Auth::isAdmin()) { ?>
                         <div class="list-group">
                             <div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
@@ -56,8 +54,7 @@ use App\Models\State; ?>
                 <label><input type="radio" name="radiobuttonOrder" class="common_selector order" value="5" autocomplete="off">Všetky</label>
             </div>
             <div class="col-md-3 col-sm-12">
-                    <button type="submit" id="orders_filter_but" class="btn btn-primary" style="background-color:  #8B0000; align-self: flex-end">Potvrdiť</button>
-            </div>
+                <button type="submit" id="orders_filter_but" class="btn btn-primary" style="background-color:  #8B0000; align-self: flex-end">Potvrdiť</button>
             </div>
         </div>
     <?php } ?>

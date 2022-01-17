@@ -14,7 +14,7 @@
                     <h5 class="card-title">Moje údaje</h5>
                     <p class="card-text">Tu si môžete prezrieť a upraviť Vaše údaje.</p>
                     <a href="?c=auth&a=changePassword" class="btn btn-success mt-2">Upraviť moje údaje</a>
-                    </div>
+                </div>
             </div>
         </div>
     </div>

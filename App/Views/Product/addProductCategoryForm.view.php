@@ -16,7 +16,6 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-md-5 col-sm-6">
-
             <form id = "formAddCategory" name="reg" method="post" novalidate>
                 <h2 class="text-center bold">Pridanie novej kategórie produktu</h2>
                 <div class="form-outline mb-4">

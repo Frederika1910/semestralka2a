@@ -526,7 +526,7 @@ $(document).ready(function () {
         let c = document.getElementById('cards');
         let cardsValue = c.options[c.selectedIndex].value;
 
-        //let cardNumber = $('#cardNumber').val();
+        let cardNumber = $('#cardNumber').val();
 
         let m = document.getElementById('months');
         let monthValue = m.options[m.selectedIndex].value;
@@ -548,6 +548,7 @@ $(document).ready(function () {
                 mobileNumberA: mobile_number,
                 rbOne: rb1,
                 rbTwo: rb2,
+                cardNo: cardNumber,
                 sOne: cardsValue,
                 sTwo: monthValue,
                 sTree: yearValue
@@ -951,7 +952,7 @@ $(document).ready(function() {
 
         $.ajax({
             method: 'POST',
-            url: 'http://localhost/semestralka2?c=order&a=sendOrder',
+            url: 'http://localhost/semestralka2?c=order&a=setOrderState',
             data: {
                 sendItem: send_order_id,
             },

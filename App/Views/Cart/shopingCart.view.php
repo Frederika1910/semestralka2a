@@ -1,4 +1,5 @@
 <?php /** @var Array $data */ ?>
+<div class="container">
     <?php $currentUser = \App\Auth::getId();
     $numberOfItems = 0;
     foreach ($data['shopping_cart'] as $item) {
@@ -24,9 +25,7 @@
            if ($item->getUserId() == $currentUser && $item->getState() == 0) { ?>
                     <td>
                         <span id="quantity<?php echo $item->getId() ?>"><?php echo $item->getQuantity() ?></span>
-
                         <input type="name" id="quantityInput<?php echo $item->getId() ?>" class="form-control" placeholder="Mnozstvo..." style="display: none;"/>
-
                     </td>
                     <td class="colProductId"><?php echo $item->getProductId() ?></td>
                     <?php $product = \App\Models\Product::getOne($item->getProductId()) ?>
@@ -82,3 +81,4 @@
             <?php } ?>
         </div>
     <?php } ?>
+</div>

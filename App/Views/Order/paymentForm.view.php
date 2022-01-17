@@ -3,17 +3,17 @@
 <div class="container">
 
     <div class="modal" id="productResponse" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body" id="modelMsg">
-                <p></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="cancel_but" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body" id="modelMsg">
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancel_but" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <div class="row">
         <div class="col"><h5>Spôsoby platby</h5>
@@ -40,7 +40,6 @@
                 <div class="col-lg-4 col-sm-12">
                     <div class="sidebar">
                         <li class="sidebar-item"><a onclick="myFunction('paymentMethodTwo')" href="#" class="px-2">Online platba kartou</a></li>
-
                         <div id="paymentMethodTwo" style="display: none">
                             <input type="radio" id="radioButtonTwo" name="paymentMethod" autocomplete="off">Platba kartou: zadarmo
                             <form method="post">
