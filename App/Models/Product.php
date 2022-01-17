@@ -166,6 +166,8 @@ class Product extends \App\Core\Model
             return "Nezadali ste cenu.";
         } else if (!preg_match("/^[0-9]\d*(,\d+)?$/", $price)) {
             return "Cena smie obsahovať len číslice.";
+        } else if ($price <= 0){
+            return "Cena musí byť kladné číslo.";
         }
 
         return null;
@@ -180,12 +182,4 @@ class Product extends \App\Core\Model
         return null;
     }
 
-    public static function validateImage(string $image): ?string
-    {
-        if ($image == null) {
-            return "Nenahrali ste obrázok.";
-        }
-
-        return null;
-    }
 }

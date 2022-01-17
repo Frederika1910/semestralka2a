@@ -213,7 +213,7 @@ class Order extends \App\Core\Model
         if ($street == "") {
             return "Nezadali ste ulicu.";
         } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $street)) {
-            return "Ulica smie obsahovať len znaky.";
+            return "Ulica smie obsahovať len platné znaky v slovenskej abecede.";
         }
 
         return null;
@@ -235,7 +235,7 @@ class Order extends \App\Core\Model
         if ($city == "") {
             return "Nezadali ste obec.";
         } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $city)) {
-            return "Obec smie obsahovať len znaky.";
+            return "Obec smie obsahovať len platné znaky v slovenskej abecede.";
         }
 
         return null;
@@ -246,7 +246,7 @@ class Order extends \App\Core\Model
         if ($country == "") {
             return "Nezadali ste štát.";
         } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $country)) {
-            return "Štát smie obsahovať len znaky.";
+            return "Štát smie obsahovať len platné znaky v slovenskej abecede.";
         }
 
         return null;
@@ -258,7 +258,7 @@ class Order extends \App\Core\Model
             return "Nezadali ste telefónne číslo.";
         } else if (!preg_match("/[0-9\+]$/", $mobileNumber)) {
             return "Telefónne číslo smie obsahovať číslice a znak '+'.";
-        } else if (strcmp(substr($mobileNumber,0,4), '+421') == 0) {
+        } else if (strcmp(substr($mobileNumber,0,4), '+421') != 0) {
             return "Telefónne číslo musí začínať +421.";
         }if (strlen($mobileNumber) < 13 || strlen($mobileNumber) > 13) {
             return "Telefónne číslo musí mať presne 13 znakov.";
@@ -271,7 +271,7 @@ class Order extends \App\Core\Model
     {
         if ($psc == "") {
             return "Nezadali ste PSČ.";
-        } else if (!preg_match("/[0-9]$/", $psc)) {
+        } else if (preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $psc)) {
             return "PSČ smie obsahovať len číslice.";
         } elseif (strlen($psc) < 5 || strlen($psc) > 5) {
             return "PSČ musí mať presne 5 znakov.";

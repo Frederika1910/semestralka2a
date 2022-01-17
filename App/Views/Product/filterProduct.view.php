@@ -24,7 +24,7 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-light light-blue lighten-4">
+    <nav class="navbar navbar-light light-blue lighten-4" id="a">
         <a class="navbar-brand" href="#">Filtre</a>
 
         <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
@@ -42,7 +42,7 @@
             <ul class="navbar-nav mr-auto">
                 <div class="row">
                     <div class="col">
-                        <button type="submit" id="clear_but" class="btn btn-primary validate" style="background-color: #E6E6FA; color: #8B0000; width: 100%">Vymaž filter</button>
+                        <button type="submit" id="clear_but" class="btn btn-primary filterB" style="background-color: #E6E6FA; color: #8B0000; width: 100%">Vymaž filter</button>
                         <div class="list-group">
                             <h3>Cena</h3>
                             <div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
@@ -60,7 +60,11 @@
                         <div class="list-group">
                             <h3>Kategórie</h3>
                             <div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
-
+                                <?php foreach ($data['product_category'] as $category) { ?>
+                                    <div class="list-group-item checkbox">
+                                        <label><input type="radio" name="radiobuttonCat" class="common_selector category" value="<?php echo $category->getId() ?>" autocomplete="off" > <?php echo $category->getName() ?></label>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="list-group">
@@ -78,7 +82,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" id="filter_but" class="btn btn-primary filterB" style="background-color:  #8B0000; width: 100%">Vyfiltruj</button>
+                        <button type="submit" onclick="a()" id="filter_but" class="btn btn-primary filterB" style="background-color:  #8B0000; width: 100%">Vyfiltruj</button>
 
                     </div>
             </ul>
@@ -88,7 +92,7 @@
     <div class="row">
         <div class="col-md-3">
             <div class="filterBigScreen">
-                <button type="submit" id="clear_but" class="btn btn-primary filterB" style="background-color: #E6E6FA; color: #8B0000; width: 100%">Vymaž filter</button>
+                <button type="submit" id="clear_but" class="btn btn-primary" style="background-color: #E6E6FA; color: #8B0000; width: 100%">Vymaž filter</button>
                 <div class="list-group">
                     <h3>Cena</h3>
                     <div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
@@ -116,15 +120,11 @@
                 <div class="list-group">
                     <h3>Pre koho</h3>
                     <div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
-                        <div class="list-group-item checkbox">
-                            <label><input type="radio" name="radiobuttonGen" class="common_selector gender" value="z" autocomplete="off"> Pre ženy</label>
-                        </div>
-                        <div class="list-group-item checkbox">
-                            <label><input type="radio" name="radiobuttonGen" class="common_selector gender" value="m" autocomplete="off"> Pre mužov</label>
-                        </div>
-                        <div class="list-group-item checkbox">
-                            <label><input type="radio" name="radiobuttonGen" class="common_selector gender" value="d" autocomplete="off"> Pre deti</label>
-                        </div>
+                        <?php foreach ($data['genders'] as $gender) { ?>
+                            <div class="list-group-item checkbox">
+                                <label><input type="radio" name="radiobuttonGen" class="common_selector gender" value="<?php echo $gender->getId() ?>" autocomplete="off" > <?php echo $gender->getName() ?></label>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             <button type="submit" id="filter_but" class="btn btn-primary filterB" style="background-color:  #8B0000; width: 100%">Vyfiltruj</button>

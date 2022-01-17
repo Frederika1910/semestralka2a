@@ -65,7 +65,7 @@ class OrderController extends AControllerRedirect
         $mobileNumber = $this->request()->getValue('mobileNumberA');
         $rb1 = $this->request()->getValue('rbOne');
         $rb2 = $this->request()->getValue('rbTwo');
-        $cardNumber = $this->request()->getValue('cardNo');
+        //$cardNumber = $this->request()->getValue('cardNo');
         $s1 = $this->request()->getValue('sOne');
         $s2 = $this->request()->getValue('sTwo');
         $s3 = $this->request()->getValue('sTree');
@@ -73,12 +73,12 @@ class OrderController extends AControllerRedirect
         $nameVal = User::validateName($name);
         $surnameVal = User::validateSurname($surname);
         $streetVal = Order::validateStreet($street);
+        $pscVal = Order::validatePsc($psc);
         $cityVal = Order::validateCity($city);
         $countryVal = Order::validateCountry($country);
         $houseNumberVal = Order::validateHouseNumber($houseNumber);
         $mobileNumberVal = Order::validateMobileNumber($mobileNumber);
-        $pscVal = Order::validatePsc($psc);
-        $cardNumberVal = Order::validateCardNumber($cardNumber);
+        //$cardNumberVal = Order::validateCardNumber($cardNumber);
         //$radioButVal = Order::validateRadioBut($radioBut);
         if ($nameVal != null) {
             echo ($nameVal);
@@ -92,31 +92,34 @@ class OrderController extends AControllerRedirect
         } else if ($houseNumberVal != null) {
             echo ($houseNumberVal);
             exit();
+        } else if ($pscVal != null) {
+            echo ($pscVal);
+            exit();
         } else if ($cityVal != null) {
             echo ($cityVal);
             exit();
         } else if ($countryVal != null) {
             echo ($countryVal);
             exit();
-        } else if ($pscVal != null) {
-            echo ($pscVal);
-            exit();
         } else if ($mobileNumberVal != null) {
             echo ($mobileNumberVal);
             exit();
-        } else if (!$rb1 && !$rb2) {
-            return "Nevybrali ste si spôsob platby.";
+        } else if ($rb1 == "false" && $rb2 == "false") {
+            echo "Nevybrali ste si spôsob platby.";
             exit();
-        } else if ($s1 == "false") {
-            return "Nevybrali ste si druh karty.";
-            exit();
-        } else if ($s2 == "false") {
-            return "Nevybrali ste si mesiac.";
-            exit();
-        } else if ($s3 == "false") {
-            return "Nevybrali ste si rok.";
-            exit();
+        } if ($rb2 == "true") {
+            if ($s1 == "false") {
+                echo "Nevybrali ste si druh karty.";
+                exit();
+            } else if ($s2 == "false") {
+                echo "Nevybrali ste si mesiac v dátume splatnosti.";
+                exit();
+            } else if ($s3 == "false") {
+                echo "Nevybrali ste si rok v dátume splatnosti.";
+                exit();
+            }
         }
+
 
 
         $newOrder = new Order();
@@ -155,7 +158,7 @@ class OrderController extends AControllerRedirect
         $newOrder->setCity($city);
         $newOrder->setCountry($country);
         $newOrder->setMobileNumber(($mobileNumber));
-        $newOrder->setState(1);
+        $newOrder->setState(1);     //cakajuca objednavka na potvrdenie
         $newOrder->save();
 
         echo "Objednávka prebehla úspešne.";
@@ -203,7 +206,7 @@ class OrderController extends AControllerRedirect
 
         foreach ($orders as $order) {
             if ($order->getId() === $delItemId) {
-                $order->setState(3);    //stornovana
+                $order->setState(3);    //stornovana objednavka cakajuca na spracovanie
                 $order->save();
 
                 $state = State::getOne($order->getState());
@@ -214,5 +217,71 @@ class OrderController extends AControllerRedirect
         }
 
         echo null;
+    }
+
+    public function showFilteredOrders() {
+        $state = intval($this->request()->getValue('state'));
+        $orders = Order::getAll();
+        $array = array();
+
+
+
+        $pocet = 0;
+        foreach ($orders as $order) {
+            if (($state) == $order->getState() || ($state) == 5) {
+                $nameState = State::getOne($order->getState())->getNameState();
+                $pocet++;
+                $correctOrder = '
+                <tr class="sendItem'. $order->getId() .'">
+                <td>'. $order->getUserId() .'</td>
+                <td class="colNUmberProducts">'. $order->getNumberOfProducts() .'</td>
+                <td class="colDate">'. $order->getDate() .'</td>
+                <td>'. $nameState .'</td>
+                <td>'. $order->getTotalPrice() .'€</td>
+                <td>';
+                if ($state == 3) {
+                    $correctOrder .= '<button type = "submit" id = "confirmStonoBut'. $order->getId() .'" class="btn btn-danger confirmStornoOrderBut" dataId = "'. $order->getId() .'"><i class="bi bi - check"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                            <path d = "M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+                        </svg >
+                    </button >';
+                } else if ($state == 1) {
+                    $correctOrder .= '<button type = "submit" id = "sendBut'. $order->getId() .'" class="btn btn-success sendOrderBut" dataId = "'.$order->getId() .'"><i class="bi bi - check"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                            <path d = "M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+                        </svg >
+                    </button >';
+                }
+                $correctOrder .= '</td>
+            </tr>
+                ';
+                array_push($array, $correctOrder);
+            }
+        }
+
+        echo json_encode($array);
+        exit();
+    }
+
+    public function setOrderState() {
+        $sendOrder = intval($this->request()->getValue('sendItem'));
+        $state = ($this->request()->getValue('state'));
+        $order = Order::getOne($sendOrder);
+        $order->setState($state);
+        $order->save();
+    }
+
+    public function sendOrder() {
+        $sendOrder = intval($this->request()->getValue('sendItem'));
+        $order = Order::getOne($sendOrder);
+        $order->setState(2);
+        $order->save();
+    }
+
+    public function confirmStornoOrder() {
+        $sendOrder = intval($this->request()->getValue('sendItem'));
+        $order = Order::getOne($sendOrder);
+        $order->setState(2);
+        $order->save();
     }
 }

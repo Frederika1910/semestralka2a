@@ -129,7 +129,7 @@ class User extends \App\Core\Model
             return "Heslo musí obsahovať aspoň 1 veľké písmeno.";
         } else if (!preg_match("/[0-9]/", $password)) {
             return "Heslo musí obsahovať aspoň 1 číslicu.";
-        } else if ($passwordControl != null && strcmp($password, $passwordControl) != 0) {
+        } else if (strcmp($password, $passwordControl) != 0) {
             return "Heslá sa nezhodujú.";
         }
 
@@ -141,7 +141,7 @@ class User extends \App\Core\Model
         if($inp == ""){
             return "Nezadali ste meno.";
         } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $inp)) {
-            return "Meno smie obsahovať iba znaky.";
+            return "Meno smie obsahovať len platné znaky v slovenskej abecede.";
         }
 
         return null;
@@ -152,7 +152,7 @@ class User extends \App\Core\Model
         if($inp == ""){
             return "Nezadali ste priezvisko.";
         } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $inp)) {
-            return "Priezvisko smie obsahovať iba znaky.";
+            return "Priezvisko smie obsahovať len platné znaky v slovenskej abecede.";
         }
 
         return null;

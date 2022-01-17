@@ -1,0 +1,34 @@
+<?php /** @var Array $data */ ?>
+<div class="container-fluid">
+
+    <div class="modal" id="categoryResponse" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body" id="categoryMsg">
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancel_but" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-5 col-sm-6">
+
+            <form id = "formAddCategory" name="reg" method="post" novalidate>
+                <h2 class="text-center bold">Pridanie novej kategórie produktu</h2>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example1cg">Názov</label>
+                    <input type="name" id="categoryName" class="form-control form-control" name="username" onkeyup="validateCategoryName()" autocomplete="off" placeholder="Názov..." required/>
+                    <div id="valid"></div>
+                </div>
+
+                <div class="d-flex justify-content-center" id="submit-info">
+                    <button type="submit" class="btn btn-success validate">Pridať</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

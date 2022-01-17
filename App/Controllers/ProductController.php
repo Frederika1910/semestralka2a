@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Gender;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\ProductCategory;
@@ -33,10 +34,12 @@ class ProductController extends AControllerRedirect
     {
         $categories = ProductCategory::getAll();
         $products = Product::getAll();
+        $genders = Gender::getAll();
         return $this->html(
             [
                 'product_category' => $categories,
-                'products' => $products
+                'products' => $products,
+                'genders' => $genders
             ]);
     }
 
@@ -135,35 +138,27 @@ class ProductController extends AControllerRedirect
         $size = $this->request()->getValue('newSize');
         $price = $this->request()->getValue('newPrice');
 
+        $nameVal = User::validateName($name);
+        $sizeVal = Product::validateSize($size);
+        $priceVal = Product::validatePrice($price);
+
+        if ($nameVal != null) {
+            echo ($nameVal);                            //toto este pozriet!!!!!!
+            exit();
+        } else if ($sizeVal != null) {
+            echo ($sizeVal);
+            exit();
+        } else if ($priceVal != null) {
+            echo($priceVal);
+            exit();
+        }
         $product = Product::getOne($id);
-        if ($name != null) {
-            $product->setName($name);
-        }
-        if ($size != null) {
-            $product->setSize($size);
-        }
-        if ($price != null) {
-            $product->setPrice($price);
-        }
 
+        $product->setName($name);
+        $product->setSize($size);
+        $product->setPrice($price);
 
-        /**
-        foreach ($products as $product) {
-            if ($product->getId() == intval($id)) {
-                if (empty($name) == true) {
-                    $s = $product->getName();
-                    $product->setName($s);
-                } else {
-                    $product->setName($name);
-                }
-
-
-                $product->setSize($size);
-                $product->setPrice($price);
-                $product->save();
-                break;
-            }
-        **/
+        $product->save();
     }
 
     public function showProductDetail() {
@@ -186,20 +181,27 @@ class ProductController extends AControllerRedirect
                             <div class="mt-4 mb-3" style="text-align: center">
                                 <span class="text-uppercase text-muted brand">Second Hand U Inky</span>
                                 <h5 class="text-uppercase" id="nameProduct'. $product->getId() .'">'. $product->getName() .'</h5>  
-                                <input type="name" id="productNameInput'. $product->getId() .'" class="form-control" placeholder="Názov..." style="display: none;"/>                             
+                                <input type="name" id="productNameInput'. $product->getId() .'" class="form-control" onkeyup="validateProductName('. $product->getId() .')" placeholder="Názov..." autocomplete="off" style="display: none;"/>                             
+                                <div id="valid"></div>
                             </div>
                             <div class="sizes mt-5" style="text-align: center">
-                                <h6 class="text-uppercase" id="sizeProduct'. $product->getId() .'">Veľkosť: '. $product->getSize() .' </h6> 
-                                <input type="name" id="productSizeInput'. $product->getId() .'" class="form-control mb-2" placeholder="Veľkosť..." style="display: none;"/>
-                                <span class="act-price" id="priceProduct'. $product->getId() .'">'. $product->getPrice() .'€</span>
-                                <input type="name" id="productPriceInput'. $product->getId() .'" class="form-control" placeholder="Cena..." style="display: none;"/>
+                                <div>
+                                    <h6 class="text-uppercase" id="sizeProduct'. $product->getId() .'">Veľkosť: '. $product->getSize() .' </h6> 
+                                    <input type="name" id="productSizeInput'. $product->getId() .'" class="form-control mb-2" onkeyup="validateSize('. $product->getId() .')" placeholder="Veľkosť..." autocomplete="off" style="display: none;"/>
+                                    <div id="valid"></div>
+                                </div>
+                                <div>
+                                    <span class="act-price" id="priceProduct'. $product->getId() .'">'. $product->getPrice() .'€</span>
+                                    <input type="name" id="productPriceInput'. $product->getId() .'" class="form-control" onkeyup="validatePrice('. $product->getId() .')" placeholder="Cena..." autocomplete="off" style="display: none;"/>
+                                    <div id="valid"></div>
+                                </div>
                             </div>
                             <div class="cart mt-4" style="text-align: center"> 
                             ';
                 if (\App\Auth::isLogged() && \App\Auth::isAdmin()) {
                     $clickedProduct .= '<button type="submit" id="delete_order_but" class="btn btn-primary" dataId='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
                                         <button type="submit" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" dataId='. $product->getId() .' style="background-color:  #A6923F">Upraviť</button>
-                                        <button type="submit" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut" dataId='. $product->getId() .' style="color:  white; background-color: lightblue; display: none">Potvrdiť</button>';
+                                        <button type="submit" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut validate" dataId='. $product->getId() .' disabled="true" style="color:  white; background-color: black; display: none">Potvrdiť</button>';
 
                 } else if (\App\Auth::isLogged()) {
                     $clickedProduct .= '<button type="submit" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000">Pridať do košíka</button>';
@@ -239,17 +241,6 @@ class ProductController extends AControllerRedirect
 
         foreach ($products as $product) {
             $isCorrect = false;
-            /**
-            if (strcmp($product->getGender(), $gender) == 0 && $product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
-                $isCorrect = true;
-            } else if (intval($category) == $product->getCategoryId()) {
-                $isCorrect = true;
-            } else if (strcmp($product->getGender(), $gender) == 0) {
-                $isCorrect = true;
-            } else if ($product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
-                $isCorrect = true;
-            }
-             **/
 
             if ($category != null && $gender != null && $minPrice != null) {
                 if ($product->getCategoryId() == intval($category) && strcmp($product->getGender(), $gender) == 0 && $product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {

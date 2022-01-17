@@ -13,31 +13,25 @@
     <table class="table table-hover" id="tableShoppingCart">
         <thead>
         <tr>
-            <th scope="col" class="productNo">#</th>
             <th scope="col">Množstvo</th>
-            <th scope="col" class="productId">Produkt ID</th>
             <th scope="col">Názov</th>
             <th scope="col" class="productPrice">Cena produktu</th>
             <th scope="col">Cena spolu</th>
         </tr>
         </thead>
         <tbody class="tbody">
-        <?php $index = 1
-        ?>
         <?php foreach ($data['shopping_cart'] as $item) {
            if ($item->getUserId() == $currentUser && $item->getState() == 0) { ?>
-                <tr class="deleteItem<?php echo $item->getId() ?>">
-                    <td class="productNo"><?php echo $index++ ?></td>
                     <td>
                         <span id="quantity<?php echo $item->getId() ?>"><?php echo $item->getQuantity() ?></span>
 
                         <input type="name" id="quantityInput<?php echo $item->getId() ?>" class="form-control" placeholder="Mnozstvo..." style="display: none;"/>
 
                     </td>
-                    <td class="productId"><?php echo $item->getProductId() ?></td>
+                    <td class="colProductId"><?php echo $item->getProductId() ?></td>
                     <?php $product = \App\Models\Product::getOne($item->getProductId()) ?>
                     <td><?php echo $product->getName() ?></td>
-                    <td class="productPrice"><?php echo $product->getPrice() ?>€</td>
+                    <td class="colPrice"><?php echo $product->getPrice() ?>€</td>
                     <td id="price<?php echo $item->getId() ?>"><?php echo $item->getQuantityPrice() ?>€</td>
 
                     <td>

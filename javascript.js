@@ -114,12 +114,13 @@ let returnValuePrice = "null";
 let returnValueCategoryId = "null";
 let returnValueSize = "null";
 let returnValueGender = "null";
+let returnValueProductName = "null";
+let returnValueCategoryName = "null";
 
 function setSubmitButton() {
     console.log("uspech");
 
-    if ( returnValueSurname == null && returnValueStreet == null && returnValueHouseNumber == null && returnValuePsc == null && returnValueCity == null && returnValueCountry == null && returnValueMobileNumber == null) {
-        console.log("som tu");
+    if (returnValueName == null && returnValueSurname == null && returnValueStreet == null && returnValueHouseNumber == null && returnValuePsc == null && returnValueCity == null && returnValueCountry == null && returnValueMobileNumber == null) {
         if (paymentPartOne === true) {
             document.querySelector(".validate").disabled = false;
         } else if (paymentPartTwo === true && returnValueCardNumber == null) {
@@ -127,8 +128,12 @@ function setSubmitButton() {
         }
     } else if (returnValueName == null && returnValueSurname == null && returnValueEmail == null && returnValuePassword == null && returnValuePasswordControl == null) {
         document.querySelector(".validate").disabled = false;
-    } else if (returnValueName == null && returnValuePrice == null && returnValueSize == null && returnValueGender == null && returnValueCategoryId == null && returnValueImage == null) {
+    } else if (returnValueProductName == null && returnValueSize == null && returnValuePrice == null) {
         document.querySelector(".validate").disabled = false;
+    } else if (returnValueCategoryName == null) {
+        document.querySelector(".validate").disabled = false;
+    } else {
+        document.querySelector(".validate").disabled = true;
     }
 }
 
@@ -156,7 +161,7 @@ function check(id) {
 
         if (error) {
             paymentPartTwo = null;
-            //document.querySelector(".validate").disabled = true;
+            document.querySelector(".validate").disabled = true;
         } else {
             paymentPartTwo = true;
         }
@@ -188,13 +193,13 @@ function displayInputInColor(string, element) {
 function validateName() {
     let input = document.getElementById('meno');
     let inputValue = input.value;
-    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-    console.log(inputValue);
+    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+
     if (!inputValue || inputValue.length === 0) {
         returnValueName = "Meno nesmie byť prázdne.";
         return displayInputInColor(returnValueName, input);
-    } else if (!disabledChar.test(inputValue)){
-        returnValueName = "Meno smie obsahovať len znaky.";
+    } else if (!char.test(inputValue)){
+        returnValueName = "Meno smie obsahovať len platné znaky v slovenskej abecede.";
         return displayInputInColor(returnValueName, input);
     }
 
@@ -205,13 +210,13 @@ function validateName() {
 function validateSurname() {
     let input = document.getElementById('priezvisko');
     let inputValue = input.value;
-    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-    console.log(inputValue);
+    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+
     if (!inputValue || inputValue.length === 0) {
         returnValueSurname = "Priezvisko nesmie byť prázdne.";
         return displayInputInColor(returnValueSurname, input);
-    } else if (!disabledChar.test(inputValue)){
-        returnValueSurname = "Priezvisko smie obsahovať len znaky.";
+    } else if (!char.test(inputValue)){
+        returnValueSurname = "Priezvisko smie obsahovať len platné znaky v slovenskej abecede.";
         return displayInputInColor(returnValueSurname, input);
     }
 
@@ -222,13 +227,13 @@ function validateSurname() {
 function validateStreet() {
     let input = document.getElementById('street');
     let inputValue = input.value;
-    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-    console.log(inputValue);
+    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+
     if (!inputValue || inputValue.length === 0) {
-        returnValueStreet = "Ulica nesmie byť prázdne.";
+        returnValueStreet = "Ulica nesmie byť prázdna.";
         return displayInputInColor(returnValueStreet, input);
-    } else if (!disabledChar.test(inputValue)){
-        returnValueStreet = "Ulica jsmie obsahovať len znaky.";
+    } else if (!char.test(inputValue)){
+        returnValueStreet = "Ulica smie obsahovať len platné znaky v slovenskej abecede.";
         return displayInputInColor(returnValueStreet, input);
     }
 
@@ -239,13 +244,13 @@ function validateStreet() {
 function validateCity() {
     let input = document.getElementById('city');
     let inputValue = input.value;
-    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-    console.log(inputValue);
+    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+
     if (!inputValue || inputValue.length === 0) {
         returnValueCity = "Obec nesmie byť prázdne.";
         return displayInputInColor(returnValueCity, input);
-    } else if (!disabledChar.test(inputValue)){
-        returnValueCity = "Obec smie obsahovať len znaky.";
+    } else if (!char.test(inputValue)){
+        returnValueCity = "Obec smie obsahovať len platné znaky v slovenskej abecede.";
         return displayInputInColor(returnValueCity, input);
     }
 
@@ -256,13 +261,13 @@ function validateCity() {
 function validateCountry() {
     let input = document.getElementById('country');
     let inputValue = input.value;
-    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-    console.log(inputValue);
+    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+
     if (!inputValue || inputValue.length === 0) {
-        returnValueCountry = "Štát nesmie byť prázdne.";
+        returnValueCountry = "Štát nesmie byť prázdny.";
         return displayInputInColor(returnValueCountry, input);
-    } else if (!disabledChar.test(inputValue)){
-        returnValueCountry = "Štát smie obsahovať len znaky.";
+    } else if (!char.test(inputValue)){
+        returnValueCountry = "Zadali ste neplatný znak.";
         return displayInputInColor(returnValueCountry, input);
     }
 
@@ -306,7 +311,7 @@ function validateHouseNumber() {
 function validatePsc() {
     let input = document.getElementById('psc');
     let inputValue = input.value;
-    let disabledChar = /[0-9]$/;
+    let disabledChar = /^[0-9\b]+$/;
     console.log(inputValue);
     if (!inputValue || inputValue.length === 0) {
         returnValuePsc = "PSČ nesmie byť prázdne.";
@@ -357,7 +362,7 @@ function validateMobileNumber() {
     } else if ((inputValue.substr(0,4) !== '+421')) {
         returnValueMobileNumber = "Telefónne číslo musí začínať +421.";
         return displayInputInColor(returnValueMobileNumber, input);
-    }if (inputValue.length < 13 || inputValue.length > 13) {
+    } else if (inputValue.length < 13 || inputValue.length > 13) {
         returnValueMobileNumber = "Telefónne číslo musí mať presne 13 znakov.";
         return displayInputInColor(returnValueMobileNumber, input);
     }
@@ -406,10 +411,10 @@ function validatePasswordControl() {
     return displayInputInColor(returnValuePasswordControl, passwordControl);
 }
 
-function validatePrice() {
-    let input = document.getElementById('price');
+function validatePrice(id) {
+    let input = document.getElementById('productPriceInput'+id);
     let inputValue = input.value;
-    let disabledChar = /[0-9]$/;
+    let disabledChar = /^[0-9]\d*(,\d+)?$/;
     console.log(inputValue);
     if (!inputValue || inputValue.length === 0) {
         returnValuePrice = "Cena nesmie byť prázdna.";
@@ -417,14 +422,17 @@ function validatePrice() {
     } else if (!disabledChar.test(inputValue)){
         returnValuePrice = "Cena smie obsahovať len číslice.";
         return displayInputInColor(returnValuePrice, input);
+    } else if (inputValue <= 0){
+        returnValuePrice = "Cena musí byť kladné číslo.";
+        return displayInputInColor(returnValuePrice, input);
     }
 
     returnValuePrice = null;
     return displayInputInColor(returnValuePrice, input);
 }
 
-function validateSize() {
-    let input = document.getElementById('size');
+function validateSize(id) {
+    let input = document.getElementById('productSizeInput'+id);
     let inputValue = input.value;
     let disabledChar = /[0-9\a-zA-Z]$/;
     console.log(inputValue);
@@ -455,6 +463,23 @@ function validateGender() {
 
     returnValueGender = null;
     return displayInputInColor(returnValueGender, input);
+}
+
+function validateCategoryName() {
+    let input = document.getElementById('categoryName');
+    let inputValue = input.value;
+    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+
+    if (!inputValue || inputValue.length === 0) {
+        returnValueCategoryName = "Názov nesmie byť prázdny.";
+        return displayInputInColor(returnValueCategoryName, input);
+    } else if (!char.test(inputValue)){
+        returnValueCategoryName = "Názov smie obsahovať len platné znaky v slovenskej abecede.";
+        return displayInputInColor(returnValueCategoryName, input);
+    }
+
+    returnValueCategoryName = null;
+    return displayInputInColor(returnValueCategoryName, input);
 }
 
 function validateCategory() {
@@ -501,14 +526,14 @@ $(document).ready(function () {
         let c = document.getElementById('cards');
         let cardsValue = c.options[c.selectedIndex].value;
 
-        let cardNumber = $('#cardNumber').val();
+        //let cardNumber = $('#cardNumber').val();
 
         let m = document.getElementById('months');
         let monthValue = m.options[m.selectedIndex].value;
 
         let y = document.getElementById('years');
         let yearValue = y.options[y.selectedIndex].value;
-
+        console.log(rb1 + " " + rb2);
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=order&a=addNewOrder',
@@ -524,7 +549,6 @@ $(document).ready(function () {
                 rbOne: rb1,
                 rbTwo: rb2,
                 sOne: cardsValue,
-                cardNo: cardNumber,
                 sTwo: monthValue,
                 sTree: yearValue
             },
@@ -655,11 +679,9 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function (data) {
-
-                $('#modelMsg').html(data);
-                $('#productResponse').show();
-
-
+                $('.filter_data').html(data);
+                //$('#modelMsg').html(data);
+                //$('#productResponse').show();
             }
         })
     })
@@ -765,7 +787,7 @@ $(document).ready(function () {
     $('#formAddCategory').submit(function (e) {
         e.preventDefault();
 
-        let name = $('#meno').val();
+        let name = $('#categoryName').val();
 
         $.ajax({
             method: 'POST',
@@ -873,12 +895,101 @@ $(document).ready(function() {
                 $('#save_order_but'+save_id).hide();
                 $('#edit_order_but'+save_id).show();
 
-                if (new_name != null) {
-                    $('#nameProduct'+save_id).html(new_name);
-                } else if (new_size != null) {
-                    $('#sizeProduct'+save_id).html(new_size);
-                } else if (new_price != null) {
-                    $('#priceProduct'+save_id).html(new_price);
+                $('#nameProduct'+save_id).html(new_name);
+                $('#sizeProduct'+save_id).html("Veľkosť: " + new_size);
+                $('#priceProduct'+save_id).html(new_price+"€");
+
+            }
+        })
+    })
+})
+
+function validateProductName(id) {
+    let input = document.getElementById('productNameInput'+id);
+    let inputValue = input.value;
+    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueProductName = "Meno nesmie byť prázdne.";
+        return displayInputInColor(returnValueProductName, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueProductName = "Meno smie obsahovať len znaky.";
+        return displayInputInColor(returnValueProductName, input);
+    }
+
+    returnValueProductName = null;
+    return displayInputInColor(returnValueProductName, input);
+}
+
+$(document).ready(function() {
+    $(document).on('click', '#orders_filter_but', function () {
+        let choice = $('.order:checked').val();
+        console.log(choice);
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost/semestralka2?c=order&a=showFilteredOrders',
+            data: {
+                state: choice
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('#userOrders').html(data)
+                //$('#modelMsg').html(data);
+                //$('#productResponse').show();
+
+
+            }
+        })
+    })
+})
+
+$(document).ready(function() {
+    $(document).on('click', '.sendOrderBut', function () {
+        let send_order_id = $(this).attr('dataId');
+        //let numberOfRows = document.getElementById('tableOrders').rows.length;
+
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost/semestralka2?c=order&a=sendOrder',
+            data: {
+                sendItem: send_order_id,
+            },
+            success: function () {
+                //$('.deleteItem' + del_id).fadeOut('slow');
+                console.log(send_order_id);
+                let i = $('#tableOrders').find('.sendItem'+send_order_id).index();
+
+                document.getElementById('tableOrders').deleteRow(i+1);
+                //if (numberOfRows <= 2) {
+                //    $('#order_but').fadeOut('slow');
+                //}
+            }
+        })
+    })
+})
+
+
+$(document).ready(function() {
+    $(document).on('click', '.confirmStornoOrderBut', function () {
+        let confimr_storno_order_id = $(this).attr('dataId');
+        let numberOfRows = document.getElementById('tableOrders').rows.length;
+        let x = 4;
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost/semestralka2?c=order&a=setOrderState',
+            data: {
+                sendItem: confimr_storno_order_id,
+                state: 4
+            },
+            success: function () {
+                //$('.deleteItem' + del_id).fadeOut('slow');
+                //console.log(send_order_id);
+                let i = $('#tableOrders').find('.sendItem'+confimr_storno_order_id).index();
+
+                document.getElementById('tableOrders').deleteRow(i+1);
+                if (numberOfRows <= 2) {
+                    $('#order_but').fadeOut('slow');
                 }
             }
         })

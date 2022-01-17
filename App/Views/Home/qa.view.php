@@ -18,15 +18,15 @@
     </div>
 
     <div id="howOrder" style="display: none">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Váš tovar si môžete objednať veľmi jednoducho. Po tom ako si nájdete svoj tovar, ktorý ste sa rozhodli kúpiť, stačí kliknúť na tlačítko Viac, ktoré sa nachádza pri každom jednom produkte. Následne sa Vám zobrazia detialné informácie, spolu s možnosťou pridania produktu do košíka. Ak si zvolíte túto možnosť, systém Vás informuje o úspešnom pridaní tovaru. Tovar sa v košíku nachádza kým si ho neobjednáte a nezaplatíte alebo kým sa sami nerozhodnete vymazať tovar z nákupného košíka.
     </div>
 
     <div id="howGet" style="display: none">
-        XXXLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Náš tovar doručujeme pomocou spoločnosti SPS, ktorá dovoľuje zákazníkom sledovať aj pohyb objednávky vďaka identifikačnému číslu v prijatom maili. Tovar Vám príde v priebehu 2 - 3 dní odo dňa objednania. Aktuálne pri online platbe za tovar poskytujeme poštovné zadarmo bez obmedzenia výšky ceny objednávky.
     </div>
 
     <div id="howRefund" style="display: none">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Áno, tovar je možné vrátiť do 30 dní od doručenia Vašej objednávky bez udania dôvodu. Stačí napísať správu na uvedenú e-mailovú adresu na našej stránke v sekcii O nás. Peniaze za tovar Vám budú vrátené. Tovar je možné vrátiť osobne u nás v predajni alebo zaslať poštou. Náklady spojené s vrátením tovaru si musí zákazník hradiť sám.
     </div>
 
 
