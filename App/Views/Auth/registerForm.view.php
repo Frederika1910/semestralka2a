@@ -13,34 +13,34 @@
             <form class = "registration" name="reg" method="post" action="?c=auth&a=register" novalidate>
                 <h2 class="text-center bold">Registrácia</h2>
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example1cg">Meno</label>
-                    <input type="name" id="meno" class="form-control form-control" name="username" onkeyup="validateName()" placeholder="Meno..." required/>
-                    <div id="valid"></div>
+                    <label class="form-label">Meno</label>
+                    <input type="text" id="meno" class="form-control form-control" name="username" onkeyup="validateName()" placeholder="Meno..." required/>
+                    <div class="valid"></div>
                 </div>
 
 
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example1cg">Priezvisko</label>
-                    <input type="name" id="priezvisko" class="form-control" name="surname" onkeyup="validateSurname()" placeholder="Priezvisko..." required/>
-                    <div id="valid"></div>
+                    <label class="form-label">Priezvisko</label>
+                    <input type="text" id="priezvisko" class="form-control" name="surname" onkeyup="validateSurname()" placeholder="Priezvisko..." required/>
+                    <div class="valid"></div>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example3cg">E-mail</label>
+                    <label class="form-label">E-mail</label>
                     <input type="email" id="mail" class="form-control" name="login" onkeyup="validateEmail()" placeholder="E-mail..." required/>
-                    <div id="valid"></div>
+                    <div class="valid"></div>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example4cg">Heslo</label>
+                    <label class="form-label">Heslo</label>
                     <input type="password" id="heslo" class="form-control" name="password" onkeyup="validatePassword()" placeholder="Heslo..." required/>
-                    <div id="valid"></div>
+                    <div class="valid"></div>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example4cdg">Kontrola hesla</label>
+                    <label class="form-label">Kontrola hesla</label>
                     <input type="password" id="hesloKontrola" class="form-control" name="confirmPassword" onkeyup="validatePasswordControl()" placeholder="Kontrola hesla..." required/>
-                    <div id="valid"></div>
+                    <div class="valid"></div>
                 </div>
 
                 <div class="d-flex justify-content-center" id="submit-info">

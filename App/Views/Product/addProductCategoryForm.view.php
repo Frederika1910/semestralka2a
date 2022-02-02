@@ -9,9 +9,11 @@
                 </div>
                 <div class="modal-footer">
                     <div class="sidebar">
-                        <li class="sidebar-item">
-                            <a href="?c=home&a=loggedUser" class="px-2">Zavrieť</a>
-                        </li>
+                        <ul>
+                            <li class="sidebar-item">
+                                <a href="?c=home&a=loggedUser" class="px-2">Zavrieť</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -23,8 +25,8 @@
             <form id = "formAddCategory" name="reg" method="post" novalidate>
                 <h2 class="text-center bold">Pridanie novej kategórie produktu</h2>
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example1cg">Názov</label>
-                    <input type="name" id="categoryName" class="form-control form-control" name="username" onkeyup="validateCategoryName()" autocomplete="off" placeholder="Názov..." required/>
+                    <label class="form-label">Názov</label>
+                    <input type="text" id="categoryName" class="form-control form-control" name="username" onkeyup="validateCategoryName()" autocomplete="off" placeholder="Názov..." required/>
                     <div id="valid"></div>
                 </div>
 

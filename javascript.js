@@ -173,7 +173,7 @@ function check(id) {
 function displayInputInColor(string, element) {
     let elementId = document.getElementById(element.id);
     let elementParent = elementId.parentElement;
-    let divErrorText = elementParent.querySelector("#valid")
+    let divErrorText = elementParent.querySelector(".valid")
     let errorText = [];
 
     if (string != null) {
@@ -658,7 +658,7 @@ $(document).ready(function() {
 })
 
 $(document).ready(function() {
-    $(document).on('click', '#filter_but', function () {
+    $(document).on('click', '.filter_but', function () {
         let category_id = getFilter('category');
         let min_price = $('.price:checked').attr('min');
         let max_price = $('.price:checked').attr('max');
@@ -694,7 +694,7 @@ function getFilter(filter) {
 }
 
 $(document).ready(function() {
-    $(document).on('click', '#clear_but', function () {
+    $(document).on('click', '.clear_but', function () {
        let x = document.getElementsByClassName('common_selector');
 
        let check = 0;
@@ -723,7 +723,7 @@ function myFunction(id) {
 }
 
 $(document).ready(function() {
-    $(document).on('click', '#more_but', function (e) {
+    $(document).on('click', '.more_but', function (e) {
         e.preventDefault();
 
         let product_id = $(this).attr('dataId');

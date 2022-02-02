@@ -2,17 +2,23 @@
     <div class="row">
         <div class="col-lg-4 col-sm-12">
             <div class="sidebar" style="color:  #8B0000">
-                <li class="sidebar-item"><a onclick="myFunction('howOrder')" href="#" class="px-2">Ako si tovar objednám?</a></li>
+                <ul>
+                    <li class="sidebar-item"><a onclick="myFunction('howOrder')" href="#" class="px-2">Ako si tovar objednám?</a></li>
+                </ul>
             </div>
         </div>
         <div class="col-lg-4 col-sm-12">
             <div class="sidebar">
-                <li class="sidebar-item"><a onclick="myFunction('howGet')" href="#" class="px-2">Ako sa mi tovar doručí?</a></li>
+                <ul>
+                    <li class="sidebar-item"><a onclick="myFunction('howGet')" href="#" class="px-2">Ako sa mi tovar doručí?</a></li>
+                </ul>
             </div>
         </div>
         <div class="col-lg-4 col-sm-12">
             <div class="sidebar">
-                <li class="sidebar-item"><a onclick="myFunction('howRefund')" href="#" class="px-2">Môžem tovar vrátiť?</a></li>
+                <ul>
+                    <li class="sidebar-item"><a onclick="myFunction('howRefund')" href="#" class="px-2">Môžem tovar vrátiť?</a></li>
+                </ul>
             </div>
         </div>
     </div>

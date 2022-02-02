@@ -143,7 +143,7 @@ class ProductController extends AControllerRedirect
         $priceVal = Product::validatePrice($price);
 
         if ($nameVal != null) {
-            echo ($nameVal);                            //toto este pozriet!!!!!!
+            echo ($nameVal);
             exit();
         } else if ($sizeVal != null) {
             echo ($sizeVal);
@@ -182,18 +182,18 @@ class ProductController extends AControllerRedirect
                                 <span class="text-uppercase text-muted brand">Second Hand U Inky</span>
                                 <h5 class="text-uppercase" id="nameProduct'. $product->getId() .'">'. $product->getName() .'</h5>  
                                 <input type="name" id="productNameInput'. $product->getId() .'" class="form-control" onkeyup="validateProductName('. $product->getId() .')" placeholder="Názov..." autocomplete="off" style="display: none;"/>                             
-                                <div id="valid"></div>
+                                <div class="valid"></div>
                             </div>
                             <div class="sizes mt-5" style="text-align: center">
                                 <div>
                                     <h6 class="text-uppercase" id="sizeProduct'. $product->getId() .'">Veľkosť: '. $product->getSize() .' </h6> 
                                     <input type="name" id="productSizeInput'. $product->getId() .'" class="form-control mb-2" onkeyup="validateSize('. $product->getId() .')" placeholder="Veľkosť..." autocomplete="off" style="display: none;"/>
-                                    <div id="valid"></div>
+                                    <div class="valid"></div>
                                 </div>
                                 <div>
                                     <span class="act-price" id="priceProduct'. $product->getId() .'">'. $product->getPrice() .'€</span>
                                     <input type="name" id="productPriceInput'. $product->getId() .'" class="form-control" onkeyup="validatePrice('. $product->getId() .')" placeholder="Cena..." autocomplete="off" style="display: none;"/>
-                                    <div id="valid"></div>
+                                    <div class="valid"></div>
                                 </div>
                             </div>
                             <div class="cart mt-4" style="text-align: center"> 

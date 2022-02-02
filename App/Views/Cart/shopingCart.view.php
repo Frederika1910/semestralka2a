@@ -8,7 +8,7 @@
         }
     }
     if ($numberOfItems <= 0) { ?>
-        <h5 align="center">Váš nákupný košík je prázdny.</h5>
+        <h5>Váš nákupný košík je prázdny.</h5>
     <?php } else { ?>
 
     <table class="table table-hover" id="tableShoppingCart">
@@ -18,16 +18,18 @@
             <th scope="col">Názov</th>
             <th scope="col" class="productPrice">Cena produktu</th>
             <th scope="col">Cena spolu</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody class="tbody">
         <?php foreach ($data['shopping_cart'] as $item) {
            if ($item->getUserId() == $currentUser && $item->getState() == 0) { ?>
+               <tr class="deleteItem<?php echo $item->getId() ?>">
                     <td>
                         <span id="quantity<?php echo $item->getId() ?>"><?php echo $item->getQuantity() ?></span>
-                        <input type="name" id="quantityInput<?php echo $item->getId() ?>" class="form-control" placeholder="Mnozstvo..." style="display: none;"/>
+                        <input type="text" id="quantityInput<?php echo $item->getId() ?>" class="form-control" placeholder="Mnozstvo..." style="display: none;"/>
                     </td>
-                    <td class="colProductId"><?php echo $item->getProductId() ?></td>
                     <?php $product = \App\Models\Product::getOne($item->getProductId()) ?>
                     <td><?php echo $product->getName() ?></td>
                     <td class="colPrice"><?php echo $product->getPrice() ?>€</td>
