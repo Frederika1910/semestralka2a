@@ -28,7 +28,7 @@
                <tr class="deleteItem<?php echo $item->getId() ?>">
                     <td>
                         <span id="quantity<?php echo $item->getId() ?>"><?php echo $item->getQuantity() ?></span>
-                        <input type="text" id="quantityInput<?php echo $item->getId() ?>" class="form-control" placeholder="Mnozstvo..." style="display: none;"/>
+                        <input type="text" id="quantityInput<?php echo $item->getId() ?>" class="form-control" autocomplete="off" placeholder="Mnozstvo..." style="display: none;">
                     </td>
                     <?php $product = \App\Models\Product::getOne($item->getProductId()) ?>
                     <td><?php echo $product->getName() ?></td>
@@ -79,7 +79,7 @@
                 }
             }
             if ($numberOfItems > 0) { ?>
-            <a href="?c=order&a=orderForm"><button class="btn btn-success p-1" id="order_but" type="button">Objednať</button></a>
+                <button class="btn btn-success p-1" id="order_but" onclick="getOrderForm()" type="button">Objednať</button>
             <?php } ?>
         </div>
     <?php } ?>

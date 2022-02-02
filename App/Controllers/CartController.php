@@ -59,6 +59,11 @@ class CartController extends AControllerRedirect
         $oldItem = Cart::getOne($this->request()->getValue('oldItem'));
 
         $newQuantity = $this->request()->getValue('text');
+
+        if (!preg_match("/[0-9]$/", $newQuantity)){
+            return;
+        }
+
         $oldItem->setQuantity($newQuantity);
 
         $product = Product::getOne($oldItem->getProductId());

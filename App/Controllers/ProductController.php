@@ -236,45 +236,10 @@ class ProductController extends AControllerRedirect
             exit();
         }
 
-        $products = Product::getAll();
+        $products = Product::getAll('category_id=?', [$category]);
         $array = array();
-
         foreach ($products as $product) {
-            $isCorrect = false;
-
-            if ($category != null && $gender != null && $minPrice != null) {
-                if ($product->getCategoryId() == intval($category) && strcmp($product->getGender(), $gender) == 0 && $product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
-                    $isCorrect = true;
-                }
-            } else if ($category != null && $gender != null) {
-                if ($product->getCategoryId() == intval($category) && strcmp($product->getGender(), $gender) == 0) {
-                    $isCorrect = true;
-                }
-            } else if ($category != null && $minPrice != null) {
-                if ($product->getCategoryId() == intval($category) && $product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
-                    $isCorrect = true;
-                }
-            } else if ($gender != null && $minPrice != null) {
-                if (strcmp($product->getGender(), $gender) == 0 && $product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
-                    $isCorrect = true;
-                }
-            } else if ($category != null) {
-                if ($product->getCategoryId() == intval($category)) {
-                    $isCorrect = true;
-                }
-            } else if ($gender != null) {
-                if (strcmp($product->getGender(), $gender) == 0) {
-                    $isCorrect = true;
-                }
-            }else if ($minPrice != null) {
-                if ($product->getPrice() >= $minPrice && $product->getPrice() <= $maxPrice) {
-                    $isCorrect = true;
-                }
-            }
-
-
-            if ($isCorrect) {
-                $filteredProduct = '
+            $filteredProduct = '
                 <div class="col-lg-4 col-md-6 mt-2">
                     <div class="card" style="width: 18rem;">
                             <img class="card-img-top" src="/semestralka2/' . \App\Config\Configuration::UPLOAD_DIR . $product->getImage() .'" alt="Card image cap">
@@ -291,8 +256,7 @@ class ProductController extends AControllerRedirect
                     </div>
 
                 </div>';
-                array_push($array, $filteredProduct);
-            }
+            array_push($array, $filteredProduct);
         }
 
         if (sizeof($array) == 0) {
@@ -302,7 +266,6 @@ class ProductController extends AControllerRedirect
 
         echo json_encode($array);
         exit();
+
     }
-
-
 }

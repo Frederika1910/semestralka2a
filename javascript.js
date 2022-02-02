@@ -54,6 +54,10 @@ buttonClose.onclick = function() {
     popup.style.display = "none";
 }
 
+function getOrderForm() {
+    location.href = '?c=order&a=orderForm';
+}
+
 window.onload = function() {
     getDarkMode();
 
@@ -132,6 +136,8 @@ function setSubmitButton() {
         document.querySelector(".validate").disabled = false;
     } else if (returnValueCategoryName == null) {
         document.querySelector(".validate").disabled = false;
+    } else if (returnValuePassword == null && returnValuePasswordControl == null) {
+        document.querySelector(".validate").disabled = false;
     } else {
         document.querySelector(".validate").disabled = true;
     }
@@ -191,6 +197,7 @@ function displayInputInColor(string, element) {
 }
 
 function validateName() {
+    console.log("sdsd");
     let input = document.getElementById('meno');
     let inputValue = input.value;
     let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
@@ -650,8 +657,10 @@ $(document).ready(function() {
                     $('#save_but'+edit_id).hide()
                     $('#edit_but'+edit_id).show();
 
-                    $('#quantity'+edit_id).html(aString);
-                    $('#price'+edit_id).html(totalPriceString+'€');
+                    if (!isNaN(quantity_input)) {
+                        $('#quantity' + edit_id).html(aString);
+                        $('#price' + edit_id).html(totalPriceString + '€');
+                    }
                 }
             })
         })
@@ -681,8 +690,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function (data) {
                 $('.filter_data').html(data);
-                //$('#modelMsg').html(data);
-                //$('#productResponse').show();
+
             }
         })
     })

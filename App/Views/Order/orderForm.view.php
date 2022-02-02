@@ -1,5 +1,5 @@
 <?php /** @var Array $data */ ?>
-<div class="container-fluid" onload="fillInputs()">
+<div class="container-fluid">
 
     <div class="modal" id="productResponse" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -169,7 +169,7 @@
                         </div>
                     </div>
                     <div class="d-flex" style="justify-content: flex-end">
-                        <a href="#"><button type="submit" id="payment_but" class="btn btn-success validate">Potvrdiť</button></a>
+                        <button type="submit" id="payment_but" class="btn btn-success validate">Potvrdiť</button>
                     </div>
 
                 </div>
