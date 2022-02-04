@@ -41,16 +41,11 @@ class CartController extends AControllerRedirect
 
     public function removeOrderItem()
     {
-        $orders = Cart::getAll();
-        $delCartItem = intval($this->request()->getValue('deleteItem'));
-        $delItemPrice = 0;
-        foreach ($orders as $item) {
-            if ($item->getId() === $delCartItem) {
-                $product = Product::getOne($item->getProductId());
-                $delItemPrice = $product->getPrice();
-                $item->delete();
-            }
-        }
+        $deleteCartItem = Cart::getOne($this->request()->getValue('deleteItem'));
+        $deleteProduct = Product::getOne($deleteCartItem->getProductId());
+        $delItemPrice = $deleteProduct->getPrice();
+        $deleteCartItem->delete();
+
         echo $delItemPrice;
     }
 
@@ -60,8 +55,8 @@ class CartController extends AControllerRedirect
 
         $newQuantity = $this->request()->getValue('text');
 
-        if (!preg_match("/[0-9]$/", $newQuantity)){
-            return;
+        if (preg_match('/[a-zA-Z]/', $newQuantity) || $newQuantity <= 0) {
+            exit();
         }
 
         $oldItem->setQuantity($newQuantity);
@@ -72,14 +67,17 @@ class CartController extends AControllerRedirect
     }
 
     public function addToCart() {
-
         $product = Product::getOne($this->request()->getValue('id'));
 
         $currentUser = Auth::getId();
         $items = Cart::getAll();
+        //$itemsOfUser = Cart::getAll('user_id=?', [$currentUser]);
+        //$itemsOfProduct = Cart::getAll('product_id=?', [$product->getId()]);
+        //echo json_encode($itemsOfProduct);
+        //exit();
         foreach ($items as $item) {
             if ($item->getProductId() == $product->getId() && $item->getUserId() == $currentUser && $item->getState() == 0) {
-                echo "Produkt sa v tvojom košíku už nachádza.";
+                echo json_encode("Produkt sa v tvojom košíku už nachádza.");
                 exit();
             }
         }
@@ -91,8 +89,7 @@ class CartController extends AControllerRedirect
         $cartItem->setUserId($currentUser);
         $cartItem->save();
 
-        echo "Produkt bol úspešne pridaný do tvojho košíka.";
+        echo json_encode("Produkt bol úspešne pridaný do tvojho košíka.");
         exit();
     }
-
 }

@@ -61,23 +61,11 @@ class AuthController extends AControllerRedirect
         $login = $this->request()->getValue('login');
         $password = $this->request()->getValue('password');
 
-        //$loginVal = User::validateEmail($login);
-        //$passwordVal = User::validatePassword($password, null);
-        //if ($loginVal != null) {
-          //  exit($loginVal);
-        //} else if ($passwordVal != null) {
-        //    exit($passwordVal);
-        //}
-
-        //$login = User::getAll("login='{$_POST['login']}'");
-        //$user = User::getAll('login=?', [$_POST['login']]);
-
         $userExist = Auth::login($login, $password);
         if ($userExist) {
             Auth::setSession($login);
             $this->redirect('home','loggedUser');
         } else {
-            //loginView lebo chcem aby sa uzivatelovi ukazal formular znova
             $this->redirect('auth', 'loginForm', ['error' => 'Nesprávne prihlasovacie údaje.']);
         }
     }
@@ -124,29 +112,17 @@ class AuthController extends AControllerRedirect
 
     public function delete()
     {
-        $login = Auth::getName();
-        $users = User::getAll();
-        $carts = Cart::getAll();
-        $orders = Order::getAll();
-
-        $deleteUser = null;
-        foreach ($users as $user) {
-            if ($user->getLogin() == $login) {
-                $deleteUser = $user;
-                break;
-            }
-        }
+        $id = Auth::getId();
+        $deleteUser = User::getOne($id);
+        $carts = Cart::getAll('user_id=?',[$deleteUser->getId()]);
+        $orders = Order::getAll('user_id=?',[$deleteUser->getId()]);
 
         foreach ($carts as $cart) {
-            if ($cart->getUserId() == $deleteUser->getId()) {
-                $cart->delete();
-            }
+            $cart->delete();
         }
 
         foreach ($orders as $order) {
-            if ($order->getUserId() == $deleteUser->getId()) {
-                $order->delete();
-            }
+            $order->delete();
         }
 
         Auth::logout();
@@ -161,6 +137,9 @@ class AuthController extends AControllerRedirect
         $newPControl = $this->request()->getValue('newPassControl');
 
         $passwordVal = User::validatePassword($oldP, $newP);
+        if ($passwordVal != null) {
+            exit($passwordVal);
+        }
 
         $userExist = Auth::getUser($login, $oldP);
         if ($userExist != null) {

@@ -1,5 +1,19 @@
 <?php /** @var Array $data */ ?>
 <div class="container">
+
+    <div class="modal" id="productResponse" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body" id="modelMsg">
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancel_but" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php $currentUser = \App\Auth::getId();
     $numberOfItems = 0;
     foreach ($data['shopping_cart'] as $item) {
@@ -28,7 +42,7 @@
                <tr class="deleteItem<?php echo $item->getId() ?>">
                     <td>
                         <span id="quantity<?php echo $item->getId() ?>"><?php echo $item->getQuantity() ?></span>
-                        <input type="text" id="quantityInput<?php echo $item->getId() ?>" class="form-control" autocomplete="off" placeholder="Mnozstvo..." style="display: none;">
+                        <input type="text" id="quantityInput<?php echo $item->getId() ?>" class="form-control" placeholder="Mnozstvo..." style="display: none;" required>
                     </td>
                     <?php $product = \App\Models\Product::getOne($item->getProductId()) ?>
                     <td><?php echo $product->getName() ?></td>

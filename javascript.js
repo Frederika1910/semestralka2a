@@ -560,6 +560,7 @@ $(document).ready(function () {
                 sTwo: monthValue,
                 sTree: yearValue
             },
+            dataType: 'json',
             success: function (data) {
                 console.log(data);
                 //console.log("rB " + radio_first);
@@ -570,23 +571,22 @@ $(document).ready(function () {
     })
 });
 
+let numberOfRows = $('#tableShoppingCart tbody tr').length;
 $(document).ready(function() {
     $(document).on('click', '.delBut', function () {
         let del_id = $(this).attr('dataId');
-        let numberOfRows = document.getElementById('tableShoppingCart').rows.length;
 
+        console.log("riadky " + numberOfRows);
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=cart&a=removeOrderItem',
             data: {
                 deleteItem: del_id,
             },
-            success: function (data) {
-                //$('.deleteItem' + del_id).fadeOut('slow');
-                let i = $('#tableShoppingCart').find('deleteItem'+del_id).index();
-
-                document.getElementById('tableShoppingCart').deleteRow(i);
-                if (numberOfRows <= 2) {
+            success: function () {
+                $('.deleteItem' + del_id).fadeOut('slow');
+                numberOfRows--;
+                if (numberOfRows < 1) {
                     $('#order_but').fadeOut('slow');
                 }
             }
@@ -617,12 +617,13 @@ $(document).ready(function() {
             data: {
                 id: product_id
             },
+            dataType: 'json',
             success: function (data) {
-                $('#modelMsg').html(data);
-                $('#productResponse').show();
+                console.log(data);
+                //$('#modelMsg').html(data);
+                //$('#productResponse').show();
             }
         })
-
     })
 })
 
@@ -638,26 +639,30 @@ $(document).ready(function() {
             e.preventDefault();
             let edit_id = $(this).attr('dataId');
             let quantity_price = $(this).attr('dataPrice'); //8
-
-            let quantity_input = parseInt($('#quantityInput'+edit_id).val());
-            let totalPrice = quantity_price * quantity_input;
-            let aString = quantity_input.toString();
-            let totalPriceString = totalPrice.toString();
+            let quantity_input = ($('#quantityInput'+edit_id).val());
 
             $.ajax({
                 type: 'POST',
                 url: 'http://localhost/semestralka2?c=cart&a=editOrderItem',
-                data: {text: $('#quantityInput'+edit_id).val(),
+                data: {text: quantity_input,
                     oldItem: edit_id,
                     },
                 success: function () {
                     $('#quantityInput'+edit_id).hide();
                     $('#quantity'+edit_id).show();
 
-                    $('#save_but'+edit_id).hide()
+                    $('#save_but'+edit_id).hide();
                     $('#edit_but'+edit_id).show();
 
-                    if (!isNaN(quantity_input)) {
+                    let aString = quantity_input.toString();
+
+                    if (isNaN(quantity_input) || parseInt(quantity_input) <= 0) {
+                       $('#modelMsg').html("Zadal si neplatnú hodnotu.");
+                        $('#productResponse').show();
+                    } else {
+                        let totalPrice = quantity_price * parseInt(quantity_input);
+                        let totalPriceString = totalPrice.toString();
+
                         $('#quantity' + edit_id).html(aString);
                         $('#price' + edit_id).html(totalPriceString + '€');
                     }
@@ -690,7 +695,6 @@ $(document).ready(function() {
             dataType: 'json',
             success: function (data) {
                 $('.filter_data').html(data);
-
             }
         })
     })
@@ -733,9 +737,7 @@ function myFunction(id) {
 $(document).ready(function() {
     $(document).on('click', '.more_but', function (e) {
         e.preventDefault();
-
         let product_id = $(this).attr('dataId');
-        console.log(product_id);
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=product&a=showProductDetail',
@@ -743,7 +745,7 @@ $(document).ready(function() {
                 id: product_id
             },
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 $('#productDetailMsg').html(data);
                 $('#productDetail').show();
             }
@@ -770,7 +772,7 @@ $(document).ready(function() {
     $(document).on('click', '.delOrderBut', function (e) {
         e.preventDefault();
         let order_item_id = $(this).attr('dataId');
-        console.log("ss" + order_item_id);
+        //console.log("ss" + order_item_id);
 
         $.ajax({
             method: 'POST',
@@ -779,14 +781,11 @@ $(document).ready(function() {
                 id: order_item_id
             },
             success: function (data) {
-                if (data != null) {
-                    //$('#delete_order_but'+order_item_id).style.disabled = true;
-                    let x = document.getElementById('stornoBut'+order_item_id);
-                    x.disabled = true;
-                    $('#stateValue').html(data);
-                    //$('#orderDetailMsg').html(data);
-                }
+                data = data.replace(/[0-9]/g, "");
 
+                //$('#delete_order_but'+order_item_id).style.disabled = true;
+                document.getElementById('stornoBut'+order_item_id).disabled = true;
+                $('#stateValue'+order_item_id).html(data);
             }
         })
     })
@@ -946,8 +945,6 @@ $(document).ready(function() {
                 $('#userOrders').html(data)
                 //$('#modelMsg').html(data);
                 //$('#productResponse').show();
-
-
             }
         })
     })

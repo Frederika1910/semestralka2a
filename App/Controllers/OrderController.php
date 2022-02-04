@@ -106,25 +106,23 @@ class OrderController extends AControllerRedirect
             echo ($mobileNumberVal);
             exit();
         } else if ($rb1 == "false" && $rb2 == "false") {
-            echo "Nevybrali ste si spôsob platby.";
+            echo json_encode("Nevybrali ste si spôsob platby.");
             exit();
         } if ($rb2 == "true") {
             if ($s1 == "false") {
-                echo "Nevybrali ste si druh karty.";
+                echo json_encode("Nevybrali ste si druh karty.");
                 exit();
             } else if ($cardNumberVal != null) {
                 echo ($cardNumberVal);
                 exit();
             } else if ($s2 == "false") {
-                echo "Nevybrali ste si mesiac v dátume splatnosti.";
+                echo json_encode("Nevybrali ste si mesiac v dátume splatnosti.");
                 exit();
             } else if ($s3 == "false") {
-                echo "Nevybrali ste si rok v dátume splatnosti.";
+                echo json_encode("Nevybrali ste si rok v dátume splatnosti.");
                 exit();
             }
         }
-
-
 
         $newOrder = new Order();
 
@@ -144,7 +142,7 @@ class OrderController extends AControllerRedirect
         }
 
         if ($totalPrice <= 0 || $numberOfItem <= 0) {
-            echo "V košíku nič nemáš.";
+            echo json_encode("V košíku nič nemáš.");
             exit();
         }
 
@@ -165,39 +163,27 @@ class OrderController extends AControllerRedirect
         $newOrder->setState(1);     //cakajuca objednavka na potvrdenie
         $newOrder->save();
 
-        echo "Objednávka prebehla úspešne.";
+        echo json_encode("Objednávka prebehla úspešne.");
         exit();
     }
 
     public function stornoOrder() {
-        $delItemId = intval($this->request()->getValue('id'));
-        $orders = Order::getAll();
+        $stornoOrder = Order::getOne($this->request()->getValue('id'));
+        $stornoOrder->setState(3);
+        $stornoOrder->save();
+        $state = State::getOne($stornoOrder->getState());
 
-        foreach ($orders as $order) {
-            if ($order->getId() === $delItemId) {
-                $order->setState(3);    //stornovana objednavka cakajuca na spracovanie
-                $order->save();
-
-                $state = State::getOne($order->getState());
-
-                echo $state->getNameState();
-                break;
-            }
-        }
-
-        echo null;
+        echo $state->getNameState();
+        exit();
     }
 
     public function showFilteredOrders() {
         $state = intval($this->request()->getValue('state'));
-        $orders = Order::getAll();
+        $orders = Order::getAll('state=?',[$state]);
         $array = array();
-
-
 
         $pocet = 0;
         foreach ($orders as $order) {
-            if (($state) == $order->getState() || ($state) == 5) {
                 $nameState = State::getOne($order->getState())->getNameState();
                 $pocet++;
                 $correctOrder = '
@@ -225,7 +211,7 @@ class OrderController extends AControllerRedirect
             </tr>
                 ';
                 array_push($array, $correctOrder);
-            }
+
         }
 
         echo json_encode($array);

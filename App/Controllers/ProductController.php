@@ -78,13 +78,12 @@ class ProductController extends AControllerRedirect
             exit();
         }
 
-        $categories = ProductCategory::getAll();
-        foreach ($categories as $category) {
-            if (strcmp(strtolower($category->getName()), strtolower($name)) == 0) {
-                echo "Kategória sa v tabuľke už nachádza.";
-                exit();
-            }
+        $categories = ProductCategory::getAll('name=?', [$name]);
+        if ($categories->getName() != null) {
+            echo "Kategória sa v tabuľke už nachádza.";
+            exit();
         }
+
         $newCategory = new ProductCategory();
         $newCategory->setName($name);
         $newCategory->save();

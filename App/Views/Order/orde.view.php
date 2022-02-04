@@ -29,9 +29,6 @@ use App\Models\State; ?>
                                     <div class="list-group-item checkbox">
                                         <label><input type="radio" name="radiobuttonOrder" class="common_selector order" value="3">Na stornovanie</label>
                                     </div>
-                                    <div class="list-group-item checkbox">
-                                        <label><input type="radio" name="radiobuttonOrder" class="common_selector order" value="5">Všetky</label>
-                                    </div>
                                     <button type="submit" id="orders_filter_but" class="btn btn-primary" style="background-color:  #8B0000; align-self: flex-end">Potvrdiť</button>
                                 </div>
                             </div>
@@ -49,9 +46,6 @@ use App\Models\State; ?>
             </div>
             <div class="col-md-3 col-sm-12">
                 <label><input type="radio" name="radiobuttonOrder" class="common_selector order" value="3">Na stornovanie</label>
-            </div>
-            <div class="col-md-3 col-sm-12">
-                <label><input type="radio" name="radiobuttonOrder" class="common_selector order" value="5">Všetky</label>
             </div>
             <div class="col-md-3 col-sm-12">
                 <button type="submit" id="orders_filter_but" class="btn btn-primary" style="background-color:  #8B0000; align-self: flex-end">Potvrdiť</button>
@@ -90,7 +84,7 @@ use App\Models\State; ?>
                 <tr class="sendItem<?php echo $order->getId()?>">
                     <td class="colNUmberProducts"><?php echo $order->getNumberOfProducts() ?></td>
                     <td class="colDate"><?php echo $order->getDate() ?></td>
-                    <td><?php echo State::getOne($order->getState())->getNameState() ?></td>
+                    <td id="stateValue<?php echo $order->getId()?>"><?php echo State::getOne($order->getState())->getNameState() ?></td>
                     <td><?php echo $order->getTotalPrice() ?>€</td>
                     <td>
                         <?php if ($order->getState() == 1) { ?>
