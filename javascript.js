@@ -99,50 +99,13 @@ function addProductToBasketDisplay() {
     }
 }
 
-let returnValueName = "null";
-let returnValueSurname = "null";
-let returnValueStreet = "null";
-let returnValueCity = "null";
-let returnValueCountry = "null";
-let returnValueMobileNumber = "null";
-let returnValueCardNumber = "null";
-let returnValueEmail = "null";
-let returnValuePassword = "null";
-let returnValuePasswordControl = "null";
-let returnValueHouseNumber = "null";
-let returnValuePsc = "null";
+
 let paymentPartOne = null;
 let paymentPartTwo = null;
-let returnValueImage = "null";
-let returnValuePrice = "null";
 let returnValueCategoryId = "null";
-let returnValueSize = "null";
-let returnValueGender = "null";
 let returnValueProductName = "null";
-let returnValueCategoryName = "null";
-/**
-function setSubmitButton() {
-    console.log("uspech");
 
-    if (returnValueName == null && returnValueSurname == null && returnValueStreet == null && returnValueHouseNumber == null && returnValuePsc == null && returnValueCity == null && returnValueCountry == null && returnValueMobileNumber == null) {
-        if (paymentPartOne === true) {
-            document.querySelector(".validate").disabled = false;
-        } else if (paymentPartTwo === true && returnValueCardNumber == null) {
-            document.querySelector(".validate").disabled = false;
-        }
-    } else if (returnValueName == null && returnValueSurname == null && returnValueEmail == null && returnValuePassword == null && returnValuePasswordControl == null) {
-        document.querySelector(".validate").disabled = false;
-    } else if (returnValueProductName == null && returnValueSize == null && returnValuePrice == null) {
-        document.querySelector(".validate").disabled = false;
-    } else if (returnValueCategoryName == null) {
-        document.querySelector(".validate").disabled = false;
-    } else if (returnValuePassword == null && returnValuePasswordControl == null) {
-        document.querySelector(".validate").disabled = false;
-    } else {
-        document.querySelector(".validate").disabled = true;
-    }
-}
-**/
+
 function check(id) {
     let rB = document.getElementById(id);
     console.log("id " + id);
@@ -173,7 +136,7 @@ function check(id) {
         }
 
     }
-    setSubmitButton();
+
 }
 
 function displayInputInColor(string, element) {
@@ -192,8 +155,6 @@ function displayInputInColor(string, element) {
         element.style.borderColor = "green"
         divErrorText.innerHTML = "";
     }
-
-    setSubmitButton();
 }
 
 function validateName() {
@@ -203,15 +164,12 @@ function validateName() {
     let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
 
     if (!inputValue || inputValue.length === 0) {
-        returnValueName = "Meno nesmie byť prázdne.";
-        return displayInputInColor(returnValueName, input);
+        return displayInputInColor("Meno nesmie byť prázdne.", input);
     } else if (!char.test(inputValue)){
-        returnValueName = "Meno smie obsahovať len platné znaky v slovenskej abecede.";
-        return displayInputInColor(returnValueName, input);
+        return displayInputInColor("Meno smie obsahovať len platné znaky v slovenskej abecede.", input);
     }
 
-    returnValueName = null;
-    return displayInputInColor(returnValueName, input);
+    return displayInputInColor(null, input);
 }
 
 function validateSurname() {
@@ -220,15 +178,12 @@ function validateSurname() {
     let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
 
     if (!inputValue || inputValue.length === 0) {
-        returnValueSurname = "Priezvisko nesmie byť prázdne.";
-        return displayInputInColor(returnValueSurname, input);
+        return displayInputInColor("Priezvisko nesmie byť prázdne.", input);
     } else if (!char.test(inputValue)){
-        returnValueSurname = "Priezvisko smie obsahovať len platné znaky v slovenskej abecede.";
-        return displayInputInColor(returnValueSurname, input);
+        return displayInputInColor("Priezvisko smie obsahovať len platné znaky v slovenskej abecede.", input);
     }
 
-    returnValueSurname = null;
-    return displayInputInColor(returnValueSurname, input);
+    return displayInputInColor(null, input);
 }
 
 function validateStreet() {
@@ -237,15 +192,12 @@ function validateStreet() {
     let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
 
     if (!inputValue || inputValue.length === 0) {
-        returnValueStreet = "Ulica nesmie byť prázdna.";
-        return displayInputInColor(returnValueStreet, input);
+        return displayInputInColor("Ulica nesmie byť prázdna.", input);
     } else if (!char.test(inputValue)){
-        returnValueStreet = "Ulica smie obsahovať len platné znaky v slovenskej abecede.";
-        return displayInputInColor(returnValueStreet, input);
+        return displayInputInColor("Ulica smie obsahovať len platné znaky v slovenskej abecede.", input);
     }
 
-    returnValueStreet = null;
-    return displayInputInColor(returnValueStreet, input);
+    return displayInputInColor(null, input);
 }
 
 function validateCity() {
@@ -254,15 +206,12 @@ function validateCity() {
     let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
 
     if (!inputValue || inputValue.length === 0) {
-        returnValueCity = "Obec nesmie byť prázdne.";
-        return displayInputInColor(returnValueCity, input);
+        return displayInputInColor("Obec nesmie byť prázdne.", input);
     } else if (!char.test(inputValue)){
-        returnValueCity = "Obec smie obsahovať len platné znaky v slovenskej abecede.";
-        return displayInputInColor(returnValueCity, input);
+        return displayInputInColor("Obec smie obsahovať len platné znaky v slovenskej abecede.", input);
     }
 
-    returnValueCity = null;
-    return displayInputInColor(returnValueCity, input);
+    return displayInputInColor(null, input);
 }
 
 function validateCountry() {
@@ -271,15 +220,12 @@ function validateCountry() {
     let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
 
     if (!inputValue || inputValue.length === 0) {
-        returnValueCountry = "Štát nesmie byť prázdny.";
-        return displayInputInColor(returnValueCountry, input);
+        return displayInputInColor("Štát nesmie byť prázdny.", input);
     } else if (!char.test(inputValue)){
-        returnValueCountry = "Zadali ste neplatný znak.";
-        return displayInputInColor(returnValueCountry, input);
+        return displayInputInColor("Zadali ste neplatný znak.", input);
     }
 
-    returnValueCountry = null;
-    return displayInputInColor(returnValueCountry, input);
+    return displayInputInColor(null, input);
 }
 
 function validateEmail() {
@@ -288,14 +234,12 @@ function validateEmail() {
     let disabledChar = /[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/;
 
     if (!mailValue || mailValue.length == 0) {
-        returnValueEmail = "Pole nesmie byť prázdne.";
-        return displayInputInColor(returnValueEmail, input);
+        return displayInputInColor("Pole nesmie byť prázdne.", input);
     } else if (!disabledChar.test(mailValue)) {
-        returnValueEmail = "E-mail musí mať tvar: inka@priklad.sk";
-        return displayInputInColor(returnValueEmail, input);
+        return displayInputInColor("E-mail musí mať tvar: inka@priklad.sk", input);
     }
-    returnValueEmail = null;
-    return displayInputInColor(returnValueEmail, input);
+
+    return displayInputInColor(null, input);
 }
 
 function validateHouseNumber() {
@@ -304,15 +248,12 @@ function validateHouseNumber() {
     let disabledChar = /[0-9\/]$/;
     console.log(inputValue);
     if (!inputValue || inputValue.length === 0) {
-        returnValueHouseNumber = "Číslo domu nesmie byť prázdne.";
-        return displayInputInColor(returnValueHouseNumber, input);
+        return displayInputInColor("Číslo domu nesmie byť prázdne.", input);
     } else if (!disabledChar.test(inputValue)){
-        returnValueHouseNumber = "Číslo domu nesmie obsahovať znaky.";
-        return displayInputInColor(returnValueHouseNumber, input);
+        return displayInputInColor("Číslo domu nesmie obsahovať znaky.", input);
     }
 
-    returnValueHouseNumber = null;
-    return displayInputInColor(returnValueHouseNumber, input);
+    return displayInputInColor(null, input);
 }
 
 function validatePsc() {
@@ -321,18 +262,14 @@ function validatePsc() {
     let disabledChar = /^[0-9\b]+$/;
     console.log(inputValue);
     if (!inputValue || inputValue.length === 0) {
-        returnValuePsc = "PSČ nesmie byť prázdne.";
-        return displayInputInColor(returnValuePsc, input);
+        return displayInputInColor("PSČ nesmie byť prázdne.", input);
     } else if (!disabledChar.test(inputValue)){
-        returnValuePsc = "PSČ nesmie obsahovať znaky.";
-        return displayInputInColor(returnValuePsc, input);
+        return displayInputInColor("PSČ nesmie obsahovať znaky.", input);
     } if (inputValue.length < 5 || inputValue.length > 5) {
-        returnValuePsc = "PSČ musí mať presne 5 znakov.";
-        return displayInputInColor(returnValuePsc, input);
+        return displayInputInColor("PSČ musí mať presne 5 znakov.", input);
     }
 
-    returnValuePsc = null;
-    return displayInputInColor(returnValuePsc, input);
+    return displayInputInColor(null, input);
 }
 
 function validateCardNumber() {
@@ -341,18 +278,14 @@ function validateCardNumber() {
     let disabledChar = /[0-9]$/;
     console.log(inputValue);
     if (!inputValue || inputValue.length === 0) {
-        returnValueCardNumber = "Číslo karty nesmie byť prázdne.";
-        return displayInputInColor(returnValueCardNumber, input);
+        return displayInputInColor("Číslo karty nesmie byť prázdne.", input);
     } else if (!disabledChar.test(inputValue)){
-        returnValueCardNumber = "Číslo karty nesmie obsahovať znaky.";
-        return displayInputInColor(returnValueCardNumber, input);
+        return displayInputInColor("Číslo karty nesmie obsahovať znaky.", input);
     } if (inputValue.length < 16 || inputValue.length > 16) {
-        returnValueCardNumber = "Číslo karty musí mať presne 16 znakov.";
-        return displayInputInColor(returnValueCardNumber, input);
+        return displayInputInColor("Číslo karty musí mať presne 16 znakov.", input);
     }
 
-    returnValueCardNumber = null;
-    return displayInputInColor(returnValueCardNumber, input);
+    return displayInputInColor(null, input);
 }
 
 function validateMobileNumber() {
@@ -361,23 +294,16 @@ function validateMobileNumber() {
     let disabledChar = /[0-9\+]$/;
     console.log(inputValue);
     if (!inputValue || inputValue.length === 0) {
-        returnValueMobileNumber = "Telefónne číslo nesmie byť prázdne.";
-        return displayInputInColor(returnValueMobileNumber, input);
+        return displayInputInColor("Telefónne číslo nesmie byť prázdne.", input);
     } else if (!disabledChar.test(inputValue)){
-        returnValueMobileNumber = "Telefónne číslo nesmie obsahovať znaky.";
-        return displayInputInColor(returnValueMobileNumber, input);
+        return displayInputInColor("Telefónne číslo nesmie obsahovať znaky.", input);
     } else if ((inputValue.substr(0,4) !== '+421')) {
-        returnValueMobileNumber = "Telefónne číslo musí začínať +421.";
-        return displayInputInColor(returnValueMobileNumber, input);
+        return displayInputInColor("Telefónne číslo musí začínať +421.", input);
     } else if (inputValue.length < 13 || inputValue.length > 13) {
-        returnValueMobileNumber = "Telefónne číslo musí mať presne 13 znakov.";
-        return displayInputInColor(returnValueMobileNumber, input);
+        return displayInputInColor("Telefónne číslo musí mať presne 13 znakov.", input);
     }
 
-    returnValueMobileNumber = null;
-    return displayInputInColor(returnValueMobileNumber, input);
-
-    return null;
+    return displayInputInColor(null, input);
 }
 
 function validatePassword() {
@@ -388,34 +314,28 @@ function validatePassword() {
     let disabledCharNumber = /[0-9]/;
 
     if (!passwordValue) {
-        returnValuePassword = "Pole nesmie byť prázdne.";
-        return displayInputInColor(returnValuePassword, input);
+        return displayInputInColor("Pole nesmie byť prázdne.", input);
     } else if (!disabledChar.test(passwordValue)) {
-        returnValuePassword = "Heslo nesmie obsahovať špeciálne znaky."
-        return displayInputInColor(returnValuePassword, input);
+        return displayInputInColor("Heslo nesmie obsahovať špeciálne znaky.", input);
     } else if (passwordValue.length <= 5) {
-        returnValuePassword = "Heslo musí mať minimálne 5 znakov.";
-        return displayInputInColor(returnValuePassword, input);
+        return displayInputInColor("Heslo musí mať minimálne 5 znakov.", input);
     } else if (!disabledCharCapitalLetter.test(passwordValue)) {
         return displayInputInColor("Heslo musí obsahovať aspoň 1 veľké písmeno.", input);
     } else if (!disabledCharNumber.test(passwordValue)) {
-        returnValuePassword = "Heslo musí obsahovať aspoň 1 číslicu.";
-        return displayInputInColor(returnValuePassword, input);
+        return displayInputInColor("Heslo musí obsahovať aspoň 1 číslicu.", input);
     }
-    returnValuePassword = null;
-    return displayInputInColor(returnValuePassword, input);
+
+    return displayInputInColor(null, input);
 }
 
 function validatePasswordControl() {
     let password = document.getElementById("heslo");
     let passwordControl = document.getElementById("hesloKontrola");
     if (passwordControl.value != password.value) {
-        returnValuePasswordControl = "Heslá sa nezhodujú.";
-        return displayInputInColor(returnValuePasswordControl, passwordControl);
+        return displayInputInColor("Heslá sa nezhodujú.", passwordControl);
     }
 
-    returnValuePasswordControl = null;
-    return displayInputInColor(returnValuePasswordControl, passwordControl);
+    return displayInputInColor(null, passwordControl);
 }
 
 function validatePrice(id) {
@@ -424,18 +344,14 @@ function validatePrice(id) {
     let disabledChar = /^[0-9]\d*(,\d+)?$/;
     console.log(inputValue);
     if (!inputValue || inputValue.length === 0) {
-        returnValuePrice = "Cena nesmie byť prázdna.";
-        return displayInputInColor(returnValuePrice, input);
+        return displayInputInColor("Cena nesmie byť prázdna.", input);
     } else if (!disabledChar.test(inputValue)){
-        returnValuePrice = "Cena smie obsahovať len číslice.";
-        return displayInputInColor(returnValuePrice, input);
+        return displayInputInColor("Cena smie obsahovať len číslice.", input);
     } else if (inputValue <= 0){
-        returnValuePrice = "Cena musí byť kladné číslo.";
-        return displayInputInColor(returnValuePrice, input);
+        return displayInputInColor("Cena musí byť kladné číslo.", input);
     }
 
-    returnValuePrice = null;
-    return displayInputInColor(returnValuePrice, input);
+    return displayInputInColor(null, input);
 }
 
 function validateSize(id) {
@@ -444,15 +360,12 @@ function validateSize(id) {
     let disabledChar = /[0-9\a-zA-Z]$/;
     console.log(inputValue);
     if (!inputValue || inputValue.length === 0) {
-        returnValueSize = "Veľkosť nesmie byť prázdna.";
-        return displayInputInColor(returnValueSize, input);
+        return displayInputInColor("Veľkosť nesmie byť prázdna.", input);
     } else if (!disabledChar.test(inputValue)){
-        returnValueSize = "Veľkosť smie obsahovať len znaky.";
-        return displayInputInColor(returnValueSize, input);
+        return displayInputInColor("Veľkosť smie obsahovať len znaky.", input);
     }
 
-    returnValueSize = null;
-    return displayInputInColor(returnValueSize, input);
+    return displayInputInColor(null, input);
 }
 
 function validateGender() {
@@ -461,15 +374,12 @@ function validateGender() {
     let disabledChar = /[a-zA-Z]$/;
     console.log(inputValue);
     if (!inputValue || inputValue.length === 0) {
-        returnValueGender = "Pre koho nesmie byť prázdne.";
-        return displayInputInColor(returnValueGender, input);
+        return displayInputInColor("Pre koho nesmie byť prázdne.", input);
     } else if (!disabledChar.test(inputValue)){
-        returnValueGender = "Pre koho nesmie obsahovať číslice.";
-        return displayInputInColor(returnValueGender, input);
+        return displayInputInColor("Pre koho nesmie obsahovať číslice.", input);
     }
 
-    returnValueGender = null;
-    return displayInputInColor(returnValueGender, input);
+    return displayInputInColor(null, input);
 }
 
 function validateCategoryName() {
@@ -478,15 +388,12 @@ function validateCategoryName() {
     let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
 
     if (!inputValue || inputValue.length === 0) {
-        returnValueCategoryName = "Názov nesmie byť prázdny.";
-        return displayInputInColor(returnValueCategoryName, input);
+        return displayInputInColor("Názov nesmie byť prázdny.", input);
     } else if (!char.test(inputValue)){
-        returnValueCategoryName = "Názov smie obsahovať len platné znaky v slovenskej abecede.";
-        return displayInputInColor(returnValueCategoryName, input);
+        return displayInputInColor("Názov smie obsahovať len platné znaky v slovenskej abecede.", input);
     }
 
-    returnValueCategoryName = null;
-    return displayInputInColor(returnValueCategoryName, input);
+    return displayInputInColor(null, input);
 }
 
 function validateCategory() {
@@ -502,15 +409,6 @@ function validateCategory() {
     if (!error) {
         returnValueCategoryId = null;
     }
-}
-
-function validateImage() {
-    let x = document.getElementById('productImage').value.length;
-    console.log(x);
-    if (x > 0) {
-        returnValueImage = null;
-    }
-    setSubmitButton();
 }
 
 $(document).ready(function () {

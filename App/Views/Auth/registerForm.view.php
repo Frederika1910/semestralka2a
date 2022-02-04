@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center" id="submit-info">
-                    <button type="submit" id="registrovat" class="btn btn-success validate">Registrovať</button>
+                    <button type="submit" id="registrovat" class="btn btn-success">Registrovať</button>
                 </div>
 
                 <p class="text-center text-muted mt-5 mb-0">Máš už vytvorený účet? <a href="?c=auth&a=login" class="fw-bold text-body"><u>Prihlás sa.</u></a></p>

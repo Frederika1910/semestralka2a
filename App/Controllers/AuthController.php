@@ -136,7 +136,7 @@ class AuthController extends AControllerRedirect
         $newP = $this->request()->getValue('newPass');
         $newPControl = $this->request()->getValue('newPassControl');
 
-        $passwordVal = User::validatePassword($oldP, $newP);
+        $passwordVal = User::validatePassword($newP, $newPControl);
         if ($passwordVal != null) {
             exit($passwordVal);
         }

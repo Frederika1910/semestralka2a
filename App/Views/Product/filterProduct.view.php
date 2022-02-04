@@ -42,7 +42,7 @@
             <div class="navbar-nav mr-auto">
                 <div class="row">
                     <div class="col">
-                        <button type="submit" class="btn btn-primary clear_but" style="background-color: #E6E6FA; color: #8B0000; width: 100%">Vymaž filter</button>
+                        <button type="button" class="btn btn-primary clear_but" style="background-color: #E6E6FA; color: #8B0000; width: 100%">Vymaž filter</button>
                         <div class="list-group">
                             <h3>Cena</h3>
                             <div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
@@ -82,7 +82,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" onclick="a()" class="btn btn-primary filter_but" style="background-color:  #8B0000; width: 100%">Vyfiltruj</button>
+                        <button type="button" onclick="a()" class="btn btn-primary filter_but" style="background-color:  #8B0000; width: 100%">Vyfiltruj</button>
 
                     </div>
                 </div>
@@ -93,7 +93,7 @@
     <div class="row">
         <div class="col-md-3">
             <div class="filterBigScreen">
-                <button type="submit" class="btn btn-primary clear_but" style="background-color: #E6E6FA; color: #8B0000; width: 100%">Vymaž filter</button>
+                <button type="button" class="btn btn-primary clear_but" style="background-color: #E6E6FA; color: #8B0000; width: 100%">Vymaž filter</button>
                 <div class="list-group">
                     <h3>Cena</h3>
                     <div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
@@ -128,7 +128,7 @@
                         <?php } ?>
                     </div>
                 </div>
-            <button type="submit" class="btn btn-primary filter_but" style="background-color:  #8B0000; width: 100%">Vyfiltruj</button>
+            <button type="button" class="btn btn-primary filter_but" style="background-color:  #8B0000; width: 100%">Vyfiltruj</button>
         </div>
         </div>
         <div class="col-md-9">

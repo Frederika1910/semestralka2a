@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <button type="submit" id="registrovat" class="btn btn-success validate">Potvrdiť</button>
+                    <button type="submit" id="registrovat" class="btn btn-success">Potvrdiť</button>
                 </div>
             </form>
         </div>

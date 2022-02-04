@@ -169,7 +169,7 @@
                         </div>
                     </div>
                     <div class="d-flex" style="justify-content: flex-end">
-                        <button type="submit" id="payment_but" class="btn btn-success validate">Potvrdiť</button>
+                        <button type="submit" id="payment_but" class="btn btn-success">Potvrdiť</button>
                     </div>
 
                 </div>
