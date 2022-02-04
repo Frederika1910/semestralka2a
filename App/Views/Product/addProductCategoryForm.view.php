@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center" id="submit-info">
-                    <button type="submit" class="btn btn-success validate">Pridať</button>
+                    <button type="submit" class="btn btn-success">Pridať</button>
                 </div>
             </form>
         </div>

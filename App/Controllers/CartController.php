@@ -69,7 +69,7 @@ class CartController extends AControllerRedirect
     public function addToCart() {
         $product = Product::getOne($this->request()->getValue('id'));
 
-        $currentUser = Auth::getId();
+        $currentUser = Auth::getId();                                                   //4 paramtere
         $items = Cart::getAll();
         //$itemsOfUser = Cart::getAll('user_id=?', [$currentUser]);
         //$itemsOfProduct = Cart::getAll('product_id=?', [$product->getId()]);

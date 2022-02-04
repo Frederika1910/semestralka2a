@@ -113,7 +113,7 @@ class OrderController extends AControllerRedirect
                 echo json_encode("Nevybrali ste si druh karty.");
                 exit();
             } else if ($cardNumberVal != null) {
-                echo ($cardNumberVal);
+                echo ($cardNumberVal);                                                      //???????
                 exit();
             } else if ($s2 == "false") {
                 echo json_encode("Nevybrali ste si mesiac v dátume splatnosti.");
@@ -133,7 +133,7 @@ class OrderController extends AControllerRedirect
         $numberOfItem = 0;
         $totalPrice = 0;
         foreach ($shoppingCartItems as $item) {
-            if ($item->getUserId() == $currentUser && $item->getState() == 0) {
+            if ($item->getUserId() == $currentUser && $item->getState() == 0) {                 //2 pparametre
                 $numberOfItem += $item->getQuantity();
                 $totalPrice += $item->getQuantityPrice();
                 $item->setState(1);

@@ -93,41 +93,27 @@ class ProductController extends AControllerRedirect
     }
 
     public function removeCategory() {
-        $id = intval($this->request()->getValue('id'));
-        $categories = ProductCategory::getAll();
-        $products = Product::getAll();
+        $category = ProductCategory::getOne($this->request()->getValue('id'));
+        $products = Product::getAll('category_id=?', [$category->getId()]);
 
         foreach ($products as $product) {
-            if ($product->getCategoryId() == $id) {
-                $product->delete();
-            }
+            $product->delete();
         }
 
-        foreach ($categories as $category) {
-            if ($category->getId() == $id) {
-                $category->delete();
-            }
-        }
-
-        echo $id;
-        exit();
+        $category->delete();
     }
 
     public function removeProduct() {
-        $id = intval($this->request()->getValue('id'));
-        $products = Product::getAll();
-        $carts = Cart::getAll();
+        $id = $this->request()->getValue('id');
+        $products = Product::getAll('id=?', [$id]);
+        $carts = Cart::getAll('product_id=?', [$id]);
 
         foreach ($carts as $cart) {
-            if ($cart->getProductId() == $id) {
-                $cart->delete();
-            }
+            $cart->delete();
         }
 
         foreach ($products as $product) {
-            if ($product->getId() == $id) {
-                $product->delete();
-            }
+            $product->delete();
         }
     }
 
@@ -163,9 +149,8 @@ class ProductController extends AControllerRedirect
     public function showProductDetail() {
 
         $clickedProduct = null;
-        $products = Product::getAll();
-        foreach ($products as $product) {
-            if ($product->getId() == intval($this->request()->getValue('id'))) {
+        $product = Product::getOne($this->request()->getValue('id'));
+
                 $clickedProduct = '
    
                 <div class="row deleteProductModal">
@@ -214,17 +199,14 @@ class ProductController extends AControllerRedirect
                     </div>
                 </div        
                 ';
-                break;
 
-            }
-        }
 
         echo $clickedProduct;
         exit();
     }
 
     public function showFilteredProducts() {
-        $category = $this->request()->getValue('category');
+        $category = $this->request()->getValue('category');                                 //4 paramtere
         $gender = $this->request()->getValue('gender');
         $minPrice = $this->request()->getValue('minPrice');
         $maxPrice = $this->request()->getValue('maxPrice');
