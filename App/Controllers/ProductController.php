@@ -182,7 +182,7 @@ class ProductController extends AControllerRedirect
                 if (\App\Auth::isLogged() && \App\Auth::isAdmin()) {
                     $clickedProduct .= '<button type="button" id="delete_order_but" class="btn btn-primary" dataId='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
                                         <button type="button" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" dataId='. $product->getId() .' style="background-color:  #A6923F">Upraviť</button>
-                                        <button type="button" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut validate" dataId='. $product->getId() .' disabled="true" style="color:  white; background-color: black; display: none">Potvrdiť</button>';
+                                        <button type="button" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut" dataId='. $product->getId() .' style="color:  white; background-color: black; display: none">Potvrdiť</button>';
 
                 } else if (\App\Auth::isLogged()) {
                     $clickedProduct .= '<button type="button" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000">Pridať do košíka</button>';

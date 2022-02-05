@@ -245,7 +245,7 @@ function validateEmail() {
 function validateHouseNumber() {
     let input = document.getElementById('houseNumber');
     let inputValue = input.value;
-    let disabledChar = /[0-9\/]$/;
+    let disabledChar = /^[0-9\/]+$/;
     console.log(inputValue);
     if (!inputValue || inputValue.length === 0) {
         return displayInputInColor("Číslo domu nesmie byť prázdne.", input);

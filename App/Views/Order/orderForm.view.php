@@ -85,7 +85,7 @@
                                 $sumaSpolu = 0;
                                 $currentUser = \App\Auth::getId();
                                 foreach ($data['shopping_cart'] as $item) {
-                                    if ($item->getUserId() == $currentUser && $item->getState() == 0) {
+                                    if ($item->getUserId() == $currentUser) {
                                         $product = \App\Models\Product::getOne($item->getProductId());
 
                                         $sumaSpolu += $item->getQuantityPrice();

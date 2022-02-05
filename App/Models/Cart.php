@@ -11,15 +11,14 @@ class Cart extends \App\Core\Model
         public int $product_id = 0,
         public int $quantityPrice = 0,
         public int $user_id = 0,
-        public int $order_id = 0,
-        public int $state = 0
+        public int $order_id = 0
     )
     {
     }
 
     static public function setDbColumns()
     {
-        return ['id', 'quantity', 'product_id', 'quantityPrice', 'user_id', 'order_id', 'state'];
+        return ['id', 'quantity', 'product_id', 'quantityPrice', 'user_id', 'order_id'];
     }
 
     static public function setTableName()
@@ -121,21 +120,5 @@ class Cart extends \App\Core\Model
     public function setOrderId(int $order_id): void
     {
         $this->order_id = $order_id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getState(): int
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param int $state
-     */
-    public function setState(int $state): void
-    {
-        $this->state = $state;
     }
 }

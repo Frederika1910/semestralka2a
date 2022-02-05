@@ -17,7 +17,7 @@
     <?php $currentUser = \App\Auth::getId();
     $numberOfItems = 0;
     foreach ($data['shopping_cart'] as $item) {
-        if ($item->getUserId() == $currentUser && $item->getState() == 0) {
+        if ($item->getUserId() == $currentUser) {
             $numberOfItems++;
         }
     }
@@ -38,7 +38,7 @@
         </thead>
         <tbody class="tbody">
         <?php foreach ($data['shopping_cart'] as $item) {
-           if ($item->getUserId() == $currentUser && $item->getState() == 0) { ?>
+           if ($item->getUserId() == $currentUser) { ?>
                <tr class="deleteItem<?php echo $item->getId() ?>">
                     <td>
                         <span id="quantity<?php echo $item->getId() ?>"><?php echo $item->getQuantity() ?></span>
@@ -80,7 +80,7 @@
         <?php $spolu = 0;
         foreach ($data['shopping_cart'] as $item) {
             $product = \App\Models\Product::getOne($item->getProductId());
-            if ($item->getUserId() == $currentUser && $item->getState() == 0) {
+            if ($item->getUserId() == $currentUser) {
                 $spolu += $product->getPrice();
             }
         } ?>
@@ -88,7 +88,7 @@
             <?php $currentUser = \App\Auth::getId();
             $numberOfItems = 0;
             foreach ($data['shopping_cart'] as $item) {
-                if ($item->getUserId() == $currentUser && $item->getState() == 0) {
+                if ($item->getUserId() == $currentUser) {
                     $numberOfItems++;
                 }
             }
