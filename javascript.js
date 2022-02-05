@@ -77,34 +77,9 @@ window.onload = function() {
     }
 }
 
-function addProductToBasket() {
-    let productsInBasket = localStorage.getItem('currentNumberOfProducts');
-
-    let productsInBasketInt = parseInt(productsInBasket);
-
-    if (productsInBasketInt) {
-        localStorage.setItem('currentNumberOfProducts', productsInBasketInt + 1);
-        document.querySelector('#vKosiku').textContent = productsInBasketInt + 1;
-    } else {
-        localStorage.setItem('currentNumberOfProducts', 1);
-        document.querySelector("#vKosiku").textContent = 1;
-    }
-}
-
-function addProductToBasketDisplay() {
-    let productsInBasket = localStorage.getItem('currentNumberOfProducts');
-
-    if (productsInBasket) {
-        document.querySelector('#vKosiku').textContent = productsInBasket;
-    }
-}
-
-
 let paymentPartOne = null;
 let paymentPartTwo = null;
 let returnValueCategoryId = "null";
-let returnValueProductName = "null";
-
 
 function check(id) {
     let rB = document.getElementById(id);
@@ -423,7 +398,6 @@ $(document).ready(function () {
         let country = $('#country').val();
         let city = $('#city').val();
         let mobile_number = $('#mobileNumber').val();
-        //let radio_first =  $("input[type=radio][name=paymentMethod]:checked").attr('id');
 
         let rb1 = document.getElementById('radioButtonOne').checked;
         let rb2 = document.getElementById('radioButtonTwo').checked;
@@ -461,7 +435,6 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 data = data.replace(/[0-9]/g, "");
-                //console.log("rB " + radio_first);
                 $('#modelMsg').html(data);
                 $('#productResponse').show();
             }
@@ -572,27 +545,17 @@ $(document).ready(function() {
 $(document).ready(function() {
     $(document).on('click', '.filter_but', function () {
         let category_id = getFilter('category');
-        let min_price = $('.price:checked').attr('min');
-        let max_price = $('.price:checked').attr('max');
         let gender = getFilter('gender');
-
-        console.log(min_price);
-        console.log(max_price);
-        console.log(gender);
-        console.log(category_id);
 
         $.ajax({
             type: 'POST',
             url: 'http://localhost/semestralka2?c=product&a=showFilteredProducts',
             data: {
                 category: category_id,
-                minPrice: min_price,
-                maxPrice: max_price,
                 gender: gender
             },
             dataType: 'json',
             success: function (data) {
-                console.log("ss " + data);
                 $('.filter_data').html(data);
             }
         })
@@ -644,7 +607,6 @@ $(document).ready(function() {
                 id: product_id
             },
             success: function (data) {
-                //console.log(data);
                 $('#productDetailMsg').html(data);
                 $('#productDetail').show();
             }
@@ -671,7 +633,6 @@ $(document).ready(function() {
     $(document).on('click', '.delOrderBut', function (e) {
         e.preventDefault();
         let order_item_id = $(this).attr('dataId');
-        //console.log("ss" + order_item_id);
 
         $.ajax({
             method: 'POST',
@@ -681,8 +642,6 @@ $(document).ready(function() {
             },
             success: function (data) {
                 data = data.replace(/[0-9]/g, "");
-
-                //$('#delete_order_but'+order_item_id).style.disabled = true;
                 document.getElementById('stornoBut'+order_item_id).disabled = true;
                 $('#stateValue'+order_item_id).html(data);
             }
@@ -731,7 +690,7 @@ $(document).ready(function() {
 })
 
 $(document).ready(function() {
-    $(document).on('click', '#delete_order_but', function(){
+    $(document).on('click', '.deleteOrderBut', function(){
         let product_id = $(this).attr('dataId');
 
         $.ajax({
@@ -768,10 +727,6 @@ $(document).ready(function() {
         $('#delete_order_but'+edit_id).hide();
     })
 })
-
-function submitChanges() {
-
-}
 
 $(document).ready(function() {
     $(document).on('click', '.saveOrderBut', function (e) {
@@ -821,23 +776,6 @@ $(document).ready(function() {
     })
 })
 
-function validateProductName(id) {
-    let input = document.getElementById('productNameInput'+id);
-    let inputValue = input.value;
-    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-    console.log(inputValue);
-    if (!inputValue || inputValue.length === 0) {
-        returnValueProductName = "Meno nesmie byť prázdne.";
-        return displayInputInColor(returnValueProductName, input);
-    } else if (!disabledChar.test(inputValue)){
-        returnValueProductName = "Meno smie obsahovať len znaky.";
-        return displayInputInColor(returnValueProductName, input);
-    }
-
-    returnValueProductName = null;
-    return displayInputInColor(returnValueProductName, input);
-}
-
 $(document).ready(function() {
     $(document).on('click', '#orders_filter_but', function () {
         let choice = $('.order:checked').val();
@@ -851,9 +789,7 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function (data) {
-                $('#userOrders').html(data)
-                //$('#modelMsg').html(data);
-                //$('#productResponse').show();
+                $('#userOrders').html(data);
             }
         })
     })

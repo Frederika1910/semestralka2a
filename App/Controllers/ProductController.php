@@ -79,7 +79,7 @@ class ProductController extends AControllerRedirect
         }
 
         $categories = ProductCategory::getAll('name=?', [$name]);
-        if ($categories->getName() != null) {
+        if (sizeof($categories) != 0) {
             echo "Kategória sa v tabuľke už nachádza.";
             exit();
         }
@@ -184,7 +184,7 @@ class ProductController extends AControllerRedirect
                             <div class="cart mt-4" style="text-align: center"> 
                             ';
                 if (\App\Auth::isLogged() && \App\Auth::isAdmin()) {
-                    $clickedProduct .= '<button type="button" id="delete_order_but" class="btn btn-primary" dataId='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
+                    $clickedProduct .= '<button type="button" id="delete_order_but'. $product->getId() .'" class="btn btn-primary deleteOrderBut" dataId='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
                                         <button type="button" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" dataId='. $product->getId() .' style="background-color:  #A6923F">Upraviť</button>
                                         <button type="button" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut" dataId='. $product->getId() .' onclick="submitChanges()" style="color:  white; background-color: black; display: none">Potvrdiť</button>';
 
@@ -208,10 +208,8 @@ class ProductController extends AControllerRedirect
     public function showFilteredProducts() {
         $category = $this->request()->getValue('category');                                 //CENA
         $gender = $this->request()->getValue('gender');
-        $minPrice = $this->request()->getValue('minPrice');
-        $maxPrice = $this->request()->getValue('maxPrice');
 
-        if ($category == null && $gender == null && $minPrice) {
+        if ($category == null && $gender == null) {
             $noFilter = "Neboli zvolené žiadne filtre.";
             echo json_encode($noFilter);
             exit();
@@ -235,12 +233,11 @@ class ProductController extends AControllerRedirect
             }
         }
 
-
         $array = array();
         foreach ($products as $product) {
                 $filteredProduct = '
                     <div class="col-lg-4 col-md-6 mt-2">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card mt-2 cardProductDelete' . $product->getId() . '" style="width: 18rem;">
                             <img class="card-img-top" src="/semestralka2/' . \App\Config\Configuration::UPLOAD_DIR . $product->getImage() . '" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title" id="cardName' . $product->getId() . '">' . $product->getName() . '</h5>
@@ -249,7 +246,7 @@ class ProductController extends AControllerRedirect
     
                             <div class="card-body d-flex flex-row">
                                 <a style="width: 100%">
-                                    <button type="submit" id="more_but" class="btn btn-primary flex-fill" style="background-color: #E6E6FA; color: #8B0000" dataId=' . $product->getId() . ' >Viac</button>
+                                    <button type="submit" id="more_button' . $product->getId() . '" class="btn btn-primary flex-fill more_but" style="background-color: #E6E6FA; color: #8B0000" dataId=' . $product->getId() . ' >Viac</button>
                                 </a>
                             </div>
                         </div>
