@@ -138,7 +138,7 @@ class User extends \App\Core\Model
 
     public static function validateName(string $inp): ?string
     {
-        if($inp == ""){
+        if($inp == "" || $inp == null){
             return "Nezadali ste meno.";
         } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $inp)) {
             return "Meno smie obsahovať len platné znaky v slovenskej abecede.";

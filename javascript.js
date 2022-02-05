@@ -769,6 +769,10 @@ $(document).ready(function() {
     })
 })
 
+function submitChanges() {
+
+}
+
 $(document).ready(function() {
     $(document).on('click', '.saveOrderBut', function (e) {
         e.preventDefault();
@@ -787,7 +791,8 @@ $(document).ready(function() {
                 newSize: new_size,
                 newPrice: new_price
             },
-            success: function() {
+            success: function(data) {
+                console.log(data);
                 $('#productNameInput'+save_id).hide();
                 $('#nameProduct'+save_id).show();
 
@@ -800,10 +805,17 @@ $(document).ready(function() {
                 $('#save_order_but'+save_id).hide();
                 $('#edit_order_but'+save_id).show();
 
-                $('#nameProduct'+save_id).html(new_name);
-                $('#sizeProduct'+save_id).html("Veľkosť: " + new_size);
-                $('#priceProduct'+save_id).html(new_price+"€");
+                data = data.replace(/[0-9]/g, "");
+                if (data === ("Zmeny boli uložené.")) {
+                    $('#nameProduct' + save_id).html(new_name);
+                    $('#sizeProduct' + save_id).html("Veľkosť: " + new_size);
+                    $('#priceProduct' + save_id).html(new_price + "€");
 
+                    $('#cardName'+save_id).html(new_name);
+                    $('#cardPrice'+save_id).html("Cena: " + new_price + "€");
+                }
+                $('#modelMsg').html(data);
+                $('#productResponse').show();
             }
         })
     })

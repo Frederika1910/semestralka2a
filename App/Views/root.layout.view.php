@@ -129,7 +129,7 @@
             <button type="button" class="btn btn-light" id="myBtn" data-mdb-ripple-color="dark" style="color: #999900">Skús šťastie!</button>
         </div>
         <div class="col m-2">
-            <button onclick="setMode()" type="button" class="btn btn-light" data-mdb-ripple-color="dark" style="color: #999900">Tmavý režim</button>
+            <button onclick="setMode()" id="modeText" type="button" class="btn btn-light" data-mdb-ripple-color="dark" style="color: #999900">Prepni režim</button>
         </div>
         <hr class="solid">
         <span>Second Hand u Inky<br>

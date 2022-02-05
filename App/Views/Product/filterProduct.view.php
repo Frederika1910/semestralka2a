@@ -138,8 +138,8 @@
                         <div class="card mt-2 cardProductDelete<?php echo $product->getId() ?>" style="width: 18rem;">
                             <img class="card-img-top" src="/semestralka2/<?php echo \App\Config\Configuration::UPLOAD_DIR . $product->getImage() ?>"  alt="Card image cap">
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo $product->getName() ?></h5>
-                                <p class="card-text">Cena: <?php echo $product->getPrice() ?>€</p>
+                                <h5 class="card-title" id="cardName<?php echo $product->getId() ?>" ><?php echo $product->getName() ?></h5>
+                                <p class="card-text" id="cardPrice<?php echo $product->getId() ?>">Cena: <?php echo $product->getPrice() ?>€</p>
                             </div>
 
                             <div class="card-body d-flex flex-row">
