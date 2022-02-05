@@ -329,6 +329,22 @@ function validatePrice(id) {
     return displayInputInColor(null, input);
 }
 
+function validateProductName(id) {
+    let input = document.getElementById('productNameInput'+id);
+    let inputValue = input.value;
+    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
+    console.log(inputValue);
+    if (!inputValue || inputValue.length === 0) {
+        returnValueProductName = "Meno nesmie byť prázdne.";
+        return displayInputInColor(returnValueProductName, input);
+    } else if (!disabledChar.test(inputValue)){
+        returnValueProductName = "Meno smie obsahovať len znaky.";
+        return displayInputInColor(returnValueProductName, input);
+    }
+    returnValueProductName = null;
+    return displayInputInColor(returnValueProductName, input);
+}
+
 function validateSize(id) {
     let input = document.getElementById('productSizeInput'+id);
     let inputValue = input.value;

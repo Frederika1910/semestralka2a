@@ -206,7 +206,7 @@ class ProductController extends AControllerRedirect
     }
 
     public function showFilteredProducts() {
-        $category = $this->request()->getValue('category');                                 //CENA
+        $category = $this->request()->getValue('category');
         $gender = $this->request()->getValue('gender');
 
         if ($category == null && $gender == null) {

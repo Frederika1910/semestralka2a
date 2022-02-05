@@ -22,7 +22,7 @@
         }
     }
     if ($numberOfItems <= 0) { ?>
-        <h5>Váš nákupný košík je prázdny.</h5>
+        <h5 style="text-align: center">Váš nákupný košík je prázdny.</h5>
     <?php } else { ?>
 
     <table class="table table-hover" id="tableShoppingCart">
