@@ -147,13 +147,10 @@ class ProductController extends AControllerRedirect
     }
 
     public function showProductDetail() {
-
-        $clickedProduct = null;
         $product = Product::getOne($this->request()->getValue('id'));
 
-                $clickedProduct = '
-   
-                <div class="row deleteProductModal">
+        $clickedProduct = '
+            <div class="row deleteProductModal">
                     <div class="col">
                         <div class="images p-3">
                             <div class="text-center p-4">
@@ -183,14 +180,14 @@ class ProductController extends AControllerRedirect
                             <div class="cart mt-4" style="text-align: center"> 
                             ';
                 if (\App\Auth::isLogged() && \App\Auth::isAdmin()) {
-                    $clickedProduct .= '<button type="submit" id="delete_order_but" class="btn btn-primary" dataId='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
-                                        <button type="submit" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" dataId='. $product->getId() .' style="background-color:  #A6923F">Upraviť</button>
-                                        <button type="submit" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut validate" dataId='. $product->getId() .' disabled="true" style="color:  white; background-color: black; display: none">Potvrdiť</button>';
+                    $clickedProduct .= '<button type="button" id="delete_order_but" class="btn btn-primary" dataId='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
+                                        <button type="button" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" dataId='. $product->getId() .' style="background-color:  #A6923F">Upraviť</button>
+                                        <button type="button" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut validate" dataId='. $product->getId() .' disabled="true" style="color:  white; background-color: black; display: none">Potvrdiť</button>';
 
                 } else if (\App\Auth::isLogged()) {
-                    $clickedProduct .= '<button type="submit" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000">Pridať do košíka</button>';
+                    $clickedProduct .= '<button type="button" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000">Pridať do košíka</button>';
                 } else {
-                    $clickedProduct .= '<button type="submit" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000" disabled="true">Pridať do košíka</button>';
+                    $clickedProduct .= '<button type="button" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000" disabled="true">Pridať do košíka</button>';
                 }
                 $clickedProduct .= '<button type="button" id="cancel_but" class="btn btn-secondary" data-dismiss="modal" style="background-color: #E6E6FA; color: #8B0000">Zavrieť</button>
                                    
@@ -200,45 +197,64 @@ class ProductController extends AControllerRedirect
                 </div        
                 ';
 
-
         echo $clickedProduct;
         exit();
     }
 
     public function showFilteredProducts() {
-        $category = $this->request()->getValue('category');                                 //4 paramtere
+        $category = $this->request()->getValue('category');                                 //CENA
         $gender = $this->request()->getValue('gender');
         $minPrice = $this->request()->getValue('minPrice');
         $maxPrice = $this->request()->getValue('maxPrice');
 
-        if ($category == null && $gender == null && $minPrice == null && $maxPrice == null) {
+        if ($category == null && $gender == null && $minPrice) {
             $noFilter = "Neboli zvolené žiadne filtre.";
             echo json_encode($noFilter);
             exit();
         }
 
-        $products = Product::getAll('category_id=?', [$category]);
+        $products = array();
+        if ($category) {
+            $products= Product::getAll('category_id=?', [$category]);
+        }
+        if ($gender) {
+            $productsGender = Product::getAll('gender=?', [$gender]);
+            if ($products) {
+                $products = array_uintersect($products, $productsGender, function ($a, $b) {
+                    if ($a->getId() === $b->getId()) {
+                        return 0;
+                    }
+                    return ($a > $b) ? 1 : -1;
+                });
+            } else {
+                $products = $productsGender;
+            }
+        }
+
+
         $array = array();
         foreach ($products as $product) {
-            $filteredProduct = '
-                <div class="col-lg-4 col-md-6 mt-2">
-                    <div class="card" style="width: 18rem;">
-                            <img class="card-img-top" src="/semestralka2/' . \App\Config\Configuration::UPLOAD_DIR . $product->getImage() .'" alt="Card image cap">
+                $filteredProduct = '
+                    <div class="col-lg-4 col-md-6 mt-2">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="/semestralka2/' . \App\Config\Configuration::UPLOAD_DIR . $product->getImage() . '" alt="Card image cap">
                             <div class="card-body">
-                                <h5 class="card-title">'. $product->getName() .'</h5>
-                                <p class="card-text" id="xyz<?php echo $product->getId() ?> ">Cena: ' . $product->getPrice() .' €</p>
+                                <h5 class="card-title">' . $product->getName() . '</h5>
+                                <p class="card-text" id="xyz<?php echo $product->getId() ?> ">Cena: ' . $product->getPrice() . ' €</p>
                             </div>
-
+    
                             <div class="card-body d-flex flex-row">
                                 <a style="width: 100%">
-                                    <button type="submit" id="more_but" class="btn btn-primary flex-fill" style="background-color: #E6E6FA; color: #8B0000" dataId='. $product->getId() .' >Viac</button>
+                                    <button type="submit" id="more_but" class="btn btn-primary flex-fill" style="background-color: #E6E6FA; color: #8B0000" dataId=' . $product->getId() . ' >Viac</button>
                                 </a>
                             </div>
-                    </div>
+                        </div>
+    
+                    </div>';
 
-                </div>';
-            array_push($array, $filteredProduct);
+                array_push($array, $filteredProduct);
         }
+
 
         if (sizeof($array) == 0) {
             echo json_encode("Neboli nájdené žiadne zhody.");
@@ -247,6 +263,5 @@ class ProductController extends AControllerRedirect
 
         echo json_encode($array);
         exit();
-
     }
 }

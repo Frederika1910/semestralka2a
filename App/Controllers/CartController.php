@@ -70,16 +70,19 @@ class CartController extends AControllerRedirect
         $product = Product::getOne($this->request()->getValue('id'));
 
         $currentUser = Auth::getId();                                                   //4 paramtere
-        $items = Cart::getAll();
-        //$itemsOfUser = Cart::getAll('user_id=?', [$currentUser]);
-        //$itemsOfProduct = Cart::getAll('product_id=?', [$product->getId()]);
-        //echo json_encode($itemsOfProduct);
-        //exit();
-        foreach ($items as $item) {
-            if ($item->getProductId() == $product->getId() && $item->getUserId() == $currentUser && $item->getState() == 0) {
-                echo json_encode("Produkt sa v tvojom košíku už nachádza.");
-                exit();
+        $itemsUser = Cart::getAll('user_id=?', [$currentUser]);
+        $itemsProduct = Cart::getAll('product_id=?', [$product->getId()]);
+
+        $item = array_uintersect($itemsUser, $itemsProduct, function ($a, $b) {
+            if ($a->getId() === $b->getId()) {
+                return 0;
             }
+            return ($a > $b) ? 1 : -1;
+        });
+
+        if (sizeof($item) != 0) {
+            echo json_encode("Produkt sa v tvojom košíku už nachádza.");
+            exit();
         }
 
         $cartItem = new Cart();

@@ -518,8 +518,8 @@ $(document).ready(function() {
             dataType: 'json',
             success: function (data) {
                 console.log(data);
-                //$('#modelMsg').html(data);
-                //$('#productResponse').show();
+                $('#modelMsg').html(data);
+                $('#productResponse').show();
             }
         })
     })
@@ -592,6 +592,7 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function (data) {
+                console.log("ss " + data);
                 $('.filter_data').html(data);
             }
         })
