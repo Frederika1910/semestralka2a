@@ -106,20 +106,20 @@ class OrderController extends AControllerRedirect
             echo ($mobileNumberVal);
             exit();
         } else if ($rb1 == "false" && $rb2 == "false") {
-            echo json_encode("Nevybrali ste si spôsob platby.");
+            echo ("Nevybrali ste si spôsob platby.");
             exit();
         } if ($rb2 == "true") {
             if ($s1 == "false") {
-                echo json_encode("Nevybrali ste si druh karty.");
+                echo ("Nevybrali ste si druh karty.");
                 exit();
             } else if ($cardNumberVal != null) {
                 echo ($cardNumberVal);                                                      //???????
                 exit();
             } else if ($s2 == "false") {
-                echo json_encode("Nevybrali ste si mesiac v dátume splatnosti.");
+                echo ("Nevybrali ste si mesiac v dátume splatnosti.");
                 exit();
             } else if ($s3 == "false") {
-                echo json_encode("Nevybrali ste si rok v dátume splatnosti.");
+                echo ("Nevybrali ste si rok v dátume splatnosti.");
                 exit();
             }
         }
@@ -129,20 +129,17 @@ class OrderController extends AControllerRedirect
         $currentUser = Auth::getId();
         $newOrder->setUserId($currentUser);
 
-        $shoppingCartItems = Cart::getAll();
+        $shoppingCartItems = Cart::getAll('user_id=?', [$currentUser]);
         $numberOfItem = 0;
         $totalPrice = 0;
         foreach ($shoppingCartItems as $item) {
-            if ($item->getUserId() == $currentUser && $item->getState() == 0) {                 //2 pparametre
                 $numberOfItem += $item->getQuantity();
                 $totalPrice += $item->getQuantityPrice();
-                $item->setState(1);
-                $item->save();
-            }
+                $item->delete();
         }
 
         if ($totalPrice <= 0 || $numberOfItem <= 0) {
-            echo json_encode("V košíku nič nemáš.");
+            echo ("V košíku nič nemáš.");
             exit();
         }
 
@@ -163,7 +160,7 @@ class OrderController extends AControllerRedirect
         $newOrder->setState(1);     //cakajuca objednavka na potvrdenie
         $newOrder->save();
 
-        echo json_encode("Objednávka prebehla úspešne.");
+        echo ("Objednávka prebehla úspešne.");
         exit();
     }
 

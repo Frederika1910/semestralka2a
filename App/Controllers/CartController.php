@@ -80,8 +80,8 @@ class CartController extends AControllerRedirect
             return ($a > $b) ? 1 : -1;
         });
 
-        if (sizeof($item) != 0) {
-            echo json_encode("Produkt sa v tvojom košíku už nachádza.");
+        if (sizeof($item) > 0) {
+            echo ("Produkt sa v tvojom košíku už nachádza.");
             exit();
         }
 
@@ -92,7 +92,7 @@ class CartController extends AControllerRedirect
         $cartItem->setUserId($currentUser);
         $cartItem->save();
 
-        echo json_encode("Produkt bol úspešne pridaný do tvojho košíka.");
+        echo ("Produkt bol úspešne pridaný do tvojho košíka.");
         exit();
     }
 }

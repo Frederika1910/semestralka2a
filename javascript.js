@@ -458,9 +458,9 @@ $(document).ready(function () {
                 sTwo: monthValue,
                 sTree: yearValue
             },
-            dataType: 'json',
             success: function (data) {
                 console.log(data);
+                data = data.replace(/[0-9]/g, "");
                 //console.log("rB " + radio_first);
                 $('#modelMsg').html(data);
                 $('#productResponse').show();
@@ -515,9 +515,9 @@ $(document).ready(function() {
             data: {
                 id: product_id
             },
-            dataType: 'json',
             success: function (data) {
                 console.log(data);
+                data = data.replace(/[0-9]/g, "");
                 $('#modelMsg').html(data);
                 $('#productResponse').show();
             }
