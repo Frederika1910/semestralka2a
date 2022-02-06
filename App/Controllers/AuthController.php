@@ -78,20 +78,29 @@ class AuthController extends AControllerRedirect
         $password = $this->request()->getValue('password');
         $passwordControl = $this->request()->getValue('confirmPassword');
 
+        $er = "";
         $nameVal = User::validateName($name);
         $surnameVal = User::validateSurname($surname);
         $loginVal = User::validateEmail($login);
         $passwordVal = User::validatePassword($password, $passwordControl);
+
         if ($nameVal != null) {
-            exit($nameVal);
-        } else if ($surnameVal != null) {
-            exit($surnameVal);
-        } else if ($loginVal != null) {
-            exit($loginVal);
-        } else if ($passwordVal != null) {
-            exit($passwordVal);
+            $er .= $nameVal . '<br>';
+        }
+        if ($surnameVal != null) {
+            $er .= ($surnameVal) . '<br>';
+        }
+        if ($loginVal != null) {
+            $er .=  ($loginVal) . '<br>';
+        }
+        if ($passwordVal != null) {
+            $er .= ($passwordVal) . '<br>';
         }
 
+        if (strlen($er) != 0) {
+            $this->redirect('auth', 'registerForm', ['error' => $er]);
+            return;
+        }
         $alreadyExist = Auth::register($login);
         if ($alreadyExist) {
             $this->redirect('auth', 'registerForm', ['error' => 'Užívateľ s danou adresou je už registrovaný.']);

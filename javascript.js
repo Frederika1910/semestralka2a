@@ -64,17 +64,6 @@ window.onload = function() {
     if(document.querySelector(".validate")) {
         document.querySelector(".validate").disabled = true;
     }
-
-    if (document.querySelector("#vKosiku")) {
-        addProductToBasketDisplay();
-    }
-    let products = document.querySelectorAll(".add-cart");
-
-    for (let i=0; i < products.length; i++) {
-        products[i].addEventListener('click', () => {
-            addProductToBasket(products[i]);
-        })
-    }
 }
 
 let paymentPartOne = null;
@@ -178,13 +167,13 @@ function validateNumber(id, maxNumbers) {
     let input = document.getElementById(id);
     let inputValue = input.value;
     let disabledChar = /^[0-9\b]+$/;
-    console.log(input);
+
     if (!inputValue || inputValue.length === 0) {
-        return displayInputInColor("PSČ nesmie byť prázdne.", input);
+        return displayInputInColor("Pole nesmie byť prázdne.", input);
     } else if (!disabledChar.test(inputValue)){
-        return displayInputInColor("PSČ nesmie obsahovať znaky.", input);
+        return displayInputInColor("Pole nesmie obsahovať znaky.", input);
     } if (inputValue.length < maxNumbers || inputValue.length > maxNumbers) {
-        return displayInputInColor("PSČ musí mať presne " + maxNumbers + " znakov.", input);
+        return displayInputInColor("Pole musí mať presne " + maxNumbers + " znakov.", input);
     }
 
     return displayInputInColor(null, input);
@@ -194,7 +183,7 @@ function validateMobileNumber() {
     let input = document.getElementById('mobileNumber');
     let inputValue = input.value;
     let disabledChar = /[0-9\+]$/;
-    console.log(inputValue);
+
     if (!inputValue || inputValue.length === 0) {
         return displayInputInColor("Telefónne číslo nesmie byť prázdne.", input);
     } else if (!disabledChar.test(inputValue)){
