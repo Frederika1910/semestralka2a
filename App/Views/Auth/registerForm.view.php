@@ -14,14 +14,14 @@
                 <h2 class="text-center bold">Registrácia</h2>
                 <div class="form-outline mb-4">
                     <label class="form-label">Meno</label>
-                    <input type="text" id="meno" class="form-control form-control" name="username" onkeyup="validateName()" placeholder="Meno..." required/>
+                    <input type="text" id="meno" class="form-control form-control" name="username" onkeyup="validateText('meno')" placeholder="Meno..." required/>
                     <div class="valid"></div>
                 </div>
 
 
                 <div class="form-outline mb-4">
                     <label class="form-label">Priezvisko</label>
-                    <input type="text" id="priezvisko" class="form-control" name="surname" onkeyup="validateSurname()" placeholder="Priezvisko..." required/>
+                    <input type="text" id="priezvisko" class="form-control" name="surname" onkeyup="validateText('priezvisko')" placeholder="Priezvisko..." required/>
                     <div class="valid"></div>
                 </div>
 

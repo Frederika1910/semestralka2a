@@ -26,7 +26,7 @@
                 <h2 class="text-center bold">Pridanie novej kategórie produktu</h2>
                 <div class="form-outline mb-4">
                     <label class="form-label">Názov</label>
-                    <input type="text" id="categoryName" class="form-control form-control" name="username" onkeyup="validateCategoryName()" autocomplete="off" placeholder="Názov..." required/>
+                    <input type="text" id="categoryName" class="form-control form-control" name="username" onkeyup="validateName('categoryName')" autocomplete="off" placeholder="Názov..." required/>
                     <div id="valid"></div>
                 </div>
 

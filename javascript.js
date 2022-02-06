@@ -132,72 +132,15 @@ function displayInputInColor(string, element) {
     }
 }
 
-function validateName() {
-    console.log("sdsd");
-    let input = document.getElementById('meno');
+function validateText(id) {
+    let input = document.getElementById(id);
     let inputValue = input.value;
     let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
 
     if (!inputValue || inputValue.length === 0) {
-        return displayInputInColor("Meno nesmie byť prázdne.", input);
+        return displayInputInColor("Pole nesmie byť prázdne.", input);
     } else if (!char.test(inputValue)){
-        return displayInputInColor("Meno smie obsahovať len platné znaky v slovenskej abecede.", input);
-    }
-
-    return displayInputInColor(null, input);
-}
-
-function validateSurname() {
-    let input = document.getElementById('priezvisko');
-    let inputValue = input.value;
-    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-
-    if (!inputValue || inputValue.length === 0) {
-        return displayInputInColor("Priezvisko nesmie byť prázdne.", input);
-    } else if (!char.test(inputValue)){
-        return displayInputInColor("Priezvisko smie obsahovať len platné znaky v slovenskej abecede.", input);
-    }
-
-    return displayInputInColor(null, input);
-}
-
-function validateStreet() {
-    let input = document.getElementById('street');
-    let inputValue = input.value;
-    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-
-    if (!inputValue || inputValue.length === 0) {
-        return displayInputInColor("Ulica nesmie byť prázdna.", input);
-    } else if (!char.test(inputValue)){
-        return displayInputInColor("Ulica smie obsahovať len platné znaky v slovenskej abecede.", input);
-    }
-
-    return displayInputInColor(null, input);
-}
-
-function validateCity() {
-    let input = document.getElementById('city');
-    let inputValue = input.value;
-    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-
-    if (!inputValue || inputValue.length === 0) {
-        return displayInputInColor("Obec nesmie byť prázdne.", input);
-    } else if (!char.test(inputValue)){
-        return displayInputInColor("Obec smie obsahovať len platné znaky v slovenskej abecede.", input);
-    }
-
-    return displayInputInColor(null, input);
-}
-
-function validateCountry() {
-    let input = document.getElementById('country');
-    let inputValue = input.value;
-    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-
-    if (!inputValue || inputValue.length === 0) {
-        return displayInputInColor("Štát nesmie byť prázdny.", input);
-    } else if (!char.test(inputValue)){
-        return displayInputInColor("Zadali ste neplatný znak.", input);
+        return displayInputInColor("Pole smie obsahovať len platné znaky v slovenskej abecede.", input);
     }
 
     return displayInputInColor(null, input);
@@ -231,33 +174,17 @@ function validateHouseNumber() {
     return displayInputInColor(null, input);
 }
 
-function validatePsc() {
-    let input = document.getElementById('psc');
+function validateNumber(id, maxNumbers) {
+    let input = document.getElementById(id);
     let inputValue = input.value;
     let disabledChar = /^[0-9\b]+$/;
-    console.log(inputValue);
+    console.log(input);
     if (!inputValue || inputValue.length === 0) {
         return displayInputInColor("PSČ nesmie byť prázdne.", input);
     } else if (!disabledChar.test(inputValue)){
         return displayInputInColor("PSČ nesmie obsahovať znaky.", input);
-    } if (inputValue.length < 5 || inputValue.length > 5) {
-        return displayInputInColor("PSČ musí mať presne 5 znakov.", input);
-    }
-
-    return displayInputInColor(null, input);
-}
-
-function validateCardNumber() {
-    let input = document.getElementById('cardNumber');
-    let inputValue = input.value;
-    let disabledChar = /[0-9]$/;
-    console.log(inputValue);
-    if (!inputValue || inputValue.length === 0) {
-        return displayInputInColor("Číslo karty nesmie byť prázdne.", input);
-    } else if (!disabledChar.test(inputValue)){
-        return displayInputInColor("Číslo karty nesmie obsahovať znaky.", input);
-    } if (inputValue.length < 16 || inputValue.length > 16) {
-        return displayInputInColor("Číslo karty musí mať presne 16 znakov.", input);
+    } if (inputValue.length < maxNumbers || inputValue.length > maxNumbers) {
+        return displayInputInColor("PSČ musí mať presne " + maxNumbers + " znakov.", input);
     }
 
     return displayInputInColor(null, input);
@@ -306,7 +233,7 @@ function validatePassword() {
 function validatePasswordControl() {
     let password = document.getElementById("heslo");
     let passwordControl = document.getElementById("hesloKontrola");
-    if (passwordControl.value != password.value) {
+    if (passwordControl.value !== password.value) {
         return displayInputInColor("Heslá sa nezhodujú.", passwordControl);
     }
 
@@ -327,22 +254,6 @@ function validatePrice(id) {
     }
 
     return displayInputInColor(null, input);
-}
-
-function validateProductName(id) {
-    let input = document.getElementById('productNameInput'+id);
-    let inputValue = input.value;
-    let disabledChar = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-    console.log(inputValue);
-    if (!inputValue || inputValue.length === 0) {
-        returnValueProductName = "Meno nesmie byť prázdne.";
-        return displayInputInColor(returnValueProductName, input);
-    } else if (!disabledChar.test(inputValue)){
-        returnValueProductName = "Meno smie obsahovať len znaky.";
-        return displayInputInColor(returnValueProductName, input);
-    }
-    returnValueProductName = null;
-    return displayInputInColor(returnValueProductName, input);
 }
 
 function validateSize(id) {
@@ -371,35 +282,6 @@ function validateGender() {
     }
 
     return displayInputInColor(null, input);
-}
-
-function validateCategoryName() {
-    let input = document.getElementById('categoryName');
-    let inputValue = input.value;
-    let char = /^[a-zA-Z\u00C0-\u017F\ ]+$/;
-
-    if (!inputValue || inputValue.length === 0) {
-        return displayInputInColor("Názov nesmie byť prázdny.", input);
-    } else if (!char.test(inputValue)){
-        return displayInputInColor("Názov smie obsahovať len platné znaky v slovenskej abecede.", input);
-    }
-
-    return displayInputInColor(null, input);
-}
-
-function validateCategory() {
-    let cat = document.getElementById('categoryProductForm');
-
-    let error = false;
-
-    if (cat.options[cat.selectedIndex].value === "false") {
-        console.log(cat.options[cat.selectedIndex].value);
-        error = true;
-    }
-
-    if (!error) {
-        returnValueCategoryId = null;
-    }
 }
 
 $(document).ready(function () {
@@ -729,7 +611,7 @@ $(document).ready(function() {
         let edit_id = $(this).attr('dataId');
 
         $('#nameProduct'+edit_id).hide();
-        $('#productNameInput'+edit_id).show();
+        $('#'+edit_id).show();
 
         $('#sizeProduct'+edit_id).hide();
         $('#productSizeInput'+edit_id).show();
@@ -749,7 +631,7 @@ $(document).ready(function() {
         e.preventDefault();
         let save_id = $(this).attr('dataId');
 
-        let new_name = $('#productNameInput'+save_id).val();
+        let new_name = $('#'+save_id).val();
         let new_size = $('#productSizeInput'+save_id).val();
         let new_price = $('#productPriceInput'+save_id).val();
         console.log(new_name);
@@ -764,7 +646,7 @@ $(document).ready(function() {
             },
             success: function(data) {
                 console.log(data);
-                $('#productNameInput'+save_id).hide();
+                $('#'+save_id).hide();
                 $('#nameProduct'+save_id).show();
 
                 $('#productSizeInput'+save_id).hide();
@@ -815,7 +697,6 @@ $(document).ready(function() {
 $(document).ready(function() {
     $(document).on('click', '.sendOrderBut', function () {
         let send_order_id = $(this).attr('dataId');
-        //let numberOfRows = document.getElementById('tableOrders').rows.length;
 
         $.ajax({
             method: 'POST',
@@ -844,8 +725,6 @@ $(document).ready(function() {
                 state: 4
             },
             success: function () {
-                //$('.deleteItem' + del_id).fadeOut('slow');
-                //console.log(send_order_id);
                 let i = $('#tableOrders').find('.sendItem'+confimr_storno_order_id).index();
 
                 document.getElementById('tableOrders').deleteRow(i+1);

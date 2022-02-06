@@ -26,19 +26,19 @@
                     <h2 class="text-center bold">Doručovacie údaje</h2>
                     <div class="form-outline mb-4">
                         <label class="form-label">Meno</label>
-                        <input type="text" name="name" id="meno" class="form-control form-control" onkeyup="validateName()" placeholder="Meno..." required autocomplete="off" required>
+                        <input type="text" name="name" id="meno" class="form-control form-control" onkeyup="validateText('meno')" placeholder="Meno..." required autocomplete="off" required>
                         <div class="valid"></div>
                     </div>
 
                     <div class="form-outline mb-4">
                         <label class="form-label">Priezvisko</label>
-                        <input type="text" name="surname" id="priezvisko" class="form-control" onkeyup="validateSurname()" placeholder="Priezvisko..." autocomplete="off" required>
+                        <input type="text" name="surname" id="priezvisko" class="form-control" onkeyup="validateText('priezvisko')" placeholder="Priezvisko..." autocomplete="off" required>
                         <div class="valid"></div>
                     </div>
 
                     <div class="form-outline mb-4">
                         <label class="form-label">Ulica</label>
-                        <input type="text" name="street" id="street" class="form-control" value="" onkeyup="validateStreet()" placeholder="Ulica..." autocomplete="off" required>
+                        <input type="text" name="street" id="street" class="form-control" value="" onkeyup="validateText('street')" placeholder="Ulica..." autocomplete="off" required>
                         <div class="valid"></div>
                     </div>
 
@@ -50,19 +50,19 @@
 
                     <div class="form-outline mb-4">
                         <label class="form-label">PSČ</label>
-                        <input type="text" name="psc" id="psc" class="form-control" onkeyup="validatePsc()" placeholder="PSČ..." autocomplete="off"  required>
+                        <input type="text" name="psc" id="psc" class="form-control" onkeyup="validateNumber('psc',5)" placeholder="PSČ..." autocomplete="off"  required>
                         <div class="valid"></div>
                     </div>
 
                     <div class="form-outline mb-4">
                         <label class="form-label">Obec</label>
-                        <input type="text" name="city" id="city" class="form-control" onkeyup="validateCity()" placeholder="Obec..." autocomplete="off" required/>
+                        <input type="text" name="city" id="city" class="form-control" onkeyup="validateText('city')" placeholder="Obec..." autocomplete="off" required/>
                         <div class="valid"></div>
                     </div>
 
                     <div class="form-outline mb-4">
                         <label class="form-label">Štát</label>
-                        <input type="text" name="country" id="country" class="form-control" onkeyup="validateCountry()" placeholder="Štát..." autocomplete="off" required/>
+                        <input type="text" name="country" id="country" class="form-control" onkeyup="validateText('country')" placeholder="Štát..." autocomplete="off" required/>
                         <div class="valid"></div>
                     </div>
 
@@ -128,8 +128,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Číslo karty:</label>
-                                                <input type="text" class="form-control" name="cardNumber" id="cardNumber" onkeyup="validateCardNumber()" placeholder="Číslo karty..." autocomplete="off" required>
-                                                <div id="valid"></div>
+                                                <input type="text" class="form-control" name="cardNumber" id="cardNumber" onkeyup="validateNumber('cardNumber',16)" placeholder="Číslo karty..." autocomplete="off" required>
+                                                <div class="valid"></div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Dátum splatnosti:</label>

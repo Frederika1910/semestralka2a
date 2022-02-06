@@ -177,7 +177,7 @@ class ProductController extends AControllerRedirect
                                     <div class="valid"></div>
                                 </div>
                             </div>
-                            <input type="name" id="productNameInput'. $product->getId() .'" class="form-control mb-2" onkeyup="validateProductName('. $product->getId() .')" placeholder="Názov..." autocomplete="off" style="display: none;" required>                                                     
+                            <input type="name" id="'. $product->getId() .'" class="form-control mb-2" onkeyup="validateName(' . $product->getId() .')" placeholder="Názov..." autocomplete="off" style="display: none;" required>                                                     
                             <input type="name" id="productSizeInput'. $product->getId() .'" class="form-control mb-2" onkeyup="validateSize('. $product->getId() .')" placeholder="Veľkosť..." autocomplete="off" style="display: none;" required>
                             <input type="name" id="productPriceInput'. $product->getId() .'" class="form-control" onkeyup="validatePrice('. $product->getId() .')" placeholder="Cena..." autocomplete="off" style="display: none;" required>
                                     
