@@ -108,12 +108,13 @@ class OrderController extends AControllerRedirect
         } else if ($rb1 == "false" && $rb2 == "false") {
             echo ("Nevybrali ste si spôsob platby.");
             exit();
-        } if ($rb2 == "true") {
+        }
+        if ($rb2 == "true") {
             if ($s1 == "false") {
                 echo ("Nevybrali ste si druh karty.");
                 exit();
             } else if ($cardNumberVal != null) {
-                echo ($cardNumberVal);                                                      //???????
+                echo ($cardNumberVal);
                 exit();
             } else if ($s2 == "false") {
                 echo ("Nevybrali ste si mesiac v dátume splatnosti.");

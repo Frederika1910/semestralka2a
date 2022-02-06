@@ -26,7 +26,7 @@
                     <h2 class="text-center bold">Doručovacie údaje</h2>
                     <div class="form-outline mb-4">
                         <label class="form-label">Meno</label>
-                        <input type="text" name="name" id="meno" class="form-control form-control" onkeyup="validateText('meno')" placeholder="Meno..." required autocomplete="off" required>
+                        <input type="text" name="name" id="meno" class="form-control form-control" onkeyup="validateText('meno')" placeholder="Meno..." autocomplete="off" required>
                         <div class="valid"></div>
                     </div>
 
@@ -100,11 +100,12 @@
                                 <div class="sidebar">
                                     <ul>
                                         <li class="sidebar-item">
-                                            <a onclick="myFunction('paymentMethodOne')" href="#" class="px-2">Dobierka</a>
+                                            <a onclick="getDiv('paymentMethodOne')" href="#" class="px-2">Dobierka</a>
                                         </li>
                                     </ul>
                                     <div id="paymentMethodOne" style="display: none">
-                                        <input type="radio" id="radioButtonOne" name="paymentMethod" value="<?php echo $sumaSpolu ?>" onclick="check('radioButtonOne')">Cena dobierky: 2€
+                                        <input type="radio" id="radioButtonOne" name="paymentMethod" value="<?php echo $sumaSpolu ?>" required="required">Cena dobierky: 2€
+                                        <div class="valid"></div>
                                     </div>
                                 </div>
                             </div>
@@ -112,20 +113,22 @@
                                 <div class="sidebar">
                                     <ul>
                                     <li class="sidebar-item">
-                                        <a onclick="myFunction('paymentMethodTwo')" href="#" class="px-2">Online platba kartou</a></li>
+                                        <a onclick="getDiv('paymentMethodTwo')" href="#" class="px-2">Online platba kartou</a></li>
                                     </ul>
                                     <div id="paymentMethodTwo" style="display: none">
-                                        <input type="radio" id="radioButtonTwo" name="paymentMethod" value="0" onclick="check('radioButtonTwo')">Platba kartou: zadarmo
+                                        <input type="radio" id="radioButtonTwo" name="paymentMethod" value="0" required>Platba kartou: zadarmo
+                                        <div class="valid"></div>
+                                        <div class="form-group">
+                                            <label>Druh karty:</label>
+                                            <select id="cards" onchange="validateCards()">
+                                                <option value="false" selected>-----</option>
+                                                <option value="Maestro">Maestro</option>
+                                                <option value="MasterCard">MasterCard</option>
+                                                <option value="Visa">Visa</option>
+                                            </select>
+                                            <div class="valid"></div>
+                                        </div>
 
-                                            <div class="form-group">
-                                                <label>Druh karty:</label>
-                                                <select id="cards" onclick="check('radioButtonTwo')">
-                                                    <option value="false" selected>-----</option>
-                                                    <option value="Maestro">Maestro</option>
-                                                    <option value="MasterCard">MasterCard</option>
-                                                    <option value="Visa">Visa</option>
-                                                </select>
-                                            </div>
                                             <div class="form-group">
                                                 <label>Číslo karty:</label>
                                                 <input type="text" class="form-control" name="cardNumber" id="cardNumber" onkeyup="validateNumber('cardNumber',16)" placeholder="Číslo karty..." autocomplete="off" required>
@@ -133,35 +136,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Dátum splatnosti:</label>
-                                                <select id="months" onclick="check('radioButtonTwo')">
-                                                    <option value="false" selected>--</option>
-                                                    <option value="1">01</option>
-                                                    <option value="2">02</option>
-                                                    <option value="3">03</option>
-                                                    <option value="4">04</option>
-                                                    <option value="5">05</option>
-                                                    <option value="6">06</option>
-                                                    <option value="7">07</option>
-                                                    <option value="8">08</option>
-                                                    <option value="9">09</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                </select>
-                                                /
-                                                <select id="years" onclick="check('radioButtonTwo')">
-                                                    <option value="false" selected>----</option>
-                                                    <option value="2022">2022</option>
-                                                    <option value="2023">2023</option>
-                                                    <option value="2024">2024</option>
-                                                    <option value="2025">2025</option>
-                                                    <option value="2026">2026</option>
-                                                    <option value="2027">2027</option>
-                                                    <option value="2028">2028</option>
-                                                    <option value="2029">2029</option>
-                                                    <option value="2030">2030</option>
-                                                    <option value="2031">2031</option>
-                                                </select>
+                                                <input type="text" class="form-control" name="cardDate" id="cardDate" onkeyup="validateDate()" placeholder="MM/RR" autocomplete="off" required>
+                                                <div class="valid"></div>
                                             </div>
                                     </div>
                                 </div>

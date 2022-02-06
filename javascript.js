@@ -60,47 +60,6 @@ function getOrderForm() {
 
 window.onload = function() {
     getDarkMode();
-
-    if(document.querySelector(".validate")) {
-        document.querySelector(".validate").disabled = true;
-    }
-}
-
-let paymentPartOne = null;
-let paymentPartTwo = null;
-let returnValueCategoryId = "null";
-
-function check(id) {
-    let rB = document.getElementById(id);
-    console.log("id " + id);
-    console.log(rB);
-    if (id === "radioButtonOne" && rB.checked) {
-        console.log("prvyif");
-        paymentPartOne = true;
-    } else if (id === "radioButtonTwo" && rB.checked) {
-        paymentPartOne = null;
-        console.log("druhyif");
-
-        let mon = document.getElementById('months');
-        let year = document.getElementById('years');
-        let card = document.getElementById('cards');
-
-        let error = false;
-
-        if (mon.options[mon.selectedIndex].value === "false" || year.options[year.selectedIndex].value === "false" || card.options[card.selectedIndex].value === "false") {
-            console.log(mon.options[mon.selectedIndex].value);
-            error = true;
-        }
-
-        if (error) {
-            paymentPartTwo = null;
-            document.querySelector(".validate").disabled = true;
-        } else {
-            paymentPartTwo = true;
-        }
-
-    }
-
 }
 
 function displayInputInColor(string, element) {
@@ -108,6 +67,7 @@ function displayInputInColor(string, element) {
     let elementParent = elementId.parentElement;
     let divErrorText = elementParent.querySelector(".valid")
     let errorText = [];
+    console.log(divErrorText);
 
     if (string != null) {
         element.style.borderColor = "red"
@@ -118,6 +78,13 @@ function displayInputInColor(string, element) {
         errorText.pop();
         element.style.borderColor = "green"
         divErrorText.innerHTML = "";
+    }
+}
+
+function validateRB() {
+    let a = document.getElementById('radioButtonOne');
+    if (a.checked) {
+        displayInputInColor('dsd', a);
     }
 }
 
@@ -334,7 +301,6 @@ $(document).ready(function() {
     $(document).on('click', '.delBut', function () {
         let del_id = $(this).attr('dataId');
 
-        console.log("riadky " + numberOfRows);
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=cart&a=removeOrderItem',
@@ -414,7 +380,7 @@ $(document).ready(function() {
 
                     let aString = quantity_input.toString();
 
-                    if (isNaN(quantity_input) || parseInt(quantity_input) <= 0) {
+                    if (isNaN(quantity_input) || parseInt(quantity_input) <= 0 || quantity_input === "") {
                        $('#modelMsg').html("Zadal si neplatnú hodnotu.");
                         $('#productResponse').show();
                     } else {
@@ -466,21 +432,72 @@ $(document).ready(function() {
            }
        }
 
-       if (check == 0) {
+       if (check === 0) {
            $('#modelMsg').html("Neboli zvolené žiadne filtre.");
            $('#productResponse').show();
        }
     })
 })
 
-function myFunction(id) {
+function getDiv(id) {
     let x = document.getElementById(id);
-    console.log(x);
+
     if (x.style.display === 'none') {
         x.style.display = 'block';
     } else if (x.style.display === 'block') {
         x.style.display = 'none';
     }
+
+    let rbOne = document.getElementById('radioButtonOne');
+    let rbTwo = document.getElementById('radioButtonTwo');
+    let card = document.getElementById('cards');
+
+    if (!rbOne.checked && !rbTwo.checked) {
+        displayInputInColor('Zvoľte si spôsob platby.', rbOne);
+        displayInputInColor('Zvoľte si spôsob platby.', rbTwo);
+    }
+    if (card.options[card.selectedIndex].value === "false") {
+        displayInputInColor('Zvoľte si druh karty.', card);
+    }
+
+}
+
+function validateQuantity(id) {
+    let input = document.getElementById(id);
+    let inputValue = input.value;
+    let disabledChar = /^[0-9]+$/;
+    console.log(inputValue);
+    if (!disabledChar.test(inputValue)){
+        return displayInputInColor("Číslo domu nesmie obsahovať znaky.", input);
+    }
+
+    return displayInputInColor(null, input);
+}
+
+function validateDate() {
+    let input = document.getElementById('cardDate');
+    let inputValue = input.value;
+    let disabledChar = /^[0-9\/]+$/;
+    let date = new Date();
+    let currentYear = date.getFullYear();
+    let futureYear = date.getFullYear()+10;
+
+    let month = inputValue.split("/")[0];
+    let year = inputValue.split("/")[1];
+
+    if (!inputValue || inputValue.length === 0) {
+        return displayInputInColor("Dátum nesmie byť prázdny.", input);
+    } else if (!disabledChar.test(inputValue)){
+        return displayInputInColor("Dátum nesmie obsahovať znaky.", input);
+    }else if (inputValue.length > 5){
+        return displayInputInColor("Dátum musí mať tvar MM/RR", input);
+    } else if (month > 12 || month.length < 2){
+        return displayInputInColor("Zadaný mesiac nie je správny.", input);
+    } else if (year.length < 2 || year < currentYear.toString().substring(2) || year > futureYear.toString().substring(2)){
+        return displayInputInColor("Zadaný rok nie je správny.", input);
+    }
+
+    return displayInputInColor(null, input);
 }
 
 $(document).ready(function() {
@@ -502,24 +519,55 @@ $(document).ready(function() {
     })
 })
 
-$('input[type=radio][name=paymentMethod]').change(function() {
+function validateCards() {
+    let x = document.getElementById('cards');
+    if (x.options[x.selectedIndex].value !== "false") {
+        return displayInputInColor(null, x);
+    } else {
+        return displayInputInColor('Zvoľte si spôsob platby.', x);
+    }
+}
 
-    if (document.getElementById('radioButtonOne').checked) {
+$('input[type=radio][name=paymentMethod]').change(function() {
+    let rbOne = document.getElementById('radioButtonOne');
+    let rbTwo = document.getElementById('radioButtonTwo');
+    let cardType = document.getElementById('cards');
+    let cardNumber = document.getElementById('cardNumber');
+    let cardDate = document.getElementById('cardDate');
+    if (rbOne.checked) {
         $('.meth').html("Poštovné: 2€");
         let y = parseInt($('#radioButtonOne').val()) + 2;
         $('#priceTotal').html("Spolu:"+ y + "€");
-    } else if (document.getElementById('radioButtonTwo').checked) {
+        displayInputInColor(null, rbOne);
+        displayInputInColor(null, rbTwo);
+        displayInputInColor(null, cardType);
+        displayInputInColor(null, cardNumber);
+        displayInputInColor(null, cardDate);
+    } else if (rbTwo.checked) {
         $('.meth').html("Poštovné: 0€");
         let y = parseInt($('#radioButtonOne').val());
-        $('#priceTotal').html("Spolu: "+ y + "€")
+        $('#priceTotal').html("Spolu: "+ y + "€");
+        displayInputInColor(null, rbTwo);
+        displayInputInColor(null, rbOne);
+        validateCards();
+        validateNumber('cardNumber', 16);
+        validateDate();
     }
+})
 
+$(document).ready(function () {
+    let all = document.getElementsByTagName('input');
+    for (let i = 0; i < all.length; i++) {
+        if (all[i].type === "radio") {
+            all[i].checked = false;
+        }
+    }
 })
 
 $(document).ready(function() {
     $(document).on('click', '.delOrderBut', function (e) {
         e.preventDefault();
-        let order_item_id = $(this).attr('dataId');
+        let order_item_id = $(this).checked = false;
 
         $.ajax({
             method: 'POST',

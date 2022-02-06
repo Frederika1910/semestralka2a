@@ -101,6 +101,7 @@ class AuthController extends AControllerRedirect
             $this->redirect('auth', 'registerForm', ['error' => $er]);
             return;
         }
+
         $alreadyExist = Auth::register($login);
         if ($alreadyExist) {
             $this->redirect('auth', 'registerForm', ['error' => 'Užívateľ s danou adresou je už registrovaný.']);
@@ -145,9 +146,15 @@ class AuthController extends AControllerRedirect
         $newP = $this->request()->getValue('newPass');
         $newPControl = $this->request()->getValue('newPassControl');
 
+        $er = "";
         $passwordVal = User::validatePassword($newP, $newPControl);
         if ($passwordVal != null) {
-            exit($passwordVal);
+            $er .= ($passwordVal);
+        }
+
+        if (strlen($er) != 0) {
+            $this->redirect('auth', 'changePassword', ['error' => $er]);
+            return;
         }
 
         $userExist = Auth::getUser($login, $oldP);
@@ -170,6 +177,7 @@ class AuthController extends AControllerRedirect
         $this->redirect('home');
     }
 
+    /**
     public function getUser() {
         $currentId = Auth::getId();
         $currentUser = User::getOne($currentId);
@@ -178,5 +186,5 @@ class AuthController extends AControllerRedirect
         $result = ['name'=>$currentName,'surname'=>$currentSurname];
         echo json_encode($result);
     }
-
+**/
 }

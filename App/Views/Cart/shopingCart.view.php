@@ -42,7 +42,8 @@
                <tr class="deleteItem<?php echo $item->getId() ?>">
                     <td>
                         <span id="quantity<?php echo $item->getId() ?>"><?php echo $item->getQuantity() ?></span>
-                        <input type="text" id="quantityInput<?php echo $item->getId() ?>" class="form-control" placeholder="Mnozstvo..." style="display: none;" required>
+                        <input type="text" id="quantityInput<?php echo $item->getId() ?>" class="form-control" onkeyup="validateQuantity('quantityInput<?php echo $item->getId() ?>')" placeholder="Mnozstvo..." style="display: none;" required>
+                        <div class="valid"></div>
                     </td>
                     <?php $product = \App\Models\Product::getOne($item->getProductId()) ?>
                     <td><?php echo $product->getName() ?></td>
