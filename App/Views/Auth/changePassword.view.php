@@ -10,7 +10,7 @@
                 </div>
             <?php } ?>
 
-            <form method="post" name="chang" action="?c=auth&a=changePass">
+            <form method="post" action="?c=auth&a=changePass">
                 <h2 class="text-center bold">Zmena hesla</h2>
                 <div class="form-group mb-2">
                     <label>Stare heslo</label>
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <button type="submit" id="registrovat" class="btn btn-success">Potvrdiť</button>
+                    <button type="submit" class="btn btn-success">Potvrdiť</button>
                 </div>
             </form>
         </div>

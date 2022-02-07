@@ -14,11 +14,11 @@
                 <h2 class="text-center bold">Prihlásenie</h2>
                 <div class="form-group">
                     <label for="exampleInputEmail1">E-mail</label>
-                    <input type="text" class="form-control" name="login" id="exampleInputEmail1" placeholder="E-mail..." required>
+                    <input type="text" class="form-control" name="login" id="exampleInputEmail1" placeholder="E-mail..." >
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Heslo</label>
-                    <input type="password"  class="form-control" name="password" id="exampleInputPassword1" placeholder="Heslo..." required>
+                    <input type="password"  class="form-control" name="password" id="exampleInputPassword1" placeholder="Heslo..." >
                 </div>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">

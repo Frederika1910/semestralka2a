@@ -364,7 +364,7 @@ $(document).ready(function() {
                 url: 'http://localhost/semestralka2?c=cart&a=editOrderItem',
                 data: {text: quantity_input,
                     oldItem: edit_id,
-                    },
+                },
                 success: function (data) {
                     $('#quantityInput'+edit_id).hide();
                     $('#quantity'+edit_id).show();
@@ -376,7 +376,8 @@ $(document).ready(function() {
 
                     if (isNaN(quantity_input) || parseInt(quantity_input) <= 0 || quantity_input === "") {
                        $('#modelMsg').html(data);
-                        $('#productResponse').show();
+                       $('#productResponse').show();
+
                     } else {
                         let totalPrice = quantity_price * parseInt(quantity_input);
                         let totalPriceString = totalPrice.toString();
@@ -386,7 +387,7 @@ $(document).ready(function() {
                     }
                 }
             })
-        })
+    })
 })
 
 $(document).ready(function() {
@@ -591,6 +592,7 @@ $(document).ready(function () {
                 nameCategory: name,
             },
             success: function (data) {
+                data = data.replace(/[0-9]/g, "");
                 $('#categoryMsg').html(data);
                 $('#categoryResponse').show();
                 document.getElementById('meno').value = '';
@@ -611,8 +613,7 @@ $(document).ready(function() {
                 id: category_id
             },
             success: function () {
-                let i = $('#categoryTable').find('productCategoryRow'+category_id).index();
-                document.getElementById('categoryTable').deleteRow(i);
+                $('#productCategoryRow' + category_id).fadeOut('slow');
             }
         })
     })

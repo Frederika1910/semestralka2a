@@ -48,7 +48,6 @@
                 </div>
 
                 <p class="text-center text-muted mt-5 mb-0">Máš už vytvorený účet? <a href="?c=auth&a=login" class="fw-bold text-body"><u>Prihlás sa.</u></a></p>
-
             </form>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <?php /** @var Array $data */ ?>
-<div class="container-fluid">
 
+<div class="container-fluid">
     <div class="modal" id="categoryResponse" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -26,10 +26,9 @@
                 <h2 class="text-center bold">Pridanie novej kategórie produktu</h2>
                 <div class="form-outline mb-4">
                     <label class="form-label">Názov</label>
-                    <input type="text" id="categoryName" class="form-control form-control" name="username" onkeyup="validateName('categoryName')" autocomplete="off" placeholder="Názov..." required/>
-                    <div id="valid"></div>
+                    <input type="text" id="categoryName" class="form-control form-control" name="username" onkeyup="validateText('categoryName')" autocomplete="off" placeholder="Názov..." required/>
+                    <div class="valid"></div>
                 </div>
-
                 <div class="d-flex justify-content-center" id="submit-info">
                     <button type="submit" class="btn btn-success">Pridať</button>
                 </div>

@@ -61,6 +61,13 @@ class AuthController extends AControllerRedirect
         $login = $this->request()->getValue('login');
         $password = $this->request()->getValue('password');
 
+        $loginVal = User::validateEmail($login);
+
+        if ($loginVal == null || $password == null) {
+            $this->redirect('auth', 'loginForm', ['error' => 'Nezadali ste prihlasovacie údaje.']);
+            return;
+        }
+
         $userExist = Auth::login($login, $password);
         if ($userExist) {
             Auth::setSession($login);
@@ -149,7 +156,7 @@ class AuthController extends AControllerRedirect
         $er = "";
         $passwordVal = User::validatePassword($newP, $newPControl);
         if ($passwordVal != null) {
-            $er .= ($passwordVal);
+            $er = ($passwordVal);
         }
 
         if (strlen($er) != 0) {
