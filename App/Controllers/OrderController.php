@@ -108,10 +108,10 @@ class OrderController extends AControllerRedirect
             } else if ($cardNumberVal != null) {
                 echo ($cardNumberVal);
                 exit();
+            } else if ($cardDateVal != null) {
+                echo($cardDateVal);
+                exit();
             }
-        } else if ($cardDateVal != null) {
-            echo ($cardDateVal);
-            exit();
         }
 
         $newOrder = new Order();
@@ -147,12 +147,10 @@ class OrderController extends AControllerRedirect
         $newOrder->setCity($city);
         $newOrder->setCountry($country);
         $newOrder->setMobileNumber(($mobileNumber));
-        $newOrder->setState(5);
+        $newOrder->setState(1);
         $newOrder->save();
 
-
-
-        echo ("kmkmk");
+        echo ("Objednávka prebehla úspešne.");
         exit();
     }
 

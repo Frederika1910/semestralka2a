@@ -281,12 +281,10 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 data = data.replace(/[0-9]/g, "");
-                if (data === "kmkmk") {
-                    window.location.href = 'http://localhost/semestralka2?c=payment&a=paymentForm';
-                } else {
+
                     $('#modelMsg').html(data);
                     $('#productResponse').show();
-                }
+
             }
         })
     })
@@ -563,8 +561,8 @@ $(document).ready(function () {
 $(document).ready(function() {
     $(document).on('click', '.delOrderBut', function (e) {
         e.preventDefault();
-        let order_item_id = $(this).checked = false;
-
+        let order_item_id = $(this).attr('dataId');
+        console.log(order_item_id);
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=order&a=stornoOrder',
