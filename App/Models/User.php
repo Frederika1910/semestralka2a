@@ -106,58 +106,6 @@ class User extends \App\Core\Model
         $this->surname = $surname;
     }
 
-    public static function validateEmail(string $email) : ?string
-    {
-        if($email == "") {
-            return "Nezadali ste e-mailovú adresu.";
-        } else if (!preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/", $email)) {
-            return "Zadaná e-mailová adresa je v nesprávnom formáte.";
-        }
-
-        return null;
-    }
-
-    public static function validatePassword($password, $passwordControl) : ?string
-    {
-        if($password == "") {
-            return "Nezadali ste heslo.";
-        } elseif(strlen($password)<5){
-            return "Heslo musí mať aspoň 5 znakov.";
-        } else if (!preg_match("/[a-z]/", $password)) {
-            return "Heslo nesmie obsahovať špeciálne znaky.";
-        } else if (!preg_match("/[A-Z]/", $password)) {
-            return "Heslo musí obsahovať aspoň 1 veľké písmeno.";
-        } else if (!preg_match("/[0-9]/", $password)) {
-            return "Heslo musí obsahovať aspoň 1 číslicu.";
-        } else if (strcmp($password, $passwordControl) != 0) {
-            return "Heslá sa nezhodujú.";
-        }
-
-        return null;
-    }
-
-    public static function validateName(string $inp): ?string
-    {
-        if($inp == "" || $inp == null){
-            return "Nezadali ste meno.";
-        } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $inp)) {
-            return "Meno smie obsahovať len platné znaky v slovenskej abecede.";
-        }
-
-        return null;
-    }
-
-    public static function validateSurname(string $inp): ?string
-    {
-        if($inp == ""){
-            return "Nezadali ste priezvisko.";
-        } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $inp)) {
-            return "Priezvisko smie obsahovať len platné znaky v slovenskej abecede.";
-        }
-
-        return null;
-    }
-
     /**
      * @return bool
      */

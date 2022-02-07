@@ -27,15 +27,15 @@
 <nav class="py-2 darkMode">
     <div class="container d-flex flex-wrap">
         <ul class="nav me-auto">
-            <li class="nav-item"><a href="?c=home" class="px-2">Domov</a></li>
-            <li class="nav-item"><a href="?c=product&a=filterProduct" class="px-2">Oblečenie</a></li>
-            <li class="nav-item"><a href="?c=home&a=qa" class="px-2">Q&A</a></li>
-            <li class="nav-item"><a href="?c=home&a=aboutus" class="px-2">O nás</a></li>
+            <li class="nav-item"><a href="?c=home" class="px-3">Domov</a></li>
+            <li class="nav-item"><a href="?c=product&a=filterProduct" class="px-3">Oblečenie</a></li>
+            <li class="nav-item"><a href="?c=home&a=qa" class="px-3">Q&A</a></li>
+            <li class="nav-item"><a href="?c=home&a=aboutus" class="px-3">O nás</a></li>
         </ul>
         <?php if (\App\Auth::isLogged() && \App\Auth::isAdmin()) { ?>
         <ul class="nav">
-            <li class="nav-item"><a href="?c=home&a=loggedUser" class="px-2">Admin</a></li>
-            <li class="nav-item"><a href="?c=auth&a=logout" class="px-2">Logout</a></li>
+            <li class="nav-item"><a href="?c=home&a=loggedUser" class="px-3">Admin</a></li>
+            <li class="nav-item"><a href="?c=auth&a=logout" class="px-3">Logout</a></li>
         </ul>
         <?php } else if (\App\Auth::isLogged()) { ?>
             <ul class="nav">
@@ -44,13 +44,13 @@
                         <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"></path>
                     </svg></a>
                 </li>
-                <li class="nav-item"><a href="?c=home&a=loggedUser" class="px-2">Môj účet</a></li>
-            <li class="nav-item"><a href="?c=auth&a=logout" class="px-2">Logout</a></li>
+                <li class="nav-item"><a href="?c=home&a=loggedUser" class="px-3">Môj účet</a></li>
+            <li class="nav-item"><a href="?c=auth&a=logout" class="px-3">Logout</a></li>
         </ul>
         <?php } else { ?>
         <ul class="nav">
-            <li class="nav-item"><a href="?c=auth&a=loginForm" class="px-2">Prihlás sa</a></li>
-            <li class="nav-item"><a href="?c=auth&a=registerForm" class="px-2">Zaregistruj sa</a></li>
+            <li class="nav-item"><a href="?c=auth&a=loginForm" class="px-3">Prihlás sa</a></li>
+            <li class="nav-item"><a href="?c=auth&a=registerForm" class="px-3">Zaregistruj sa</a></li>
         </ul>
         <?php } ?>
     </div>

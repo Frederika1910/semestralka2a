@@ -259,7 +259,7 @@ $(document).ready(function () {
         let cardsValue = c.options[c.selectedIndex].value;
         let cardNumber = $('#cardNumber').val();
         let cardDate = $('#cardDate').val();
-
+        console.log(cardDate);
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=order&a=addNewOrder',
@@ -293,7 +293,7 @@ $(document).ready(function () {
 let numberOfRows = $('#tableShoppingCart tbody tr').length;
 $(document).ready(function() {
     $(document).on('click', '.delBut', function () {
-        let del_id = $(this).attr('dataId');
+        let del_id = $(this).attr('data-id');
 
         $.ajax({
             method: 'POST',
@@ -314,7 +314,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(document).on('click', '.editBut', function(){
-        let edit_id = $(this).attr('dataId');
+        let edit_id = $(this).attr('data-id');
 
         $('#quantity'+edit_id).hide();
         $('#quantityInput'+edit_id).show();
@@ -327,8 +327,8 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(document).on('click', '#edit_order_item', function(){
-        let product_id = $(this).attr('dataId');
-
+        let product_id = $(this).attr('data-id');
+        console.log(product_id);
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=cart&a=addToCart',
@@ -355,7 +355,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $(document).on('click', '.saveBut', function(e){
             e.preventDefault();
-            let edit_id = $(this).attr('dataId');
+            let edit_id = $(this).attr('data-id');
             let quantity_price = $(this).attr('data-price');
             let quantity_input = ($('#quantityInput'+edit_id).val());
 
@@ -377,7 +377,7 @@ $(document).ready(function() {
                     if (isNaN(quantity_input) || parseInt(quantity_input) <= 0 || quantity_input === "") {
                        $('#modelMsg').html(data);
                        $('#productResponse').show();
-
+                       $('.valid').html("");
                     } else {
                         let totalPrice = quantity_price * parseInt(quantity_input);
                         let totalPriceString = totalPrice.toString();
@@ -442,19 +442,19 @@ function getDiv(id) {
     } else if (x.style.display === 'block') {
         x.style.display = 'none';
     }
+}
 
-    let rbOne = document.getElementById('radioButtonOne');
-    let rbTwo = document.getElementById('radioButtonTwo');
-    let card = document.getElementById('cards');
+function showDetails(id) {
+    let divOne = document.getElementById('paymentMethodOne');
+    let divTwo = document.getElementById('paymentMethodTwo');
 
-    if (!rbOne.checked && !rbTwo.checked) {
-        displayInputInColor('Zvoľte si spôsob platby.', rbOne);
-        displayInputInColor('Zvoľte si spôsob platby.', rbTwo);
+    if (id === 'paymentMethodOne') {
+        divOne.style.display = 'block';
+        divTwo.style.display = 'none';
+    } else if (id === 'paymentMethodTwo') {
+        divOne.style.display = 'none';
+        divTwo.style.display = 'block';
     }
-    if (card.options[card.selectedIndex].value === "false") {
-        displayInputInColor('Zvoľte si druh karty.', card);
-    }
-
 }
 
 function validateQuantity(id) {

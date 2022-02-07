@@ -10,6 +10,7 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\State;
 use App\Models\User;
+use Cassandra\Date;
 
 class OrderController extends AControllerRedirect
 {
@@ -63,16 +64,16 @@ class OrderController extends AControllerRedirect
         $s1 = $this->request()->getValue('sOne');
         $cardDate = $this->request()->getValue('cardD');
 
-        $nameVal = User::validateName($name);
-        $surnameVal = User::validateSurname($surname);
-        $streetVal = Order::validateStreet($street);
-        $pscVal = Order::validatePsc($psc);
-        $cityVal = Order::validateCity($city);
-        $countryVal = Order::validateCountry($country);
-        $houseNumberVal = Order::validateHouseNumber($houseNumber);
-        $mobileNumberVal = Order::validateMobileNumber($mobileNumber);
-        $cardNumberVal = Order::validateCardNumber($cardNumber);
-        $cardDateVal = Order::validateCardNumber($cardDate);
+        $nameVal = AuthController::validateName($name);
+        $surnameVal = AuthController::validateSurname($surname);
+        $streetVal = $this->validateStreet($street);
+        $pscVal = $this->validatePsc($psc);
+        $cityVal = $this->validateCity($city);
+        $countryVal = $this->validateCountry($country);
+        $houseNumberVal = $this->validateHouseNumber($houseNumber);
+        $mobileNumberVal = $this->validateMobileNumber($mobileNumber);
+        $cardNumberVal = $this->validateCardNumber($cardNumber);
+        $cardDateVal = $this->validateCardDate($cardDate);
 
         if ($nameVal != null) {
             echo ($nameVal);
@@ -182,13 +183,13 @@ class OrderController extends AControllerRedirect
                 <td>'. $order->getTotalPrice() .'€</td>
                 <td>';
                 if ($state == 3) {
-                    $correctOrder .= '<button type = "submit" id = "confirmStonoBut'. $order->getId() .'" class="btn btn-danger confirmStornoOrderBut" dataId = "'. $order->getId() .'"><i class="bi bi - check"></i>
+                    $correctOrder .= '<button type = "submit" id = "confirmStonoBut'. $order->getId() .'" class="btn btn-danger confirmStornoOrderBut" data-id = "'. $order->getId() .'"><i class="bi bi - check"></i>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
                             <path d = "M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
                         </svg >
                     </button >';
                 } else if ($state == 1) {
-                    $correctOrder .= '<button type = "submit" id = "sendBut'. $order->getId() .'" class="btn btn-success sendOrderBut" dataId = "'.$order->getId() .'"><i class="bi bi - check"></i>
+                    $correctOrder .= '<button type = "submit" id = "sendBut'. $order->getId() .'" class="btn btn-success sendOrderBut" data-id = "'.$order->getId() .'"><i class="bi bi - check"></i>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
                             <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
                         </svg>
@@ -205,6 +206,111 @@ class OrderController extends AControllerRedirect
         exit();
     }
 
+    public static function validateStreet(string $street): ?string
+    {
+        if ($street == "") {
+            return "Nezadali ste ulicu.";
+        } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $street)) {
+            return "Ulica smie obsahovať len platné znaky v slovenskej abecede.";
+        }
+
+        return null;
+    }
+
+    public static function validateHouseNumber(string $houseNumber): ?string
+    {
+        if ($houseNumber == "") {
+            return "Nezadali ste číslo domu.";
+        } else if (!preg_match("/[0-9\/]$/", $houseNumber)) {
+            return "Číslo domu smie obsahovať číslice a znak '/'.";
+        }
+
+        return null;
+    }
+
+    public static function validateCity(string $city): ?string
+    {
+        if ($city == "") {
+            return "Nezadali ste obec.";
+        } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $city)) {
+            return "Obec smie obsahovať len platné znaky v slovenskej abecede.";
+        }
+
+        return null;
+    }
+
+    public static function validateCountry(string $country): ?string
+    {
+        if ($country == "") {
+            return "Nezadali ste štát.";
+        } else if (!preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $country)) {
+            return "Štát smie obsahovať len platné znaky v slovenskej abecede.";
+        }
+
+        return null;
+    }
+
+    public static function validateMobileNumber(string $mobileNumber): ?string
+    {
+        if ($mobileNumber == "") {
+            return "Nezadali ste telefónne číslo.";
+        } else if (!preg_match("/[0-9\+]$/", $mobileNumber)) {
+            return "Telefónne číslo smie obsahovať číslice a znak '+'.";
+        } else if (strcmp(substr($mobileNumber,0,4), '+421') != 0) {
+            return "Telefónne číslo musí začínať +421.";
+        }if (strlen($mobileNumber) < 13 || strlen($mobileNumber) > 13) {
+        return "Telefónne číslo musí mať presne 13 znakov.";
+    }
+
+        return null;
+    }
+
+    public static function validatePsc(string $psc): ?string
+    {
+        if ($psc == "") {
+            return "Nezadali ste PSČ.";
+        } else if (preg_match("/^[a-zA-Z\x{00C0}-\x{017F}\ ]+$/u", $psc)) {
+            return "PSČ smie obsahovať len číslice.";
+        } elseif (strlen($psc) < 5 || strlen($psc) > 5) {
+            return "PSČ musí mať presne 5 znakov.";
+        }
+
+        return null;
+    }
+
+    public static function validateCardNumber(string $cardNumber): ?string
+    {
+        if ($cardNumber == "") {
+            return "Číslo karty nesmie byť prázdne.";
+        } else if (!preg_match("/[0-9]$/", $cardNumber)){
+            return "Číslo karty nesmie obsahovať znaky.";
+        } if (strlen($cardNumber) < 16 || strlen($cardNumber) > 16) {
+        return "Číslo karty musí mať presne 16 znakov.";
+    }
+
+        return null;
+    }
+
+    public function validateCardDate(string $date): ?string {
+        $currentYear = date('Y');
+        $futureYear = date('Y', strtotime($currentYear. ' + 10 year'));
+        $parts = explode("/", $date);
+
+        if ($date == "") {
+            return "Dátum nesmie byť prázdny.";
+        } else if (!preg_match("/^[0-9\/]+$/", $date)){
+            return "Dátum nesmie obsahovať znaky.";
+        }else if (strlen($date) > 5){
+            return "Dátum musí mať tvar MM/RR";
+        } else if (($parts[0]) > 12) {
+            return "Zadaný mesiac nie je správny.";
+        } else if ($parts[1] < substr($currentYear, 2) || $parts[1] > substr($futureYear, 2)){
+            return "Zadaný rok nie je správny.";
+        }
+
+        return null;
+    }
+/**
     public function setOrderState() {
         $sendOrder = intval($this->request()->getValue('sendItem'));
         $state = ($this->request()->getValue('state'));
@@ -212,5 +318,5 @@ class OrderController extends AControllerRedirect
         $order->setState($state);
         $order->save();
     }
-
+**/
 }

@@ -3,26 +3,25 @@
         <div class="col-lg-4 col-sm-12">
             <div class="sidebar" style="color:  #8B0000">
                 <ul>
-                    <li class="sidebar-item"><a onclick="myFunction('howOrder')" href="#" class="px-2">Ako si tovar objednám?</a></li>
+                    <li class="sidebar-item"><a onclick="getDiv('howOrder')" href="#" class="px-2">Ako si tovar objednám?</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-lg-4 col-sm-12">
             <div class="sidebar">
                 <ul>
-                    <li class="sidebar-item"><a onclick="myFunction('howGet')" href="#" class="px-2">Ako sa mi tovar doručí?</a></li>
+                    <li class="sidebar-item"><a onclick="getDiv('howGet')" href="#" class="px-2">Ako sa mi tovar doručí?</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-lg-4 col-sm-12">
             <div class="sidebar">
                 <ul>
-                    <li class="sidebar-item"><a onclick="myFunction('howRefund')" href="#" class="px-2">Môžem tovar vrátiť?</a></li>
+                    <li class="sidebar-item"><a onclick="getDiv('howRefund')" href="#" class="px-2">Môžem tovar vrátiť?</a></li>
                 </ul>
             </div>
         </div>
     </div>
-
     <div id="howOrder" style="display: none">
         Váš tovar si môžete objednať veľmi jednoducho. Po tom ako si nájdete svoj tovar, ktorý ste sa rozhodli kúpiť, stačí kliknúť na tlačítko Viac, ktoré sa nachádza pri každom jednom produkte. Následne sa Vám zobrazia detialné informácie, spolu s možnosťou pridania produktu do košíka. Ak si zvolíte túto možnosť, systém Vás informuje o úspešnom pridaní tovaru. Tovar sa v košíku nachádza kým si ho neobjednáte a nezaplatíte alebo kým sa sami nerozhodnete vymazať tovar z nákupného košíka.
     </div>

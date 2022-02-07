@@ -4,6 +4,7 @@ use App\Models\State; ?>
 
 <div class="container">
 
+    <?php if (\App\Auth::isLogged() && \App\Auth::isAdmin()) { ?>
     <nav class="navbar navbar-light light-blue lighten-4">
         <a class="navbar-brand" href="#">Filtre</a>
 
@@ -19,7 +20,7 @@ use App\Models\State; ?>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent1">
             <div class="navbar-nav mr-auto">
-                <?php if (\App\Auth::isLogged() && \App\Auth::isAdmin()) { ?>
+
                         <div class="list-group">
                             <div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
                                 <div class="row" style="align-content: center">
@@ -33,13 +34,11 @@ use App\Models\State; ?>
                                 </div>
                             </div>
                         </div>
-                <?php } ?>
+
             </div>
         </div>
     </nav>
 
-
-    <?php if (\App\Auth::isLogged() && \App\Auth::isAdmin()) { ?>
         <div class="row rBBigScreen" style="align-content: center">
             <div class="col-md-3 col-sm-12 checkbox">
                 <label><input type="radio" name="radiobuttonOrder" class="common_selector order" value="1">Na odoslanie</label>

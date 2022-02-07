@@ -45,6 +45,7 @@
                 <div class="form-outline mb-4">
                     <label class="form-label">Číslo domu</label>
                     <input type="text" name="houseNumber" id="houseNumber" class="form-control" onkeyup="validateHouseNumber()" placeholder="Číslo domu..." autocomplete="off" required>
+                    <span>Akceptovaný formát 1955/9</span>
                     <div class="valid"></div>
                 </div>
 
@@ -97,7 +98,7 @@
                                     <div class="sidebar">
                                         <ul>
                                             <li class="sidebar-item">
-                                                <a onclick="getDiv('paymentMethodOne')" href="#" class="px-2">Dobierka</a>
+                                                <a onclick="showDetails('paymentMethodOne')" href="#" class="px-2">Dobierka</a>
                                             </li>
                                         </ul>
                                         <div id="paymentMethodOne" style="display: none">
@@ -110,7 +111,7 @@
                                     <div class="sidebar">
                                         <ul>
                                             <li class="sidebar-item">
-                                                <a onclick="getDiv('paymentMethodTwo')" href="#" class="px-2">Online platba kartou</a></li>
+                                                <a onclick="showDetails('paymentMethodTwo')" href="#" class="px-2">Online platba kartou</a></li>
                                         </ul>
                                         <div id="paymentMethodTwo" style="display: none">
                                             <input type="radio" id="radioButtonTwo" name="paymentMethod" value="0" required>Platba kartou: zadarmo

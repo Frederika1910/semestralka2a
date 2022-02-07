@@ -71,7 +71,7 @@ class ProductController extends AControllerRedirect
 
     public function addProductCategory() {
         $name = $this->request()->getValue('nameCategory');
-        $nameVal = User::validateName($name);
+        $nameVal = AuthController::validateName($name);
 
         if ($nameVal != null) {
             echo ($nameVal);
@@ -123,9 +123,9 @@ class ProductController extends AControllerRedirect
         $size = $this->request()->getValue('newSize');
         $price = $this->request()->getValue('newPrice');
 
-        $nameVal = User::validateName($name);
-        $sizeVal = Product::validateSize($size);
-        $priceVal = Product::validatePrice($price);
+        $nameVal = AuthController::validateName($name);
+        $sizeVal = $this->validateSize($size);
+        $priceVal = $this->validatePrice($price);
 
         if ($nameVal != null) {
             echo ($nameVal);
@@ -185,14 +185,14 @@ class ProductController extends AControllerRedirect
                             <div class="cart mt-4" style="text-align: center"> 
                             ';
                 if (\App\Auth::isLogged() && \App\Auth::isAdmin()) {
-                    $clickedProduct .= '<button type="button" id="delete_order_but'. $product->getId() .'" class="btn btn-primary deleteOrderBut" dataId='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
-                                        <button type="button" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" dataId='. $product->getId() .' style="background-color:  #A6923F">Upraviť</button>
-                                        <button type="button" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut" dataId='. $product->getId() .' style="color:  white; background-color: black; display: none">Potvrdiť</button>';
+                    $clickedProduct .= '<button type="button" id="delete_order_but'. $product->getId() .'" class="btn btn-primary deleteOrderBut" data-id='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
+                                        <button type="button" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" data-id='. $product->getId() .' style="background-color:  #A6923F">Upraviť</button>
+                                        <button type="button" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut" data-id='. $product->getId() .' style="color:  white; background-color: black; display: none">Potvrdiť</button>';
 
                 } else if (\App\Auth::isLogged()) {
-                    $clickedProduct .= '<button type="button" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000">Pridať do košíka</button>';
+                    $clickedProduct .= '<button type="button" class="btn btn-danger flex-fill ms-1" id="edit_order_item" data-id='. $product->getId() .' style="background-color:  #8B0000">Pridať do košíka</button>';
                 } else {
-                    $clickedProduct .= '<button type="button" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000" disabled="true">Pridať do košíka</button>';
+                    $clickedProduct .= '<button type="button" class="btn btn-danger flex-fill ms-1" id="edit_order_item" data-id='. $product->getId() .' style="background-color:  #8B0000" disabled="true">Pridať do košíka</button>';
                 }
                 $clickedProduct .= '<button type="button" id="cancel_but" class="btn btn-secondary" data-dismiss="modal" style="background-color: #E6E6FA; color: #8B0000">Zavrieť</button>
                                    
@@ -237,7 +237,7 @@ class ProductController extends AControllerRedirect
         $array = array();
         foreach ($products as $product) {
                 $filteredProduct = '
-                    <div class="col-lg-4 col-md-6 mt-2">
+                    <div class="col">
                         <div class="card mt-2 cardProductDelete' . $product->getId() . '" style="width: 18rem;">
                             <img class="card-img-top" src="/semestralka2/' . \App\Config\Configuration::UPLOAD_DIR . $product->getImage() . '" alt="Card image cap">
                             <div class="card-body">
@@ -245,10 +245,8 @@ class ProductController extends AControllerRedirect
                                 <p class="card-text" id="cardPrice' . $product->getId() . '">Cena: ' . $product->getPrice() . ' €</p>
                             </div>
     
-                            <div class="card-body d-flex flex-row">
-                                <a style="width: 100%">
-                                    <button type="submit" id="more_button' . $product->getId() . '" class="btn btn-primary flex-fill more_but" style="background-color: #E6E6FA; color: #8B0000" data-id=' . $product->getId() . ' >Viac</button>
-                                </a>
+                            <div class="card-body d-flex flex-row">                      
+                                <button type="button" id="more_button' . $product->getId() . '" class="btn btn-primary flex-fill more_but" style="background-color: #E6E6FA; color: #8B0000" data-id=' . $product->getId() . ' >Viac</button>                              
                             </div>
                         </div>
     
@@ -265,5 +263,29 @@ class ProductController extends AControllerRedirect
 
         echo json_encode($array);
         exit();
+    }
+
+    public function validateSize(string $size): ?string
+    {
+        if ($size == "") {
+            return "Nezadali ste veľkosť.";
+        } else if (!preg_match("/[0-9\a-zA-Z]$/", $size)) {
+            return "Veľkosť smie obsahovať len znaky.";
+        }
+
+        return null;
+    }
+
+    public function validatePrice(string $price): ?string
+    {
+        if ($price == "") {
+            return "Nezadali ste cenu.";
+        } else if (!preg_match("/^[0-9]\d*(,\d+)?$/", $price)) {
+            return "Cena smie obsahovať len číslice.";
+        } else if ($price <= 0){
+            return "Cena musí byť kladné číslo.";
+        }
+
+        return null;
     }
 }
