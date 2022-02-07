@@ -76,7 +76,7 @@
             </div>
                 <div class="col-lg-7 col-sm-12">
                     <div class="row">
-                        <div class="col"><h5>Spôsoby platby</h5>
+                        <div class="col"><h5>Zvoľte spôsob platby</h5>
                             <div class="row justify-content-center">
                                 <div class="col-lg-12 col-sm-12">
                                     <?php
