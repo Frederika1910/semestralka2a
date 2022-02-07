@@ -22,6 +22,7 @@
             </div>
         </div>
     </div>
+
     <div id="howOrder" style="display: none">
         Váš tovar si môžete objednať veľmi jednoducho. Po tom ako si nájdete svoj tovar, ktorý ste sa rozhodli kúpiť, stačí kliknúť na tlačítko Viac, ktoré sa nachádza pri každom jednom produkte. Následne sa Vám zobrazia detialné informácie, spolu s možnosťou pridania produktu do košíka. Ak si zvolíte túto možnosť, systém Vás informuje o úspešnom pridaní tovaru. Tovar sa v košíku nachádza kým si ho neobjednáte a nezaplatíte alebo kým sa sami nerozhodnete vymazať tovar z nákupného košíka.
     </div>
