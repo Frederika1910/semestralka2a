@@ -185,9 +185,9 @@ class ProductController extends AControllerRedirect
                             <div class="cart mt-4" style="text-align: center"> 
                             ';
                 if (\App\Auth::isLogged() && \App\Auth::isAdmin()) {
-                    $clickedProduct .= '<button type="button" id="delete_order_but'. $product->getId() .'" class="btn btn-primary deleteOrderBut" data-id='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
-                                        <button type="button" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" data-id='. $product->getId() .' style="background-color:  #A6923F">Upraviť</button>
-                                        <button type="button" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut" data-id='. $product->getId() .' style="color:  white; background-color: black; display: none">Potvrdiť</button>';
+                    $clickedProduct .= '<button type="button" id="delete_order_but'. $product->getId() .'" class="btn btn-primary deleteOrderBut" data-id='. $product->getId() .' style="background-color:  #8B0000; width: auto">Odstrániť</button>
+                                        <button type="button" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" data-id='. $product->getId() .' style="background-color:  #A6923F; width: auto">Upraviť</button>
+                                        <button type="button" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut" data-id='. $product->getId() .' style="color:  white; background-color: black; display: none; width: auto">Potvrdiť</button>';
 
                 } else if (\App\Auth::isLogged()) {
                     $clickedProduct .= '<button type="button" class="btn btn-danger flex-fill ms-1" id="edit_order_item" data-id='. $product->getId() .' style="background-color:  #8B0000">Pridať do košíka</button>';

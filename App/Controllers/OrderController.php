@@ -310,13 +310,4 @@ class OrderController extends AControllerRedirect
 
         return null;
     }
-/**
-    public function setOrderState() {
-        $sendOrder = intval($this->request()->getValue('sendItem'));
-        $state = ($this->request()->getValue('state'));
-        $order = Order::getOne($sendOrder);
-        $order->setState($state);
-        $order->save();
-    }
-**/
 }
