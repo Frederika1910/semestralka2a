@@ -356,7 +356,7 @@ $(document).ready(function() {
     $(document).on('click', '.saveBut', function(e){
             e.preventDefault();
             let edit_id = $(this).attr('dataId');
-            let quantity_price = $(this).attr('dataPrice');
+            let quantity_price = $(this).attr('data-price');
             let quantity_input = ($('#quantityInput'+edit_id).val());
 
             $.ajax({
@@ -498,7 +498,7 @@ function validateDate() {
 $(document).ready(function() {
     $(document).on('click', '.more_but', function (e) {
         e.preventDefault();
-        let product_id = $(this).attr('dataId');
+        let product_id = $(this).attr('data-id');
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=product&a=showProductDetail',
@@ -562,7 +562,7 @@ $(document).ready(function () {
 $(document).ready(function() {
     $(document).on('click', '.delOrderBut', function (e) {
         e.preventDefault();
-        let order_item_id = $(this).attr('dataId');
+        let order_item_id = $(this).attr('data-id');
         console.log(order_item_id);
         $.ajax({
             method: 'POST',
@@ -604,7 +604,7 @@ $(document).ready(function () {
 $(document).ready(function() {
     $(document).on('click', '.delCategoryBut', function (e) {
         e.preventDefault();
-        let category_id = $(this).attr('dataId');
+        let category_id = $(this).attr('data-id');
 
         $.ajax({
             method: 'POST',
@@ -621,7 +621,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(document).on('click', '.deleteOrderBut', function(){
-        let product_id = $(this).attr('dataId');
+        let product_id = $(this).attr('data-id');
 
         $.ajax({
             method: 'POST',
@@ -640,7 +640,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(document).on('click', '.editOrderBut', function(){
-        let edit_id = $(this).attr('dataId');
+        let edit_id = $(this).attr('data-id');
 
         $('#nameProduct'+edit_id).hide();
         $('#'+edit_id).show();
@@ -661,7 +661,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $(document).on('click', '.saveOrderBut', function (e) {
         e.preventDefault();
-        let save_id = $(this).attr('dataId');
+        let save_id = $(this).attr('data-id');
 
         let new_name = $('#'+save_id).val();
         let new_size = $('#productSizeInput'+save_id).val();
@@ -707,7 +707,7 @@ $(document).ready(function() {
 })
 
 $(document).ready(function() {
-    $(document).on('click', '#orders_filter_but', function () {
+    $(document).on('click', '.orders_filter_but', function () {
         let choice = $('.order:checked').val();
         console.log(choice);
 
@@ -728,7 +728,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(document).on('click', '.sendOrderBut', function () {
-        let send_order_id = $(this).attr('dataId');
+        let send_order_id = $(this).attr('data-id');
 
         $.ajax({
             method: 'POST',
@@ -746,7 +746,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $(document).on('click', '.confirmStornoOrderBut', function () {
-        let confimr_storno_order_id = $(this).attr('dataId');
+        let confimr_storno_order_id = $(this).attr('data-id');
         let numberOfRows = document.getElementById('tableOrders').rows.length;
         let x = 4;
         $.ajax({

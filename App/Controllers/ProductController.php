@@ -247,7 +247,7 @@ class ProductController extends AControllerRedirect
     
                             <div class="card-body d-flex flex-row">
                                 <a style="width: 100%">
-                                    <button type="submit" id="more_button' . $product->getId() . '" class="btn btn-primary flex-fill more_but" style="background-color: #E6E6FA; color: #8B0000" dataId=' . $product->getId() . ' >Viac</button>
+                                    <button type="submit" id="more_button' . $product->getId() . '" class="btn btn-primary flex-fill more_but" style="background-color: #E6E6FA; color: #8B0000" data-id=' . $product->getId() . ' >Viac</button>
                                 </a>
                             </div>
                         </div>

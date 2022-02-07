@@ -108,7 +108,7 @@
                                 <p class="card-text" id="cardPrice<?php echo $product->getId() ?>">Cena: <?php echo $product->getPrice() ?>€</p>
                             </div>
                             <div class="card-body d-flex flex-row">
-                                <button type="button" id="more_button<?php echo $product->getId() ?>" class="btn btn-primary more_but" style="background-color: #E6E6FA; color: #8B0000" dataId="<?php echo $product->getId() ?>" >Viac</button>
+                                <button type="button" id="more_button<?php echo $product->getId() ?>" class="btn btn-primary more_but" style="background-color: #E6E6FA; color: #8B0000" data-id="<?php echo $product->getId() ?>" >Viac</button>
                             </div>
                         </div>
                     </div>
