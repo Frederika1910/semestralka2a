@@ -241,7 +241,7 @@ function validateGender() {
 }
 
 $(document).ready(function () {
-    $('#my_form_id').submit(function (e) {
+    $('#order_form').submit(function (e) {
         e.preventDefault();
 
         let name = $('#meno').val();
@@ -253,20 +253,15 @@ $(document).ready(function () {
         let city = $('#city').val();
         let mobile_number = $('#mobileNumber').val();
 
-        let rb1 = document.getElementById('radioButtonOne').checked;
-        let rb2 = document.getElementById('radioButtonTwo').checked;
+        //let rb1 = document.getElementById('radioButtonOne').checked;
+        //let rb2 = document.getElementById('radioButtonTwo').checked;
 
-        let c = document.getElementById('cards');
-        let cardsValue = c.options[c.selectedIndex].value;
+        //let c = document.getElementById('cards');
+        //let cardsValue = c.options[c.selectedIndex].value;
 
-        let cardNumber = $('#cardNumber').val();
+        //let cardNumber = $('#cardNumber').val();
+        //let cardDate = $('#cardDate').val();
 
-        let m = document.getElementById('months');
-        let monthValue = m.options[m.selectedIndex].value;
-
-        let y = document.getElementById('years');
-        let yearValue = y.options[y.selectedIndex].value;
-        console.log(rb1 + " " + rb2);
         $.ajax({
             method: 'POST',
             url: 'http://localhost/semestralka2?c=order&a=addNewOrder',
@@ -279,18 +274,21 @@ $(document).ready(function () {
                 countryA: country,
                 cityA: city,
                 mobileNumberA: mobile_number,
-                rbOne: rb1,
-                rbTwo: rb2,
-                cardNo: cardNumber,
-                sOne: cardsValue,
-                sTwo: monthValue,
-                sTree: yearValue
+                //rbOne: rb1,
+                //rbTwo: rb2,
+                //cardNo: cardNumber,
+                //sOne: cardsValue,
+                //cardD: cardDate
             },
             success: function (data) {
                 console.log(data);
                 data = data.replace(/[0-9]/g, "");
-                $('#modelMsg').html(data);
-                $('#productResponse').show();
+                if (data !== "") {
+                    location.window.href = "?c=payment&a=paymentForm";
+                } else {
+                    $('#modelMsg').html(data);
+                    $('#productResponse').show();
+                }
             }
         })
     })

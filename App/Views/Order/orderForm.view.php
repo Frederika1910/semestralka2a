@@ -19,7 +19,7 @@
     </div>
 
 
-    <form id="my_form_id" name="reg" method="post"  novalidate>
+    <form id="order_form" name="reg" method="post"  novalidate>
         <div class="row justify-content-center">
 
             <div class="col-lg-5 col-sm-12">
@@ -74,82 +74,11 @@
                     </div>
 
 
-
-            </div>
-            <div class="col-lg-7 col-sm-12">
-                <div class="row">
-                    <div class="col"><h5>Spôsoby platby</h5>
-                        <div class="row justify-content-center">
-                            <div class="col-lg-12 col-sm-12">
-                                <?php
-                                $sumaSpolu = 0;
-                                $currentUser = \App\Auth::getId();
-                                foreach ($data['shopping_cart'] as $item) {
-                                    if ($item->getUserId() == $currentUser) {
-                                        $product = \App\Models\Product::getOne($item->getProductId());
-
-                                        $sumaSpolu += $item->getQuantityPrice();
-                                    }
-                                } ?>
-                                <div>Zaplatiť: <?php echo $sumaSpolu ?>€</div>
-                                <div class="meth">Poštovné: 0€</div>
-                                <br>
-                                <div id="priceTotal">Spolu: <?php echo $sumaSpolu ?> €</div>
-                            </div>
-                            <div class="col-lg-5 col-sm-12">
-                                <div class="sidebar">
-                                    <ul>
-                                        <li class="sidebar-item">
-                                            <a onclick="getDiv('paymentMethodOne')" href="#" class="px-2">Dobierka</a>
-                                        </li>
-                                    </ul>
-                                    <div id="paymentMethodOne" style="display: none">
-                                        <input type="radio" id="radioButtonOne" name="paymentMethod" value="<?php echo $sumaSpolu ?>" required="required">Cena dobierky: 2€
-                                        <div class="valid"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-sm-12">
-                                <div class="sidebar">
-                                    <ul>
-                                    <li class="sidebar-item">
-                                        <a onclick="getDiv('paymentMethodTwo')" href="#" class="px-2">Online platba kartou</a></li>
-                                    </ul>
-                                    <div id="paymentMethodTwo" style="display: none">
-                                        <input type="radio" id="radioButtonTwo" name="paymentMethod" value="0" required>Platba kartou: zadarmo
-                                        <div class="valid"></div>
-                                        <div class="form-group">
-                                            <label>Druh karty:</label>
-                                            <select id="cards" onchange="validateCards()">
-                                                <option value="false" selected>-----</option>
-                                                <option value="Maestro">Maestro</option>
-                                                <option value="MasterCard">MasterCard</option>
-                                                <option value="Visa">Visa</option>
-                                            </select>
-                                            <div class="valid"></div>
-                                        </div>
-
-                                            <div class="form-group">
-                                                <label>Číslo karty:</label>
-                                                <input type="text" class="form-control" name="cardNumber" id="cardNumber" onkeyup="validateNumber('cardNumber',16)" placeholder="Číslo karty..." autocomplete="off" required>
-                                                <div class="valid"></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Dátum splatnosti:</label>
-                                                <input type="text" class="form-control" name="cardDate" id="cardDate" onkeyup="validateDate()" placeholder="MM/RR" autocomplete="off" required>
-                                                <div class="valid"></div>
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex" style="justify-content: flex-end">
-                        <button type="submit" id="payment_but" class="btn btn-success">Potvrdiť</button>
-                    </div>
-
+                <div class="d-flex" style="justify-content: flex-end">
+                    <button type="submit" id="payment_but" class="btn btn-success">Potvrdiť</button>
                 </div>
             </div>
+
         </div>
     </form>
 </div>

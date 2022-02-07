@@ -32,15 +32,6 @@ class OrderController extends AControllerRedirect
             ]);
     }
 
-    public function paymentForm() {
-
-        $orders = Cart::getAll();
-
-        return $this->html(
-            [
-                'shopping_cart' => $orders
-            ]);
-    }
 
     public function orde()
     {
@@ -54,6 +45,7 @@ class OrderController extends AControllerRedirect
             ]);
     }
 
+
     public function addNewOrder()
     {
         $name = $this->request()->getValue('nameA');
@@ -64,12 +56,11 @@ class OrderController extends AControllerRedirect
         $country = $this->request()->getValue('countryA');
         $city = $this->request()->getValue('cityA');
         $mobileNumber = $this->request()->getValue('mobileNumberA');
-        $rb1 = $this->request()->getValue('rbOne');
-        $rb2 = $this->request()->getValue('rbTwo');
+        //$rb1 = $this->request()->getValue('rbOne');
+        //$rb2 = $this->request()->getValue('rbTwo');
         $cardNumber = $this->request()->getValue('cardNo');
-        $s1 = $this->request()->getValue('sOne');
-        $s2 = $this->request()->getValue('sTwo');
-        $s3 = $this->request()->getValue('sTree');
+        //$s1 = $this->request()->getValue('sOne');
+        $cardDate = $this->request()->getValue('cardD');
 
         $nameVal = User::validateName($name);
         $surnameVal = User::validateSurname($surname);
@@ -79,7 +70,8 @@ class OrderController extends AControllerRedirect
         $countryVal = Order::validateCountry($country);
         $houseNumberVal = Order::validateHouseNumber($houseNumber);
         $mobileNumberVal = Order::validateMobileNumber($mobileNumber);
-        $cardNumberVal = Order::validateCardNumber($cardNumber);
+        //$cardNumberVal = Order::validateCardNumber($cardNumber);
+        //$cardDateVal = Order::validateCardNumber($cardDate);
 
         if ($nameVal != null) {
             echo ($nameVal);
@@ -105,26 +97,24 @@ class OrderController extends AControllerRedirect
         } else if ($mobileNumberVal != null) {
             echo ($mobileNumberVal);
             exit();
-        } else if ($rb1 == "false" && $rb2 == "false") {
+        }
+        /**
+        else if ($rb1 == "false" && $rb2 == "false") {
             echo ("Nevybrali ste si spôsob platby.");
             exit();
-        }
-        if ($rb2 == "true") {
+        } else if ($rb2 == "true") {
             if ($s1 == "false") {
                 echo ("Nevybrali ste si druh karty.");
                 exit();
             } else if ($cardNumberVal != null) {
                 echo ($cardNumberVal);
                 exit();
-            } else if ($s2 == "false") {
-                echo ("Nevybrali ste si mesiac v dátume splatnosti.");
-                exit();
-            } else if ($s3 == "false") {
-                echo ("Nevybrali ste si rok v dátume splatnosti.");
-                exit();
             }
+        } else if ($cardDateVal != null) {
+            echo ($cardDateVal);
+            exit();
         }
-
+**/
         $newOrder = new Order();
 
         $currentUser = Auth::getId();
@@ -134,9 +124,9 @@ class OrderController extends AControllerRedirect
         $numberOfItem = 0;
         $totalPrice = 0;
         foreach ($shoppingCartItems as $item) {
-                $numberOfItem += $item->getQuantity();
-                $totalPrice += $item->getQuantityPrice();
-                $item->delete();
+            $numberOfItem += $item->getQuantity();
+            $totalPrice += $item->getQuantityPrice();
+            $item->delete();
         }
 
         if ($totalPrice <= 0 || $numberOfItem <= 0) {
@@ -146,9 +136,9 @@ class OrderController extends AControllerRedirect
 
         $newOrder->setNumberOfProducts($numberOfItem);
 
-        if ($rb1 == "true" && $rb2 == "false") {
-            $totalPrice += 2;
-        }
+        //if ($rb1 == "true" && $rb2 == "false") {
+        //    $totalPrice += 2;
+        //}
 
         $newOrder->setDate(date("Y/m/d"));
         $newOrder->setTotalPrice($totalPrice);
@@ -158,10 +148,10 @@ class OrderController extends AControllerRedirect
         $newOrder->setCity($city);
         $newOrder->setCountry($country);
         $newOrder->setMobileNumber(($mobileNumber));
-        $newOrder->setState(1);     //cakajuca objednavka na potvrdenie
+        //$newOrder->setState(1);     //cakajuca objednavka na potvrdenie
         $newOrder->save();
 
-        echo ("Objednávka prebehla úspešne.");
+        echo ("");
         exit();
     }
 
