@@ -56,10 +56,11 @@ class OrderController extends AControllerRedirect
         $country = $this->request()->getValue('countryA');
         $city = $this->request()->getValue('cityA');
         $mobileNumber = $this->request()->getValue('mobileNumberA');
-        //$rb1 = $this->request()->getValue('rbOne');
-        //$rb2 = $this->request()->getValue('rbTwo');
+
+        $rb1 = $this->request()->getValue('rbOne');
+        $rb2 = $this->request()->getValue('rbTwo');
         $cardNumber = $this->request()->getValue('cardNo');
-        //$s1 = $this->request()->getValue('sOne');
+        $s1 = $this->request()->getValue('sOne');
         $cardDate = $this->request()->getValue('cardD');
 
         $nameVal = User::validateName($name);
@@ -70,8 +71,8 @@ class OrderController extends AControllerRedirect
         $countryVal = Order::validateCountry($country);
         $houseNumberVal = Order::validateHouseNumber($houseNumber);
         $mobileNumberVal = Order::validateMobileNumber($mobileNumber);
-        //$cardNumberVal = Order::validateCardNumber($cardNumber);
-        //$cardDateVal = Order::validateCardNumber($cardDate);
+        $cardNumberVal = Order::validateCardNumber($cardNumber);
+        $cardDateVal = Order::validateCardNumber($cardDate);
 
         if ($nameVal != null) {
             echo ($nameVal);
@@ -97,9 +98,7 @@ class OrderController extends AControllerRedirect
         } else if ($mobileNumberVal != null) {
             echo ($mobileNumberVal);
             exit();
-        }
-        /**
-        else if ($rb1 == "false" && $rb2 == "false") {
+        } else if ($rb1 == "false" && $rb2 == "false") {
             echo ("Nevybrali ste si spôsob platby.");
             exit();
         } else if ($rb2 == "true") {
@@ -114,7 +113,7 @@ class OrderController extends AControllerRedirect
             echo ($cardDateVal);
             exit();
         }
-**/
+
         $newOrder = new Order();
 
         $currentUser = Auth::getId();
@@ -136,9 +135,9 @@ class OrderController extends AControllerRedirect
 
         $newOrder->setNumberOfProducts($numberOfItem);
 
-        //if ($rb1 == "true" && $rb2 == "false") {
-        //    $totalPrice += 2;
-        //}
+        if ($rb1 == "true" && $rb2 == "false") {
+            $totalPrice += 2;
+        }
 
         $newOrder->setDate(date("Y/m/d"));
         $newOrder->setTotalPrice($totalPrice);
@@ -148,10 +147,12 @@ class OrderController extends AControllerRedirect
         $newOrder->setCity($city);
         $newOrder->setCountry($country);
         $newOrder->setMobileNumber(($mobileNumber));
-        //$newOrder->setState(1);     //cakajuca objednavka na potvrdenie
+        $newOrder->setState(5);
         $newOrder->save();
 
-        echo ("");
+
+
+        echo ("kmkmk");
         exit();
     }
 

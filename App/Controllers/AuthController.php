@@ -176,15 +176,4 @@ class AuthController extends AControllerRedirect
         Auth::logout();
         $this->redirect('home');
     }
-
-    /**
-    public function getUser() {
-        $currentId = Auth::getId();
-        $currentUser = User::getOne($currentId);
-        $currentName = $currentUser->getName();
-        $currentSurname = $currentUser->getSurname();
-        $result = ['name'=>$currentName,'surname'=>$currentSurname];
-        echo json_encode($result);
-    }
-**/
 }

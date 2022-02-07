@@ -253,14 +253,12 @@ $(document).ready(function () {
         let city = $('#city').val();
         let mobile_number = $('#mobileNumber').val();
 
-        //let rb1 = document.getElementById('radioButtonOne').checked;
-        //let rb2 = document.getElementById('radioButtonTwo').checked;
-
-        //let c = document.getElementById('cards');
-        //let cardsValue = c.options[c.selectedIndex].value;
-
-        //let cardNumber = $('#cardNumber').val();
-        //let cardDate = $('#cardDate').val();
+        let rb1 = document.getElementById('radioButtonOne').checked;
+        let rb2 = document.getElementById('radioButtonTwo').checked;
+        let c = document.getElementById('cards');
+        let cardsValue = c.options[c.selectedIndex].value;
+        let cardNumber = $('#cardNumber').val();
+        let cardDate = $('#cardDate').val();
 
         $.ajax({
             method: 'POST',
@@ -274,17 +272,17 @@ $(document).ready(function () {
                 countryA: country,
                 cityA: city,
                 mobileNumberA: mobile_number,
-                //rbOne: rb1,
-                //rbTwo: rb2,
-                //cardNo: cardNumber,
-                //sOne: cardsValue,
-                //cardD: cardDate
+                rbOne: rb1,
+                rbTwo: rb2,
+                cardNo: cardNumber,
+                sOne: cardsValue,
+                cardD: cardDate
             },
             success: function (data) {
                 console.log(data);
                 data = data.replace(/[0-9]/g, "");
-                if (data !== "") {
-                    location.window.href = "?c=payment&a=paymentForm";
+                if (data === "kmkmk") {
+                    window.location.href = 'http://localhost/semestralka2?c=payment&a=paymentForm';
                 } else {
                     $('#modelMsg').html(data);
                     $('#productResponse').show();
@@ -360,7 +358,7 @@ $(document).ready(function() {
     $(document).on('click', '.saveBut', function(e){
             e.preventDefault();
             let edit_id = $(this).attr('dataId');
-            let quantity_price = $(this).attr('dataPrice'); //8
+            let quantity_price = $(this).attr('dataPrice');
             let quantity_input = ($('#quantityInput'+edit_id).val());
 
             $.ajax({
@@ -369,7 +367,7 @@ $(document).ready(function() {
                 data: {text: quantity_input,
                     oldItem: edit_id,
                     },
-                success: function () {
+                success: function (data) {
                     $('#quantityInput'+edit_id).hide();
                     $('#quantity'+edit_id).show();
 
@@ -379,7 +377,7 @@ $(document).ready(function() {
                     let aString = quantity_input.toString();
 
                     if (isNaN(quantity_input) || parseInt(quantity_input) <= 0 || quantity_input === "") {
-                       $('#modelMsg').html("Zadal si neplatnú hodnotu.");
+                       $('#modelMsg').html(data);
                         $('#productResponse').show();
                     } else {
                         let totalPrice = quantity_price * parseInt(quantity_input);

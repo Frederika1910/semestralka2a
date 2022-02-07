@@ -164,29 +164,30 @@ class ProductController extends AControllerRedirect
                             <div class="mt-4 mb-3" style="text-align: center">
                                 <span class="text-uppercase text-muted brand">Second Hand U Inky</span>
                                 <h5 class="text-uppercase" id="nameProduct'. $product->getId() .'">'. $product->getName() .'</h5>  
+                               <input type="name" id="'. $product->getId() .'" class="form-control mb-2" onkeyup="validateText(' . $product->getId() .')" placeholder="Názov..." autocomplete="off" style="display: none;" required>                                                     
                                 <div class="valid"></div>
                             </div>
                                 
                             <div class="sizes mt-5" style="text-align: center">
                                 <div>
                                     <h6 class="text-uppercase" id="sizeProduct'. $product->getId() .'">Veľkosť: '. $product->getSize() .' </h6> 
+                                    <input type="name" id="productSizeInput'. $product->getId() .'" class="form-control mb-2" onkeyup="validateSize('. $product->getId() .')" placeholder="Veľkosť..." autocomplete="off" style="display: none;" required>              
                                     <div class="valid"></div>
                                 </div>
                                 <div>
                                     <span class="act-price" id="priceProduct'. $product->getId() .'">'. $product->getPrice() .'€</span>
+                                    <input type="name" id="productPriceInput'. $product->getId() .'" class="form-control" onkeyup="validatePrice('. $product->getId() .')" placeholder="Cena..." autocomplete="off" style="display: none;" required>                          
                                     <div class="valid"></div>
                                 </div>
                             </div>
-                            <input type="name" id="'. $product->getId() .'" class="form-control mb-2" onkeyup="validateName(' . $product->getId() .')" placeholder="Názov..." autocomplete="off" style="display: none;" required>                                                     
-                            <input type="name" id="productSizeInput'. $product->getId() .'" class="form-control mb-2" onkeyup="validateSize('. $product->getId() .')" placeholder="Veľkosť..." autocomplete="off" style="display: none;" required>
-                            <input type="name" id="productPriceInput'. $product->getId() .'" class="form-control" onkeyup="validatePrice('. $product->getId() .')" placeholder="Cena..." autocomplete="off" style="display: none;" required>
+                           
                                     
                             <div class="cart mt-4" style="text-align: center"> 
                             ';
                 if (\App\Auth::isLogged() && \App\Auth::isAdmin()) {
                     $clickedProduct .= '<button type="button" id="delete_order_but'. $product->getId() .'" class="btn btn-primary deleteOrderBut" dataId='. $product->getId() .' style="background-color:  #8B0000">Odstrániť</button>
                                         <button type="button" id="edit_order_but'. $product->getId() .'" class="btn btn-primary editOrderBut" dataId='. $product->getId() .' style="background-color:  #A6923F">Upraviť</button>
-                                        <button type="button" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut" dataId='. $product->getId() .' onclick="submitChanges()" style="color:  white; background-color: black; display: none">Potvrdiť</button>';
+                                        <button type="button" id="save_order_but'. $product->getId() .'" class="btn btn-primary saveOrderBut" dataId='. $product->getId() .' style="color:  white; background-color: black; display: none">Potvrdiť</button>';
 
                 } else if (\App\Auth::isLogged()) {
                     $clickedProduct .= '<button type="button" class="btn btn-danger flex-fill ms-1" id="edit_order_item" dataId='. $product->getId() .' style="background-color:  #8B0000">Pridať do košíka</button>';

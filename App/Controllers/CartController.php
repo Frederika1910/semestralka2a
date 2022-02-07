@@ -56,6 +56,7 @@ class CartController extends AControllerRedirect
         $newQuantity = $this->request()->getValue('text');
 
         if (preg_match('/[a-zA-Z]/', $newQuantity) || $newQuantity <= 0) {
+            echo "Zadal si neplatnú hodnotu.";
             exit();
         }
 
@@ -69,7 +70,7 @@ class CartController extends AControllerRedirect
     public function addToCart() {
         $product = Product::getOne($this->request()->getValue('id'));
 
-        $currentUser = Auth::getId();                                                   //4 paramtere
+        $currentUser = Auth::getId();
         $itemsUser = Cart::getAll('user_id=?', [$currentUser]);
         $itemsProduct = Cart::getAll('product_id=?', [$product->getId()]);
 
